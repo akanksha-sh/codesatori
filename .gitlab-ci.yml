@@ -1,0 +1,17 @@
+image: docker:19.03.9
+
+variables:
+  DOCKER_TLS_CERTDIR: "/certs"
+
+services:
+  - docker:19.03.9-dind
+
+before_script:
+  - docker info
+
+build:
+  stage: build
+  script:
+    - docker build -t codesatori_frontend
+    - docker run codesatori_frontend 
+    #- docker run -p80:5000 codesatori_frontend
