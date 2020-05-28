@@ -1,9 +1,9 @@
 image: docker:19.03.9
 
 services:
-  - docker:19.03.9-dind
-  entrypoint: ["env", "-u", "DOCKER_HOST"]
-  command: ["dockerd-entrypoint.sh"]
+  - name: docker:19.03.9-dind
+    entrypoint: ["env", "-u", "DOCKER_HOST"]
+    command: ["dockerd-entrypoint.sh"]
 
 variables:
   DOCKER_HOST: tcp://docker:2375/
