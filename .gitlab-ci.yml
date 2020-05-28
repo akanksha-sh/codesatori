@@ -16,6 +16,6 @@ image: docker:19.03.9
 build:
   stage: build
   script:
-    - docker build -t codesatori_frontend
+    - docker build -t codesatori_frontend .
     - docker run codesatori_frontend 
     #- docker run -p80:5000 codesatori_frontend
