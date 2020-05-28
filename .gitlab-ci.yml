@@ -1,4 +1,4 @@
-image: docker:19.03.9
+#image: docker:19.03.9
 
 #services:
 #  - name: docker:19.03.9-dind
@@ -10,8 +10,8 @@ image: docker:19.03.9
 #  DOCKER_DRIVER: overlay2
 #  DOCKER_TLS_CERTDIR: "/certs"
 
-#before_script:
-#  - docker info
+before_script:
+  - docker info
 
 build:
   stage: build
