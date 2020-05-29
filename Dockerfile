@@ -5,12 +5,11 @@ FROM node:12.17.0-alpine3.11
 WORKDIR /codesatori_frontend/webapp
 
 #install dependancies
-COPY package*.json ./
-RUN npm install -g serve
-RUN npm install express-favicon typescript --s
+# COPY package*.json ./
+# RUN npm install -g serve
+# RUN npm install express-favicon typescript --s
 
 #copy and run app
 COPY . ./
-RUN npm run build
 #EXPOSE 5000
-CMD serve -s build -l $PORT
+CMD npm run start -- -l $PORT
