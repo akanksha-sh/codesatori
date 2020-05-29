@@ -6,7 +6,7 @@ WORKDIR /codesatori_frontend/webapp
 
 #install dependancies
 COPY package*.json ./
-RUN npm install serve --s
+RUN npm install serve express-favicon typescript --s
 
 #copy and run app
 COPY . ./
