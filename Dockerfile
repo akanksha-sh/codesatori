@@ -12,4 +12,4 @@ WORKDIR /codesatori_frontend/webapp
 #copy and run app
 COPY . ./
 #EXPOSE 5000
-CMD npm run start -- -l $PORT
+CMD npm run start
