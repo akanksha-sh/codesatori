@@ -12,4 +12,5 @@ WORKDIR /codesatori_frontend/webapp
 #copy and run app
 COPY . ./
 #EXPOSE 5000
+RUN npm run heroku-postbuild
 CMD npm run start
