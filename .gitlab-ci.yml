@@ -1,0 +1,12 @@
+before_script:
+  - docker info
+
+build:
+  stage: build
+  only:
+    - master
+  script:
+    - dpl --provider=heroku --app=codesatori --api-key=$HEROKU_API_KEY
+    #- docker build -t codesatori_frontend .
+    #- docker run codesatori_frontend 
+    #- docker run -p80:5000 codesatori_frontend
