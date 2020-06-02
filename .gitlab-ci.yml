@@ -1,7 +1,7 @@
 variables:
-  VM_IP: "146.169.41.91:4418"
+  VM_IP: "146.169.41.91:8080"
   VM_DEPLOYMENT_PORT: "5000"
-  TIME_TO_LIVE_IN_SECONDS: "300"
+  TIME_TO_LIVE_IN_SECONDS: "90"
 
 stages:
   - build
