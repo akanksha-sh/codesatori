@@ -21,7 +21,7 @@ deploy-vm:
   stage: deploy-vm
   script:
     - docker build --target RUN -t codesatori-frontend .
-    - timeout 300 docker run -p 146.169.41.91:5000:5000 codesatori-frontend
+    - timeout 300 docker run -p 146.169.41.91:8080:5000 codesatori-frontend
 
 deploy-heroku:
   stage: deploy-heroku
