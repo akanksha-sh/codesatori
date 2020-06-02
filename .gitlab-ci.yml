@@ -1,6 +1,6 @@
 variables:
   VM_DEPLOYMENT_PORT: "5000"
-  TIME_TO_LIVE_IN_SECONDS: "180"
+  TIME_TO_LIVE_IN_SECONDS: "300"
 
 stages:
   - build
