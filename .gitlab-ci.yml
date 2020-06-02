@@ -21,7 +21,7 @@ deploy-vm:
   script:
     - export PORT=$VM_DEPLOYMENT_PORT
     - docker build --target RUN -t codesatori-frontend .
-    - timeout $TIME_TO_LIVE_IN_SECONDS docker run codesatori-frontend
+    - timeout $TIME_TO_LIVE_IN_SECONDS docker run -d -p $VM_DEPLOYMENT_PORT codesatori-frontend
 
 deploy-heroku:
   stage: deploy-heroku
