@@ -1,5 +1,5 @@
 variables:
-  VM_IP: "146.169.41.91"
+  VM_IP: "146.169.41.91:8080"
   VM_DEPLOYMENT_PORT: "5000"
   TIME_TO_LIVE_IN_SECONDS: "300"
 
@@ -21,7 +21,7 @@ deploy-vm:
   stage: deploy-vm
   script:
     - docker build --target RUN -t codesatori-frontend .
-    - timeout 300 docker run -p 146.169.41.91:8080:5000 codesatori-frontend
+    - timeout --preserve-status "$TIME_TO_LIVE_IN_SECONDS" docker run -p "$VM_IP":"$VM_DEPLOYMENT_PORT" codesatori-frontend
 
 deploy-heroku:
   stage: deploy-heroku
