@@ -1,5 +1,5 @@
 #pull official docker image for ReactJS
-FROM node:12.17.0-alpine3.11
+FROM node:12.17.0-alpine3.11 as BUILD
 
 #set working directory
 WORKDIR /codesatori_frontend/webapp
@@ -12,5 +12,8 @@ WORKDIR /codesatori_frontend/webapp
 #copy and run app
 COPY . ./
 #EXPOSE 5000
+RUN npm run build
+
+FROM BUILD as RUN
 RUN npm run heroku-postbuild
 CMD npm run start
