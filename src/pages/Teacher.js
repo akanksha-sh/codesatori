@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Todos from './Courses';
 import AddTodo from './AddTodo';
 
-
 export class Teacher extends Component {
     state = {
         todos: [
@@ -52,13 +51,11 @@ export class Teacher extends Component {
 
     render() {
     return (
-        
         <div className="App">
         <div className="container">
-            <h3> Courses </h3>
+            <h3 style={{textAlign:"center"}}> Courses </h3>
             <AddTodo addTodo={this.addTodo}/>
-            <Todos todos={this.state.todos}
-            delTodo= {this.delTodo}/>
+            <Todos todos={this.state.todos} delTodo= {this.delTodo}/>
         </div>
         </div>
     );

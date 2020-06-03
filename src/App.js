@@ -7,16 +7,26 @@ import Teacher from "./pages/Teacher";
 import Student from "./pages/Student";
 
 export default class App extends Component {
+
+  state = {
+    isLoggedIn: false
+  }
+
+  Logged = () => {
+    this.setState({isLoggedIn: true})
+  }
+
   render() {
     return (
       <Router>
+        <Header loginStatus={this.state.isLoggedIn}/>
         <div className="App" style={appStyle}>
           <div className="container">
-            <Header />
             <Route
               exact
               path="/"
               render={(props) => (
+                
                 <React.Fragment>
                   <h1>Home</h1>
                   <p>Welcome to CodeSatori!</p>
@@ -26,7 +36,7 @@ export default class App extends Component {
                     any suggestions.
                   </p>
 
-                  <Link style={linkStyle} to="/teacher">
+                  <Link style={linkStyle} to="/teacher" onClick= {this.Logged}>
                   <h4>Teacher Dashboard</h4>
                   </Link>  
                   <Link style={linkStyle} to="/student">

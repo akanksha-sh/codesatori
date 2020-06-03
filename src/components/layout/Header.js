@@ -1,35 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import DashboardHeader from './DashboardHeader'
+import LoginHeader from './LoginHeader'
 
-export default function Header() {
-  return (
-    <header style={headerStyle}>
-      <Link style={linkStyle} to="/">
-        <h1>CodeSatori</h1>
-      </Link>
-      <nav>
-        <Link style={linkStyle} to="/login">
-          <div style={{ textAlign: "right" }}>Log In</div>
-        </Link>
-        <Link style={linkStyle} to="/signup">
-          Sign Up
-        </Link>
-      </nav>
-    </header>
-  );
+export class Header extends Component {
+    render() {
+        return (
+            this.props.isLogged? <DashboardHeader/> : <LoginHeader/>
+        )
+    }
 }
 
-const headerStyle = {
-  alignItems: "center",
-  background: "#000",
-  display: "flex",
-  justifyContent: "space-between",
-};
+export default Header
 
-const linkStyle = {
-  color: "#fff",
-  display: "inline-block",
-  fontFamily: "Roboto",
-  padding: "10px",
-  textDecoration: "none",
-};

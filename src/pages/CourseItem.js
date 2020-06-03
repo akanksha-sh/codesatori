@@ -23,15 +23,13 @@ export class TodoItem extends React.Component {
                     <button style={infoBtn}> i </button>
                         <div className= "dropdown-content">
                         <span> &nbsp; <h4 style={{textAlign:"center"}}> {title} </h4></span>
-                        <p> &nbsp; Number of students           {students}</p>
-                        <p> &nbsp; Number of assignements       {noAssignments}</p>
+                        <p> &nbsp; Number of students :          {students}</p>
+                        <p> &nbsp; Number of assignements :      {noAssignments}</p>
                         <ul style={{alignContent: "right", listStyle:'none'}}>
-                            <li style={itemStyle}> ongoing   {ongoing} </li>
-                            <li style={itemStyle}> pending   {pending} </li>
-                            <li style={itemStyle}> marked   {marked} </li>
-
+                            <li style={itemStyle}> Ongoing : {ongoing} </li>
+                            <li style={itemStyle}> Pending :  {pending} </li>
+                            <li style={itemStyle}> Marked :  {marked} </li>
                         </ul>
-
                         </div>
                     </div>
                     <span> &nbsp; {title} </span>
@@ -70,7 +68,6 @@ const infoBtn = {
 const itemStyle = { 
     padding: '11px 11px',
     cursor: 'pointer', 
-    float: 'left',
 }
 
 export default TodoItem
