@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Header from "./components/layout/Header";
-import LogIn from "./components/pages/LogIn";
-import SignUp from "./components/pages/SignUp";
-import Teacher from "./components/pages/Teacher";
-import Student from "./components/pages/Student";
+import LogIn from "./pages/LogIn";
+import SignUp from "./pages/SignUp";
+import Teacher from "./pages/Teacher";
+import Student from "./pages/Student";
 
 export default class App extends Component {
   render() {
