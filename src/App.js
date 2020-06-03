@@ -5,6 +5,7 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import Teacher from "./pages/Teacher";
 import Student from "./pages/Student";
+import Assignment from "./pages/Assignment";
 
 export default class App extends Component {
 
@@ -48,6 +49,7 @@ export default class App extends Component {
             <Route exact path="/login" component={LogIn} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/teacher" component={Teacher}/>
+            <Route exact path="/assignments" component={Assignment}/>
             <Route exact path="/student" component={Student}/>
 
           </div>

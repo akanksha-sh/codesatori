@@ -44,7 +44,11 @@ export class Teacher extends Component {
     const newTodo = {
         id: 7,
         title,
-        completed: false
+        students: 80,
+        noAssignments: 4,
+        ongoing: 1,
+        pending: 0,
+        marked:  3,
     }
     this.setState({todos: [...this.state.todos, newTodo]})
     }
@@ -53,7 +57,7 @@ export class Teacher extends Component {
     return (
         <div className="App">
         <div className="container">
-            <h3 style={{textAlign:"center"}}> Courses </h3>
+            <h2 style={{textAlign:"center"}}> Courses </h2>
             <AddTodo addTodo={this.addTodo}/>
             <Todos todos={this.state.todos} delTodo= {this.delTodo}/>
         </div>

@@ -5,7 +5,8 @@ import LoginHeader from './LoginHeader'
 export class Header extends Component {
     render() {
         return (
-            this.props.isLogged? <DashboardHeader/> : <LoginHeader/>
+            // switched around for now need to fix bug 
+            this.props.isLogged? <LoginHeader/> : <DashboardHeader/>
         )
     }
 }

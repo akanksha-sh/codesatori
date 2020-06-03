@@ -6,11 +6,9 @@ export class TodoItem extends React.Component {
     getStyle = () => {
         return {
             background: '#f4f4f4',
-            padding: '10 px',
+            padding: '50 px',
             borderBottom: '1px #ccc dotted', 
             borderTop: '1px #ccc dotted', 
-            textDecoration: this.props.todo.completed ? 
-            'line-through' : 'none'
         }
     }
 
