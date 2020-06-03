@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Todos from './Todos';
+import Todos from './Courses';
 import AddTodo from './AddTodo';
 
 
@@ -23,14 +23,6 @@ export class Teacher extends Component {
           },
         ]
       }
-    markComplete = (id) => {
-    this.setState({todos: this.state.todos.map(todo => {
-        if(todo.id === id) {
-        todo.completed = !todo.completed
-        }
-        return todo;
-    }) })
-    }
 
     delTodo = (id) => {
     this.setState({todos: [...this.state.todos.filter(todo => todo.id !== id)] 
@@ -53,7 +45,7 @@ export class Teacher extends Component {
         <div className="container">
             <h3> Courses </h3>
             <AddTodo addTodo={this.addTodo}/>
-            <Todos todos={this.state.todos} markComplete={this.markComplete} 
+            <Todos todos={this.state.todos}
             delTodo= {this.delTodo}/>
         </div>
         </div>
