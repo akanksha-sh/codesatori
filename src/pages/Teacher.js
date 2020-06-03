@@ -9,17 +9,29 @@ export class Teacher extends Component {
           {
             id: 1,
             title: 'A-Level Computer Science',
-            completed: false
+            students: 90,
+            noAssignments: 5,
+            ongoing: 1,
+            pending: 2,
+            marked:  2,
           },
           {
             id: 2,
             title: 'A-Level Further Maths',
-            completed: false
+            students: 60,
+            noAssignments: 6,
+            ongoing: 2,
+            pending: 2,
+            marked:  2,
           },
           {
             id: 3,
             title: 'IGCSE Computer Science',
-            completed: false
+            students: 80,
+            noAssignments: 4,
+            ongoing: 1,
+            pending: 0,
+            marked:  3,
           },
         ]
       }
