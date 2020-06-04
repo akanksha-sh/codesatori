@@ -22,9 +22,11 @@ export class NavigationBar extends Component {
       };
   }
 
+  toggleNav = () => this.setState({isOpen: !this.state.isOpen});
+
   render() {
       return (
-          <div>
+        <div>
           <Navbar color="dark" dark expand="md" fixed="top">
             <NavbarBrand href="/">codesatori</NavbarBrand>
             <NavbarToggler onClick={this.toggleNav} />
@@ -38,13 +40,9 @@ export class NavigationBar extends Component {
                 </NavItem>
               </Nav>
               <Nav navbar>
-                  <UncontrolledDropdown nav>
-                      <DropdownToggle nav>
-                      Settings
-                      </DropdownToggle>
-                      <DropdownMenu right>
-                      
-                      </DropdownMenu>
+                <UncontrolledDropdown nav>
+                  <DropdownToggle nav>Settings</DropdownToggle>
+                  <DropdownMenu right></DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
             </Collapse>
