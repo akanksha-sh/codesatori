@@ -43,8 +43,8 @@ const retrievedClasses =
     [
         {
           id: 1,
-          title: "A-Level Computer Science",
-          students: 90,
+          title: "Mr Williams - A-Level Computer Science, 19/20",
+          students: 15,
           noAssignments: 5,
           ongoing: 1,
           pending: 2,
@@ -53,8 +53,8 @@ const retrievedClasses =
         },
         {
           id: 2,
-          title: "A-Level Further Maths",
-          students: 60,
+          title: "Mr Macleod - A-Level Computer Science, 19/20",
+          students: 15,
           noAssignments: 6,
           ongoing: 2,
           pending: 2,
@@ -63,8 +63,8 @@ const retrievedClasses =
         },
         {
           id: 3,
-          title: "IGCSE Computer Science",
-          students: 80,
+          title: "Mr Macleod - IGCSE Computer Science, 19/20",
+          students: 20,
           noAssignments: 4,
           ongoing: 1,
           pending: 0,
@@ -73,7 +73,7 @@ const retrievedClasses =
         },
         {
             id: 4,
-            title: "A-Level Chemistry",
+            title: "Mr Macleod - IGCSE Computer Science, 18/19",
             students: 20,
             noAssignments: 5,
             ongoing: 1,

@@ -72,15 +72,9 @@ export class Landing extends Component {
               >
                 <div style={{ height: 400 }}>
                   <div style={infoStyle}>
-                    <Link
-                      style={{
-                        color: "#000",
-                        textDecoration: "none",
-                      }}
-                      to="/teacher"
-                    >
-                      <h1>Teacher Dashboard</h1>
-                    </Link>
+                    <h1>To get started, login with the following credentials:</h1>
+                    <h3>Username: teacher</h3>
+                    <h3>Password: password</h3>
                   </div>
                 </div>
               </Parallax>
