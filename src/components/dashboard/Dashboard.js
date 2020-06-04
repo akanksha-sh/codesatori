@@ -15,7 +15,7 @@ export class Dashboard extends Component {
             <div>
                 <Router>
                     <NavigationBar />
-                    <div style={{"padding-top": "65px"}}>
+                    <div className="content-container">
                         <div style={contentStyle} className="container">
                             <Route exact path="/classes" component={Classes} />
                             <Route exact path="/assignments" component={Assignments} />
