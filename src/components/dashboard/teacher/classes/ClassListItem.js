@@ -3,9 +3,13 @@ import { Link as RRLink } from "react-router-dom";
 import {
   UncontrolledDropdown,
   DropdownMenu,
-  ListGroupItem,
   DropdownToggle,
-  ButtonGroup,
+  Collapse,
+  CardBody,
+  Card,
+  ListGroup,
+  ListGroupItem,
+  Table,
 } from "reactstrap";
 import AddStudent from "./AddStudent";
 import ClassInfo from "./ClassInfo";
@@ -13,10 +17,21 @@ import ClassInfo from "./ClassInfo";
 export default class ClassListItem extends Component {
   constructor(props) {
     super(props);
+    this.state = { isInfoOpen: false, areAssignmentsOpen: false };
   }
 
   clickHandler = (e) => {
     e.preventDefault();
+  };
+
+  toggleAreAssignmentsOpen = (e) => {
+    this.clickHandler(e);
+    this.setState({ areAssignmentsOpen: !this.state.areAssignmentsOpen });
+  };
+
+  toggleIsInfoOpen = (e) => {
+    this.clickHandler(e);
+    this.setState({ isInfoOpen: !this.state.isInfoOpen });
   };
 
   render() {
@@ -40,6 +55,7 @@ export default class ClassListItem extends Component {
         exact
         to={"/classes/" + this.props.class.id}
         action
+        style={{ fontWeight: "bold" }}
       >
         {this.props.class.title}
         <div style={{ float: "right" }}>
@@ -51,14 +67,57 @@ export default class ClassListItem extends Component {
               <AddStudent />
             </DropdownMenu>
           </UncontrolledDropdown>
-          <UncontrolledDropdown onClick={this.clickHandler}>
+          <UncontrolledDropdown onClick={this.toggleAreAssignmentsOpen}>
+            <DropdownToggle color="light" className="transparentDropdownToggle">
+              <i class="material-icons md-dark">assignment</i>
+            </DropdownToggle>
+          </UncontrolledDropdown>
+          <UncontrolledDropdown onClick={this.toggleIsInfoOpen}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
               <i class="material-icons md-dark">info</i>
             </DropdownToggle>
-            <DropdownMenu right>
-              <ClassInfo class={this.props.class} />
-            </DropdownMenu>
           </UncontrolledDropdown>
+        </div>
+        <div style={{ paddingTop: "25px" }}>
+          <Collapse isOpen={this.state.areAssignmentsOpen}>
+            /* TODO: assignment stuff goes here. */
+          </Collapse>
+          <Collapse isOpen={this.state.isInfoOpen}>
+            <Table>
+              <tbody>
+                <tr>
+                  <th scope="row" style={infoTabStyle}>
+                    No. of students:
+                  </th>
+                  <td>{this.props.class.students}</td>
+                </tr>
+                <tr>
+                  <th scope="row" style={infoTabStyle}>
+                    No. of assignments:
+                  </th>
+                  <td>{this.props.class.noAssignments}</td>
+                </tr>
+                <tr>
+                  <th scope="row" style={infoTabStyle}>
+                    Ongoing assignments:
+                  </th>
+                  <td>{this.props.class.ongoing}</td>
+                </tr>
+                <tr>
+                  <th scope="row" style={infoTabStyle}>
+                    Pending assignments:
+                  </th>
+                  <td>{this.props.class.pending}</td>
+                </tr>
+                <tr>
+                  <th scope="row" style={infoTabStyle}>
+                    Marked assignments:
+                  </th>
+                  <td>{this.props.class.marked}</td>
+                </tr>
+              </tbody>
+            </Table>
+          </Collapse>
         </div>
       </ListGroupItem>
     );
@@ -70,4 +129,8 @@ const buttonStyle = {
   outline: "none",
   paddingBottom: "0px",
   border: "none",
+};
+
+const infoTabStyle = {
+  fontWeight: "normal",
 };
