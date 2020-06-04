@@ -12,7 +12,7 @@ before_script:
   - docker info
 
 after_script:
-  - docker system prune -f
+  - docker system prune -f --all
 
 build:
   stage: build
