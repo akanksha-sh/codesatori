@@ -19,16 +19,18 @@ export class StudentOngoingTutorialInformation extends Component {
     
     render() {
         return (
-            <Link to="/tutorial">
-                <div style={InfoBoxStyle}>
+            <div style={InfoBoxStyle}>
                         <div style={this.getCountdownBoxStyle(this.props.tutorial.daysLeft)}>
-                            {this.props.tutorial.daysLeft} Days Left
+                            <Link to="/tutorial" style={{color:'#f2f2f2'}}>
+                                {this.props.tutorial.daysLeft} Days Left
+                            </Link>
                         </div>
                         <div style={NameBoxStyle}>
                             {this.props.tutorial.name}
+                            <br></br>
+                            {this.props.tutorial.className}
                         </div>
                 </div>
-            </Link>
         )
     }
 }
@@ -39,6 +41,7 @@ const InfoBoxStyle ={
     display:'flex',
     width:'100%',
     height:'35pt',
+    margin: '2pt 0pt 4pt',
     flexDirection:'row',
 }
 
