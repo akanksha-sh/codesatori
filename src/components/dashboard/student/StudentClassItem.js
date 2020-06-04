@@ -4,8 +4,8 @@ import StudentClassInfo from './StudentClassInfo'
 
 export class StudentClassItem extends Component {
 	state={
-		isOpen: true,
-		btnSymbol: '-',
+		isOpen: false,
+		btnSymbol: '+',
 	}
 
 	getDescriptionStyle = () => {
@@ -58,7 +58,16 @@ export class StudentClassItem extends Component {
 					<button onClick={this.toggleNav} style={this.getBtnStyle()}>{this.state.btnSymbol}</button>
 				</div>
 				<Collapse isOpen={this.state.isOpen}>
-					<Table responsive="sm">
+					<Table responsive="sm" hover>
+						<thead>
+						<tr>
+							<th>Title</th>
+							<th>Status</th>
+							<th>On Time/Late</th>
+							<th>No. Of Tests Passed</th>
+							<th>Score</th>
+						</tr>
+						</thead>
 						<tbody>
 							<StudentClassInfo id={this.props.item.id} />
 						</tbody>

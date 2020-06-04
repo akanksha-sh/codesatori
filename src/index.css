@@ -12,8 +12,18 @@ code {
     monospace;
 }
 
+tr {
+  display: flex;
+  justify-content: center;
+}
+
 td {
   font-size: small;
+  text-align: center;
+}
+
+th {
+  font-size: smaller;
   text-align: center;
 }
 
