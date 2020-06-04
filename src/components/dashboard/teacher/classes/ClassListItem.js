@@ -80,8 +80,41 @@ export default class ClassListItem extends Component {
         </div>
         <div style={{ paddingTop: "25px" }}>
           <Collapse isOpen={this.state.areAssignmentsOpen}>
-            /* TODO: assignment stuff goes here. */
+            <tbody>
+              {this.props.class.ongoingAssignments.map(function (d, idx) {
+                return (
+                  <tr>
+                    <th
+                      scope="row"
+                      style={{
+                        fontStyle: "italic",
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {d.title}
+                    </th>
+                    <td>
+                      <UncontrolledDropdown
+                        onClick={(e) => {
+                          e.preventDefault();
+                          /* TODO: go to the page where you can set assignmens. */
+                        }}
+                      >
+                        <DropdownToggle
+                          color="light"
+                          className="transparentDropdownToggle"
+                        >
+                          <i class="material-icons md-dark">settings</i>
+                        </DropdownToggle>
+                      </UncontrolledDropdown>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </Collapse>
+        </div>
+        <div style={{ paddingTop: "25px" }}>
           <Collapse isOpen={this.state.isInfoOpen}>
             <Table>
               <tbody>

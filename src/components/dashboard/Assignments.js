@@ -42,7 +42,7 @@ const retrievedAssignments = [
   },
   {
     id: 2,
-    title: "Tutorial 1 : Introduction to complex numbers",
+    title: "Tutorial 1 : Linked-Lists",
     ongoing: true,
   },
   {
