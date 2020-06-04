@@ -10,7 +10,7 @@ export class Signup extends Component {
 
     render() {
         return (
-            <div style={signupStyle}>
+            <div className="dropdown-menu-custom">
                 <Form onSubmit={this.signupHandler}> 
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Input type="email" name="email" id="loginEmail" placeholder="email" />
@@ -27,9 +27,5 @@ export class Signup extends Component {
     }
 }
 
-const signupStyle = {
-    width: "300px",
-    margin: "10px 20px",
-  };
 
 export default Signup

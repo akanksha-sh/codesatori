@@ -16,14 +16,20 @@ export class Dashboard extends Component {
                 <Router>
                     <NavigationBar />
                     <div style={{"padding-top": "65px"}}>
-                    <Route exact path="/classes" component={Classes} />
-                    <Route exact path="/assignments" component={Assignments} />
+                        <div style={contentStyle} className="container">
+                            <Route exact path="/classes" component={Classes} />
+                            <Route exact path="/assignments" component={Assignments} />
+                        </div>
                     <Redirect exact from="/" to="/classes" />
                     </div>
                 </Router>
             </div>
         )
     }
+}
+
+const contentStyle = {
+    margin: "50px auto"
 }
 
 export default Dashboard
