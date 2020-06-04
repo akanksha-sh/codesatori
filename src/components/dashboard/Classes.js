@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserContext from "../../contexts/UserContext";
 import TeacherClasses from "./teacher/classes/TeacherClasses";
 import { pageTitle, contentDiv } from "../../Style";
+import { Jumbotron } from "reactstrap";
 
 export default class Classes extends Component {
   static contextType = UserContext;

@@ -28,7 +28,8 @@ export class NavigationBar extends Component {
           <NavbarBrand href="/">codesatori</NavbarBrand>
           <NavbarToggler onClick={this.toggleNav} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="mr-auto" navbar>
+            <Nav className="mr-auto" navbar></Nav>
+            <Nav navbar>
               <NavItem>
                 <NavLink
                   tag={RRNavLink}
@@ -49,12 +50,12 @@ export class NavigationBar extends Component {
                   Assignments
                 </NavLink>
               </NavItem>
-            </Nav>
-            <Nav navbar>
-              <UncontrolledDropdown nav>
-                <DropdownToggle nav>Settings</DropdownToggle>
-                <DropdownMenu right></DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                <UncontrolledDropdown nav>
+                  <DropdownToggle nav>Settings</DropdownToggle>
+                  <DropdownMenu right></DropdownMenu>
+                </UncontrolledDropdown>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
