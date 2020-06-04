@@ -5,11 +5,9 @@ import {
   DropdownMenu,
   DropdownToggle,
   Collapse,
-  CardBody,
-  Card,
-  ListGroup,
   ListGroupItem,
   Table,
+  Button,
 } from "reactstrap";
 import AddStudent from "./AddStudent";
 import ClassInfo from "./ClassInfo";
@@ -35,6 +33,7 @@ export default class ClassListItem extends Component {
   };
 
   render() {
+    const {id, title} = this.props.class
     if (!this.props.class.active) {
       return (
         <ListGroupItem
@@ -51,10 +50,10 @@ export default class ClassListItem extends Component {
 
     return (
       <ListGroupItem
-        tag={RRLink}
-        exact
-        to={"/classes/" + this.props.class.id}
-        action
+        // tag={RRLink}
+        // exact
+        // to={"/classes/" + this.props.class.id}
+        // action
         style={{ fontWeight: "bold" }}
       >
         {this.props.class.title}
@@ -77,7 +76,9 @@ export default class ClassListItem extends Component {
               <i class="material-icons md-dark">info</i>
             </DropdownToggle>
           </UncontrolledDropdown>
+          <Button style={{margin:"6px"}} onClick={this.props.delClass.bind(this, id)} close/>
         </div>
+
         <div style={{ paddingTop: "25px" }}>
           <Collapse isOpen={this.state.areAssignmentsOpen}>
             /* TODO: assignment stuff goes here. */
@@ -120,15 +121,20 @@ export default class ClassListItem extends Component {
           </Collapse>
         </div>
       </ListGroupItem>
+
     );
   }
 }
 
-const buttonStyle = {
-  "background-color": "transparent",
+const btnStyle = {
+  borderRadius: '50%',
+  width: "10px",
+  background: "black",
+  color: "white",
   outline: "none",
   paddingBottom: "0px",
-  border: "none",
+  border: "1px",
+ 
 };
 
 const infoTabStyle = {
