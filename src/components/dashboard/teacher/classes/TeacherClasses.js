@@ -17,7 +17,7 @@ export default class TeacherClasses extends Component {
         <ListGroup style={listGroup}>
           {this.props.classes.map(function (d, idx) {
             if (d.active) {
-              return <ClassListItem class={d} delClass={del}/>;
+              return <ClassListItem key={idx} class={d} delClass={del}/>;
             }
           })}
         </ListGroup>
@@ -25,7 +25,7 @@ export default class TeacherClasses extends Component {
         <ListGroup style={listGroup}>
           {this.props.classes.map(function (d, idx) {
             if (!d.active) {
-              return <ClassListItem class={d}  delClass={del} />;
+              return <ClassListItem key={idx} class={d}  delClass={del} />;
             }
           })}
         </ListGroup>

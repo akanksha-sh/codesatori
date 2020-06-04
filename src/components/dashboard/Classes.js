@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserContext from "../../contexts/UserContext";
 import TeacherClasses from "./teacher/classes/TeacherClasses";
 import { pageTitle, contentDiv } from "../../Style";
+import AddClass from "./teacher/classes/AddClass";
 
 export default class Classes extends Component {
   static contextType = UserContext;
@@ -18,8 +19,18 @@ export default class Classes extends Component {
 
   delClass = (id) => {
     this.setState(
-      {classes: [...retrievedClasses.filter(i => i.id !== id)]})
+      {classes: [...this.state.classes.filter(i => i.id !== id)]})
   }
+
+  addClass = (title) => {
+    const newClass = {
+      id: 7,
+      title,
+      active: true,
+    }
+    this.setState({classes: [...this.state.classes, newClass]})
+  }
+
 
   render() {
     const user = this.context;
@@ -28,6 +39,9 @@ export default class Classes extends Component {
       return (
         <div style={contentDiv}>
           <h2 style={pageTitle}> Classes </h2>
+          <AddClass addClass={this.addClass}/>
+          <br/>
+          <br/>
           <TeacherClasses classes={this.state.classes} delClass={this.delClass}/>
         </div>
       );
