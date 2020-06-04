@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.0",
     "material-design-icons": "^3.0.1",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-anime": "^3.0.3",
     "react-dom": "^16.13.1",
@@ -26,7 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "npm install && npm run build"
+    "heroku-postbuild": "npm install && npm run build",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "eslintConfig": {
     "extends": "react-app"
