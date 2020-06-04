@@ -44,6 +44,7 @@ export default class ClassListItem extends Component {
           action
         >
           {this.props.class.title}
+          <Button style={{margin:"6px"}} onClick={this.props.delClass.bind(this, id)} close/>
         </ListGroupItem>
       );
     }
