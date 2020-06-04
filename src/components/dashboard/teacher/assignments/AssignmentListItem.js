@@ -21,11 +21,11 @@ export default class AssignmentListItem extends Component {
     if (!this.props.assignment.ongoing) {
       return (
         <ListGroupItem
-          disabled
-          tag={RRLink}
-          exact
-          to={"/assignments/" + this.props.assignment.id}
-          action
+          // disabled
+          // tag={RRLink}
+          // exact
+          // to={"/assignments/" + this.props.assignment.id}
+          // action
         >
           {this.props.assignment.title}
         </ListGroupItem>
@@ -34,10 +34,10 @@ export default class AssignmentListItem extends Component {
 
     return (
       <ListGroupItem
-        tag={RRLink}
-        exact
-        to={"/assignments/" + this.props.assignment.id}
-        action
+        // tag={RRLink}
+        // exact
+        // to={"/assignments/" + this.props.assignment.id}
+        // action
       >
         {this.props.assignment.title}
         <div style={{ float: "right" }}>

@@ -5,11 +5,9 @@ import {
   DropdownMenu,
   DropdownToggle,
   Collapse,
-  CardBody,
-  Card,
-  ListGroup,
   ListGroupItem,
   Table,
+  Button,
 } from "reactstrap";
 import AddStudent from "./AddStudent";
 import ClassInfo from "./ClassInfo";
@@ -35,29 +33,31 @@ export default class ClassListItem extends Component {
   };
 
   render() {
+    const {id, title} = this.props.class
     if (!this.props.class.active) {
       return (
         <ListGroupItem
-          disabled
-          tag={RRLink}
-          exact
-          to={"/classes/" + this.props.class.id}
-          action
+          // disabled
+          // tag={RRLink}
+          // exact
+          // to={"/classes/" + id}
+          // action
         >
           {this.props.class.title}
+          <Button style={{margin:"6px"}} onClick={this.props.delClass.bind(this, id)} close/>
         </ListGroupItem>
       );
     }
 
     return (
       <ListGroupItem
-        tag={RRLink}
-        exact
-        to={"/classes/" + this.props.class.id}
-        action
+        // tag={RRLink}
+        // exact
+        // to={"/classes/" + this.props.class.id}
+        // action
         style={{ fontWeight: "bold" }}
       >
-        {this.props.class.title}
+        {title}
         <div style={{ float: "right" }}>
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
@@ -77,7 +77,9 @@ export default class ClassListItem extends Component {
               <i class="material-icons md-dark">info</i>
             </DropdownToggle>
           </UncontrolledDropdown>
+          <Button style={{margin:"6px"}} onClick={this.props.delClass.bind(this, id)} close/>
         </div>
+
         <div style={{ paddingTop: "25px" }}>
           <Collapse isOpen={this.state.areAssignmentsOpen}>
             <tbody>
@@ -153,16 +155,10 @@ export default class ClassListItem extends Component {
           </Collapse>
         </div>
       </ListGroupItem>
+
     );
   }
 }
-
-const buttonStyle = {
-  "background-color": "transparent",
-  outline: "none",
-  paddingBottom: "0px",
-  border: "none",
-};
 
 const infoTabStyle = {
   fontWeight: "normal",
