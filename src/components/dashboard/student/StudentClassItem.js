@@ -5,57 +5,35 @@ import StudentClassInfo from './StudentClassInfo'
 export class StudentClassItem extends Component {
 	state={
 		isOpen: false,
-		btnSymbol: '+',
-	}
-
-	getDescriptionStyle = () => {
-		return {
-			background: (this.props.item.overdue === 0) ? "#ffffff" : "#b73e3a",
-			alignItems: "center",
-			borderBottom: "1px #ccc solid",
-			padding: "4px 6px 1px",
-			width: "100%",
-			fontWeight: 'bold',
-		}
 	}
 
 	getBtnStyle = () => {
-		if (this.state.btnSymbol === '+') {
-			return {
-				background: '#b73e3a',
-				color: '#ffffff',
-				border: 'none',
-				padding: '0px 6px',
-				borderRadius: '50%',
-				cursor: 'pointer',
-				float: 'right',
-				fontSize: '10pt',
-			}
-		} else {
-			return {
-				background: '#e5e5e5',
-				color: '#000000',
-				border: 'none',
-				padding: '0px 8px',
-				borderRadius: '50%',
-				cursor: 'pointer',
-				float: 'right',
-				fontSize: '10pt',
-			}
+		return {
+			background: (!this.state.isOpen) ? '#b73e3a' : '#e5e5e5',
+			color: (!this.state.isOpen) ? '#ffffff' : '#000000',
+			height: '15pt',
+			width: '15pt',
+			border: 'none',
+			borderRadius: '50%',
+			cursor: 'pointer',
+			float: 'right',
+			fontSize: '10pt',
+			fontWeight: (!this.state.isOpen) ? 'normal' : 'bold',
 		}
 	}
 
 	toggleNav = () => this.setState({
-		isOpen: !this.state.isOpen, 
-		btnSymbol: (this.state.btnSymbol === '+') ? '-' : '+'
+		isOpen: !this.state.isOpen,
 	});
 
 	render() {
 		return (
 			<div>
-				<div style={this.getDescriptionStyle()}>
+				<div style={DescriptionStyle}>
 					{this.props.item.name}
-					<button onClick={this.toggleNav} style={this.getBtnStyle()}>{this.state.btnSymbol}</button>
+					<button onClick={this.toggleNav} style={this.getBtnStyle()}>
+						{(this.state.isOpen) ? '-' : '+'}
+					</button>
 				</div>
 				<Collapse isOpen={this.state.isOpen}>
 					<Table responsive="sm" hover>
@@ -79,3 +57,12 @@ export class StudentClassItem extends Component {
 }
 
 export default StudentClassItem
+
+const DescriptionStyle = {
+	background: "#ffffff",
+	alignItems: "center",
+	borderBottom: "1px #ccc solid",
+	padding: "4px 6px 1px",
+	width: "100%",
+	fontWeight: 'bold',
+}
