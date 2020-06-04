@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function DashboardHeader() {
+export default function TeacherDashboardHeader() {
   return (
     <header style={headerStyle}>
       <Link style={linkStyle} to="/">

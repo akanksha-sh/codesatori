@@ -7,22 +7,26 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import Teacher from "./pages/Teacher";
 import Student from "./pages/Student";
-import Assignment from "./pages/Assignment";
+import Assignment from "./pages/TeacherAssignment";
 import Footer from "./components/layout/Footer";
+//import axios from "axios";
 
 export default class App extends Component {
   state = {
-    isLoggedIn: false,
+    // for debugging purposes
+    isLoggedIn: true,
+    accountType: "student"
   };
 
-  Logged = () => {
+  Logged = (e) => {
     this.setState({ isLoggedIn: true });
+    // this.setState({ isLoggedIn: e.target.logged, accountType:e.target.accountType});
   };
 
   render() {
     return (
       <Router>
-        <Header />
+        <Header isLoggedIn={this.state.isLoggedIn} accountType={this.state.accountType} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/teacher" component={Teacher} />
@@ -92,6 +96,25 @@ export default class App extends Component {
                   </div>
                 </div>
               </Parallax>
+              <Parallax
+                bgImage={image5}
+                strength={500}
+                blur={{ min: -1, max: 5 }}
+              >
+                <div style={{ height: 400 }}>
+                  <div style={infoStyle}>
+                    <Link
+                      style={{
+                        color: "#000",
+                        textDecoration: "none",
+                      }}
+                      to="/student"
+                    >
+                      <h1>Student Dashboard</h1>
+                    </Link>
+                  </div>
+                </div>
+              </Parallax>
             </div>
           )}
         />
@@ -105,6 +128,7 @@ const image1 = "/wide_1.jfif";
 const image2 = "/wide_2.jfif";
 const image3 = "/wide_3.png";
 const image4 = "/wide_4.jfif";
+const image5 = "/wide_5.jfif";
 
 const appStyle = {
   fontFamily: "Roboto",

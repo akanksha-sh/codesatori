@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import DashboardHeader from './DashboardHeader'
+import TeacherDashboardHeader from './TeacherDashboardHeader'
+import StudentDashboardHeader from './StudentDashboardHeader'
 import LoginHeader from './LoginHeader'
 
 export class Header extends Component {
     render() {
-        return (
-            // switched around for now need to fix bug 
-            this.props.isLogged? <LoginHeader/> : <DashboardHeader/>
-        )
+			if (!this.props.isLoggedIn) {return <LoginHeader/>}
+			else if (this.props.accountType === "teacher") {return <TeacherDashboardHeader/>}
+			else if (this.props.accountType === "student") {return <StudentDashboardHeader/>};
     }
 }
 
