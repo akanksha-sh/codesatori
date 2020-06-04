@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Parallax } from "react-parallax";
-import Reveal from "react-reveal/Reveal";
 import Header from "./components/layout/Header";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";

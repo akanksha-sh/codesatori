@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 export class Assignment extends Component {
     render() {
         return (
-          <div style={{marginTop: "20px"}}>
+          <div style={{margin: "20px"}}>
           <h2 style={{textAlign:"center", margin:"30px"}}>Assignments</h2>
           <h4>Ongoing</h4>
           <ListGroup style={{marginTop: "20px", marginBottom: "20px"}}>
