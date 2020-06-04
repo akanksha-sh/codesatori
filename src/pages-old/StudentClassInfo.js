@@ -17,7 +17,7 @@ export class StudentClassInfo extends Component {
 
 	render () {
 		return (
-			this.state.tutorials.map((tutorial) => <TutorialInfo tutorial={tutorial} />)
+			this.state.tutorials.map((tutorial) => <TutorialInfo key={tutorial.id} tutorial={tutorial} />)
 		)
 	}
 }

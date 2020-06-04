@@ -1,19 +1,11 @@
 import React, { Component} from 'react'
-import { Collapse } from 'reactstrap'
+import { Collapse, Table } from 'reactstrap'
 import StudentClassInfo from './StudentClassInfo'
 
 export class StudentClassItem extends Component {
 	state={
-		isOpen: false,
-		btnSymbol: '+',
-	}
-
-	getTutorials = (e) => {
-		return (
-			[
-				'Hello'
-			]
-		)
+		isOpen: true,
+		btnSymbol: '-',
 	}
 
 	getDescriptionStyle = () => {
@@ -66,7 +58,11 @@ export class StudentClassItem extends Component {
 					<button onClick={this.toggleNav} style={this.getBtnStyle()}>{this.state.btnSymbol}</button>
 				</div>
 				<Collapse isOpen={this.state.isOpen}>
-					<StudentClassInfo id={this.props.item.id} />
+					<Table responsive="sm">
+						<tbody>
+							<StudentClassInfo id={this.props.item.id} />
+						</tbody>
+					</Table>
 				</Collapse>
 			</div>
 		)
