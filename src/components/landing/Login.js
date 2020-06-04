@@ -18,7 +18,7 @@ export class Login extends Component {
 
     render() {
         return (
-            <div style={loginStyle}>
+            <div className="dropdown-menu-custom">
                 <Form onSubmit={this.loginHandler}> 
                 <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Input type="username" name="username" onChange={this.handleFormChange} id="loginEmail" placeholder="username" />
@@ -35,9 +35,6 @@ export class Login extends Component {
     }
 }
 
-const loginStyle = {
-    width: "300px",
-    margin: "10px 20px",
-  };
+
 
 export default Login

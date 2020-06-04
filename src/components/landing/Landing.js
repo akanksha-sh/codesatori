@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import { Parallax } from "react-parallax";
 import LandingHeader from "./LandingHeader"
 import LandingFooter from "./LandingFooter"
+import { Jumbotron, Button } from 'reactstrap';
 
 export class Landing extends Component {
   constructor(props) {
@@ -14,76 +14,25 @@ export class Landing extends Component {
     return (
       <Router>
         <LandingHeader handleLogIn={this.props.handleLogIn}/>
-        {/* <Route exact path="/login" component={LogIn} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/teacher" component={Teacher} />
-        <Route exact path="/assignments" component={Assignment} />
-        <Route exact path="/student" component={Student} /> */}
         <Redirect from="*" to="/" />
         <Route
           exact
           path="/"
           render={(props) => (
-            <div className="App" style={appStyle}>
-              <Parallax
-                bgImage={image1}
-                strength={500}
-                blur={{ min: -1, max: 5 }}
-              >
-                <div style={{ height: 400 }}>
-                  <div style={infoStyle}>
-                    <h1>Welcome to CodeSatori!</h1>
-                    <h3>A New Coding Platform for Schools</h3>
-                  </div>
-                </div>
-              </Parallax>
-              <Parallax
-                bgImage={image2}
-                strength={500}
-                blur={{ min: -1, max: 5 }}
-              >
-                <div style={{ height: 400 }}>
-                  <div style={infoStyle}>
-                    <h1>We're currently still developing...</h1>
-                    <h3>
-                      But please email us at contact.codesatori@gmail.com if you
-                      have any suggestions!
-                    </h3>
-                  </div>
-                </div>
-              </Parallax>
-              <Parallax
-                bgImage={image3}
-                strength={500}
-                blur={{ min: -1, max: 5 }}
-              >
-                <div style={{ height: 400 }}>
-                  <div style={infoStyle}>
-                    <h1>While You're Waiting</h1>
-                    <h3>You can have a look at some of our demo pages.</h3>
-                    <p>(if you want)</p>
-                  </div>
-                </div>
-              </Parallax>
-              <Parallax
-                bgImage={image4}
-                strength={500}
-                blur={{ min: -1, max: 5 }}
-              >
-                <div style={{ height: 400 }}>
-                  <div style={infoStyle}>
-                    <Link
-                      style={{
-                        color: "#000",
-                        textDecoration: "none",
-                      }}
-                      to="/teacher"
-                    >
-                      <h1>Teacher Dashboard</h1>
-                    </Link>
-                  </div>
-                </div>
-              </Parallax>
+            <div className="App content-container" style={appStyle}>
+              <Jumbotron style={{marginBottom: "0px"}}>
+                <h1 className="display-3 anim-typewriter line-1" style={{margin: "30px 0px"}}>codesatori</h1>
+                <p className="lead text-center">A new coding platform for schools</p>
+                <p className="text-center" style={{marginBottom: "20px"}}>Online code compilation, real-time help, class analytics, simple grade tracking, and more</p>
+                <p className="lead text-center">
+                  <Button color="primary">Coming soon</Button>
+                </p>
+              </Jumbotron>
+              <Jumbotron style={{"background-color":"transparent"}}>
+                <h3 className="text-center">We're currently still in development.</h3> <br/>
+                <p className="lead text-center" style={{marginBottom: "10px"}}>But feel free to have a look at our demo pages.</p>
+                <p className="text-center">Use username: teacher and password: password to log in and take a look!</p>
+              </Jumbotron>
             </div>
           )}
         />
@@ -100,23 +49,6 @@ const image4 = "/wide_4.jfif";
 
 const appStyle = {
   fontFamily: "Roboto",
-};
-
-const infoStyle = {
-  alignItems: "center",
-  backgroundColor: "#fff",
-  backgroundPosition: "center",
-  bottom: "this.state.offset / 2",
-  justifyContent: "center",
-  left: "50%",
-  margin: "auto",
-  opacity: "0.9",
-  padding: "10px",
-  position: "absolute",
-  textAlign: "center",
-  top: "50%",
-  transform: "translate(-50%,-50%)",
-  width: "50%",
 };
 
 export default Landing

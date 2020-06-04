@@ -9,20 +9,26 @@ export class Dashboard extends Component {
 		super(props);
 	}
 
-	render() {
-		return (
-			<div>
-				<Router>
-					<NavigationBar />
-					<div style={{"paddingTop": "65px"}}>
-						<Route exact path="/classes" component={Classes} />
-						<Route exact path="/assignments" component={Assignments} />
-						<Redirect exact from="/" to="/classes" />
-					</div>
-				</Router>
-			</div>
-		)
-	}
+    render() {
+        return (
+            <div>
+                <Router>
+                    <NavigationBar />
+                    <div className="content-container">
+                        <div style={contentStyle} className="container">
+                            <Route exact path="/classes" component={Classes} />
+                            <Route exact path="/assignments" component={Assignments} />
+                        </div>
+                    <Redirect exact from="/" to="/classes" />
+                    </div>
+                </Router>
+            </div>
+        )
+    }
+}
+
+const contentStyle = {
+    margin: "50px auto"
 }
 
 export default Dashboard

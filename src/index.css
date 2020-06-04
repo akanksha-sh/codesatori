@@ -45,5 +45,38 @@ td {
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
 
+.dropdown-menu-custom {width: 300px; margin: 10px 20px;}
+
+.content-container {padding-top: 55px}
+
+/* The typing effect */
+/* Animation */
+.anim-typewriter{
+  animation: typewriter 1.5s steps(15) 0.5s 1 normal both,
+             blinkTextCursor 500ms steps(15) infinite normal;
+}
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 5em;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(100,100,100,.75);}
+  to{border-right-color: transparent;}
+}
+
+.line-1{
+  position: relative;
+  margin: 0 auto;
+  border-right: 2px solid rgba(255,255,255,.75);
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateY(-50%);    
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
+.transparentDropdownToggle:not(:hover) {background-color: transparent; padding-bottom: 0px; border-color: transparent}
+.transparentDropdownToggle:hover {background-color: transparent; padding-bottom: 0px; border-color: #ededed}
+@import '~material-design-icons/iconfont/material-icons.css';
