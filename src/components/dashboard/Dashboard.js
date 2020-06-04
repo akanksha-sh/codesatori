@@ -9,6 +9,7 @@ export class Dashboard extends Component {
 		super(props);
 	}
 
+    /* Changed redirect... back to classes after assignment page is completed. */
     render() {
         return (
             <div>
@@ -19,7 +20,7 @@ export class Dashboard extends Component {
                             <Route exact path="/classes" component={Classes} />
                             <Route exact path="/assignments" component={Assignments} />
                         </div>
-                    <Redirect exact from="/" to="/classes" />
+                    <Redirect exact from="/" to="/assignments" />
                     </div>
                 </Router>
             </div>

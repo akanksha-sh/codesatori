@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UserContext from '../../contexts/UserContext'
 import TeacherClasses from '../../components/dashboard/teacher/TeacherClasses'
-import StudentClasses from './student/StudentClasses'
+import StudentClasses from './student/classes/StudentClasses'
 import {pageTitle, contentDiv} from '../../Style'
 
 export class Classes extends Component {

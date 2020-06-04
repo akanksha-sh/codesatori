@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UserContext from '../../contexts/UserContext'
 import TeacherAssignment from '../../pages-old/TeacherAssignment'
-import StudentAssignment from './student/StudentAssignment'
+import StudentAssignment from './student/assignments/StudentAssignment'
 
 export class Assignments extends Component {
     static contextType = UserContext
