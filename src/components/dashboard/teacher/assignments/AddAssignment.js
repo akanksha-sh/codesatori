@@ -31,9 +31,9 @@ export class AddAssignment extends Component {
               <Label for="group" className="mr-sm-2">Class</Label>
               <Input type="select" name="group" id="group" placeholder="e.g. Class 19B" >
                 <option>For class</option>
-                <option>Class 17S</option>
-                <option>Class 16H</option>
-                <option>Class 17B</option>
+                <option>AL Comptuing</option>
+                <option>IGCSE Computing</option>
+                <option>AL Maths</option>
               </Input>
             </FormGroup>
             <Button style={{marginLeft:"40px", marginTop:"13px"}}>Submit</Button>
