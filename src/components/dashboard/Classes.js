@@ -7,17 +7,19 @@ import { Jumbotron } from "reactstrap";
 export default class Classes extends Component {
   static contextType = UserContext;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      classes: [],
-    };
+  state = {
+    classes: []
   }
 
   componentDidMount() {
     this.setState({
       classes: retrievedClasses,
     });
+  }
+
+  delClass = (id) => {
+    this.setState(
+      {classes: [...retrievedClasses.filter(i => i.id !== id)]})
   }
 
   render() {
@@ -27,7 +29,7 @@ export default class Classes extends Component {
       return (
         <div style={contentDiv}>
           <h2 style={pageTitle}> Classes </h2>
-          <TeacherClasses classes={this.state.classes} />
+          <TeacherClasses classes={this.state.classes} delClass={this.delClass}/>
         </div>
       );
     }
