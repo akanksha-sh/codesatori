@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import UserContext from '../../contexts/UserContext'
-import TeacherClasses from '../../pages/Teacher'
+import TeacherClasses from '../../pages-old/Teacher'
 
 export class Classes extends Component {
     static contextType = UserContext
