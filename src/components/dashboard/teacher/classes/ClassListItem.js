@@ -37,11 +37,11 @@ export default class ClassListItem extends Component {
     if (!this.props.class.active) {
       return (
         <ListGroupItem
-          disabled
-          tag={RRLink}
-          exact
-          to={"/classes/" + this.props.class.id}
-          action
+          // disabled
+          // tag={RRLink}
+          // exact
+          // to={"/classes/" + id}
+          // action
         >
           {this.props.class.title}
           <Button style={{margin:"6px"}} onClick={this.props.delClass.bind(this, id)} close/>
@@ -57,7 +57,7 @@ export default class ClassListItem extends Component {
         // action
         style={{ fontWeight: "bold" }}
       >
-        {this.props.class.title}
+        {title}
         <div style={{ float: "right" }}>
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
@@ -159,17 +159,6 @@ export default class ClassListItem extends Component {
     );
   }
 }
-
-const btnStyle = {
-  borderRadius: '50%',
-  width: "10px",
-  background: "black",
-  color: "white",
-  outline: "none",
-  paddingBottom: "0px",
-  border: "1px",
- 
-};
 
 const infoTabStyle = {
   fontWeight: "normal",
