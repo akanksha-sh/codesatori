@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import UserContext from "../../contexts/UserContext";
 import TeacherAssignments from "./teacher/assignments/TeacherAssignments";
 import { pageTitle, contentDiv } from "../../Style";
+import AddAssignment from "./teacher/assignments/AddAssignment"
 
 export default class Assignments extends Component {
   static contextType = UserContext;
@@ -19,6 +20,15 @@ export default class Assignments extends Component {
     });
   }
 
+  addAssignment = (title) => {
+    const newAssignment = {
+      id: 7,
+      title,
+      ongoing: true,
+    }
+    this.setState({assignments: [...this.state.assignments, newAssignment]})
+  }
+
   render() {
     const user = this.context;
 
@@ -26,6 +36,10 @@ export default class Assignments extends Component {
       return (
         <div style={contentDiv}>
           <h2 style={pageTitle}> Assignments </h2>
+          <br/>
+          <AddAssignment addAssignment={this.addAssignment}/> 
+          <br/>
+          <br/>
           <TeacherAssignments classes={this.state.assignments} />
         </div>
       );
