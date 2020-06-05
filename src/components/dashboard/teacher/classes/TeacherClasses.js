@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { ListGroup } from "reactstrap";
 import { listGroup } from "../../../../Style";
 import ClassListItem from "./ClassListItem";
-import PropTypes from "prop-types";
 import { pageTitle, contentDiv } from "../../../../Style";
 import AddClass from "./AddClass";
 
@@ -21,27 +20,28 @@ export default class TeacherClasses extends Component {
     });
   }
 
-  DelClass = (id) => {
+  delClass = (id) => {
     this.setState(
       {classes: [...this.state.classes.filter(i => i.id !== id)]})
   }
 
-  AddClass = (title) => {
+  addClass = (title) => {
     const newClass = {
       id: 7,
       title,
       active: true,
+      ongoingAssignments: [],
     }
     this.setState({classes: [...this.state.classes, newClass]})
   }
 
   render() {
-    const del = this.DelClass
+    const del = this.delClass
 
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Classes </h2>
-        <AddClass AddClass={this.AddClass}/>
+        <AddClass addClass={this.addClass}/>
         <br/>
         <br/>
         <div>
@@ -65,10 +65,6 @@ export default class TeacherClasses extends Component {
       </div>
     );
   }
-}
-
-TeacherClasses.propTypes = {
-  delTodo: PropTypes.func.isRequired
 }
 
 const retrievedClasses = [

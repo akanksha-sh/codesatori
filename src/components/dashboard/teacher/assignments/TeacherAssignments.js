@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ListGroup } from "reactstrap";
 import { listGroup, pageTitle, contentDiv } from "../../../../Style";
 import AssignmentListItem from "./AssignmentListItem"
+import AddAssignment from "./AddAssignment"
 
 export default class TeacherAssignment extends Component {
   constructor(props) {
@@ -17,16 +18,29 @@ export default class TeacherAssignment extends Component {
     });
   }
 
+  addAssignment = (title) => {
+    const newAssignment = {
+      id: 7,
+      title,
+      ongoing: true,
+    }
+    this.setState({assignments: [...this.state.assignments, newAssignment]})
+  }
+
   render() {
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
+        <br/>
+        <AddAssignment addAssignment={this.addAssignment}/> 
+        <br/>
+        <br/>
         <div>
           <h4>Ongoing</h4>
           <ListGroup style={listGroup}>
             {this.state.assignments.map(function (d, idx) {
               if (d.ongoing) {
-                return <AssignmentListItem assignment={d} />;
+                return <AssignmentListItem key={idx} assignment={d} />;
               }
             })}
           </ListGroup>
@@ -34,7 +48,7 @@ export default class TeacherAssignment extends Component {
           <ListGroup style={listGroup}>
             {this.state.assignments.map(function (d, idx) {
               if (!d.ongoing) {
-                return <AssignmentListItem assignment={d} />;
+                return <AssignmentListItem key={idx} assignment={d} />;
               }
             })}
           </ListGroup>
