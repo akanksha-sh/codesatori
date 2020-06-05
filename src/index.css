@@ -1,6 +1,3 @@
-
-
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -13,6 +10,23 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+tr {
+  display: flex;
+  text-align: center;
+}
+
+td {
+  font-size: small;
+  text-align: center;
+  flex: 1;
+}
+
+th {
+  font-size: smaller;
+  text-align: center;
+  flex: 1;
 }
 
 

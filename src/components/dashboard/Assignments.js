@@ -1,32 +1,13 @@
 import React, { Component } from "react";
 import UserContext from "../../contexts/UserContext";
 import TeacherAssignments from "./teacher/assignments/TeacherAssignments";
-import { pageTitle, contentDiv } from "../../Style";
-import AddAssignment from "./teacher/assignments/AddAssignment"
+import StudentAssignments from "./student/assignments/StudentAssignments";
 
 export default class Assignments extends Component {
   static contextType = UserContext;
 
   constructor(props) {
     super(props);
-    this.state = {
-      assignments: [],
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      assignments: retrievedAssignments,
-    });
-  }
-
-  addAssignment = (title) => {
-    const newAssignment = {
-      id: 7,
-      title,
-      ongoing: true,
-    }
-    this.setState({assignments: [...this.state.assignments, newAssignment]})
   }
 
   render() {
@@ -34,49 +15,10 @@ export default class Assignments extends Component {
 
     if (user.isTeacher) {
       return (
-        <div style={contentDiv}>
-          <h2 style={pageTitle}> Assignments </h2>
-          <br/>
-          <AddAssignment addAssignment={this.addAssignment}/> 
-          <br/>
-          <br/>
-          <TeacherAssignments classes={this.state.assignments} />
-        </div>
+        <TeacherAssignments classes={this.state.assignments} />
       );
     }
-    return <div></div>;
+    return <StudentAssignments />;
   }
 }
 
-const retrievedAssignments = [
-  {
-    id: 1,
-    title: "Tutorial 2 : Programming in Python",
-    marked: false,
-    ongoing: true,
-  },
-  {
-    id: 2,
-    title: "Tutorial 1 : Linked-Lists",
-    marked: false,
-    ongoing: true,
-  },
-  {
-    id: 3,
-    title: "Tutorial 2 : Microprocessors",
-    marked: false,
-    ongoing: true,
-  },
-  {
-    id: 4,
-    title: "Tutorial 1 : Programming in Python",
-    marked: false,
-    ongoing: false,
-  },
-  {
-    id: 5,
-    title: "Tutorial 2 : What are supercomputers?",
-    marked: true,
-    ongoing: false,
-  },
-];
