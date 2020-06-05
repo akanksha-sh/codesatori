@@ -52,26 +52,31 @@ const retrievedAssignments = [
   {
     id: 1,
     title: "Tutorial 2 : Programming in Python",
+    marked: false,
     ongoing: true,
   },
   {
     id: 2,
     title: "Tutorial 1 : Linked-Lists",
+    marked: false,
     ongoing: true,
   },
   {
     id: 3,
     title: "Tutorial 2 : Microprocessors",
+    marked: false,
     ongoing: true,
   },
   {
     id: 4,
     title: "Tutorial 1 : Programming in Python",
+    marked: false,
     ongoing: false,
   },
   {
     id: 5,
     title: "Tutorial 2 : What are supercomputers?",
+    marked: true,
     ongoing: false,
   },
 ];

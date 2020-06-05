@@ -15,7 +15,7 @@ export default class TeacherAssignment extends Component {
         <ListGroup style={listGroup}>
           {this.props.classes.map(function (d, idx) {
             if (d.ongoing) {
-              return <AssignmentListItem assignment={d} />;
+              return <AssignmentListItem key={idx} assignment={d} />;
             }
           })}
         </ListGroup>
@@ -23,7 +23,7 @@ export default class TeacherAssignment extends Component {
         <ListGroup style={listGroup}>
           {this.props.classes.map(function (d, idx) {
             if (!d.ongoing) {
-              return <AssignmentListItem assignment={d} />;
+              return <AssignmentListItem key={idx} assignment={d} />;
             }
           })}
         </ListGroup>
