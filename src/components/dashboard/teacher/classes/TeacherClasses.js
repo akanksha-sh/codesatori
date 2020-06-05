@@ -37,7 +37,7 @@ export default class TeacherClasses extends Component {
   }
 
   render() {
-    const del = this.props.delClass
+    const del = this.delClass
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Classes </h2>
@@ -47,7 +47,7 @@ export default class TeacherClasses extends Component {
         <div>
           <h4>Active</h4>
           <ListGroup style={listGroup}>
-            {this.props.classes.map(function (d, idx) {
+            {this.state.classes.map(function (d, idx) {
               if (d.active) {
                 return <ClassListItem key={idx} class={d} delClass={del}/>;
               }
@@ -55,7 +55,7 @@ export default class TeacherClasses extends Component {
           </ListGroup>
           <h4>Inactive</h4>
           <ListGroup style={listGroup}>
-            {this.props.classes.map(function (d, idx) {
+            {this.state.classes.map(function (d, idx) {
               if (!d.active) {
                 return <ClassListItem key={idx} class={d}  delClass={del} />;
               }

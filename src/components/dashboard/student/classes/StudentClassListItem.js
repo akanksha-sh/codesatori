@@ -2,7 +2,7 @@ import React, { Component} from 'react'
 import { Collapse, Table } from 'reactstrap'
 import StudentClassInfo from './StudentClassInfo'
 
-export class StudentClassItem extends Component {
+export class StudentClassListItem extends Component {
 	state={
 		isOpen: false,
 	}
@@ -14,11 +14,23 @@ export class StudentClassItem extends Component {
 			height: '15pt',
 			width: '15pt',
 			border: 'none',
-			borderRadius: '50%',
 			cursor: 'pointer',
-			float: 'right',
 			fontSize: '10pt',
 			fontWeight: (!this.state.isOpen) ? 'normal' : 'bold',
+		}
+	}
+
+	getDescriptionStyle = (status) => {
+		return {
+			background: (status === 'pending') ? "#f2f2f2" : "#ffffff",
+			color: (status === 'pending') ? '#8e929b' : "#000000",
+			display: "flex",
+			alignItems: "top",
+			borderBottom: "1px #ccc solid",
+			padding: "20px 20px 1px",
+			height: "80pt",
+			width: "100%",
+			fontWeight: 'bold',
 		}
 	}
 
@@ -29,11 +41,13 @@ export class StudentClassItem extends Component {
 	render() {
 		return (
 			<div>
-				<div style={DescriptionStyle}>
-					{this.props.item.name}
-					<button onClick={this.toggleNav} style={this.getBtnStyle()}>
-						{(this.state.isOpen) ? '-' : '+'}
-					</button>
+				<div style={this.getDescriptionStyle(this.props.class.status)}>
+					{this.props.class.name}
+					<Collapse isOpen={this.props.class.status !== 'pending'} style={{marginLeft:'auto'}}>
+						<button onClick={this.toggleNav} style={this.getBtnStyle()}>
+							{(this.state.isOpen) ? '-' : '+'}
+						</button>
+					</Collapse>
 				</div>
 				<Collapse isOpen={this.state.isOpen}>
 					<Table responsive="sm" style={{display:'flex', flexDirection:'column', width:'100%'}} hover>
@@ -47,7 +61,7 @@ export class StudentClassItem extends Component {
 						</tr>
 						</thead>
 						<tbody>
-							<StudentClassInfo id={this.props.item.id} />
+							<StudentClassInfo id={this.props.class.id} />
 						</tbody>
 					</Table>
 				</Collapse>
@@ -56,13 +70,4 @@ export class StudentClassItem extends Component {
 	}
 }
 
-export default StudentClassItem
-
-const DescriptionStyle = {
-	background: "#ffffff",
-	alignItems: "center",
-	borderBottom: "1px #ccc solid",
-	padding: "4px 6px 1px",
-	width: "100%",
-	fontWeight: 'bold',
-}
+export default StudentClassListItem

@@ -15,7 +15,7 @@ export default class Assignments extends Component {
 
     if (user.isTeacher) {
       return (
-        <TeacherAssignments classes={this.state.assignments} />
+        <TeacherAssignments />
       );
     }
     return <StudentAssignments />;

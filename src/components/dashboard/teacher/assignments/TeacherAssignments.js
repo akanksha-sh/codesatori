@@ -39,7 +39,7 @@ export default class TeacherAssignment extends Component {
         <div>
           <h4>Ongoing</h4>
           <ListGroup style={listGroup}>
-            {this.props.classes.map(function (d, idx) {
+            {this.state.assignments.map(function (d, idx) {
               if (d.ongoing) {
                 return <AssignmentListItem key={idx} assignment={d} />;
               }
@@ -47,7 +47,7 @@ export default class TeacherAssignment extends Component {
           </ListGroup>
           <h4>Recieved</h4>
           <ListGroup style={listGroup}>
-            {this.props.classes.map(function (d, idx) {
+            {this.state.assignments.map(function (d, idx) {
               if (!d.ongoing) {
                 return <AssignmentListItem key={idx} assignment={d} />;
               }

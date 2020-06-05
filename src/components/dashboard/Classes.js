@@ -10,7 +10,7 @@ export default class Classes extends Component {
     const user = this.context;
 
     if (user.isTeacher) {
-      return <TeacherClasses classes={this.state.classes} delClass={this.delClass}/>;
+      return <TeacherClasses />;
     }
     return <StudentClasses />;
   }
