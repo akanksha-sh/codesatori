@@ -36,7 +36,7 @@ export class StudentClassItem extends Component {
 					</button>
 				</div>
 				<Collapse isOpen={this.state.isOpen}>
-					<Table responsive="sm" hover>
+					<Table responsive="sm" style={{display:'flex', flexDirection:'column', width:'100%'}} hover>
 						<thead>
 						<tr>
 							<th>Title</th>

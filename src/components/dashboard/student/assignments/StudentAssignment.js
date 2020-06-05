@@ -22,11 +22,11 @@ export class StudentAssignment extends Component {
         <div style={{display:'flex',flexDirection:'row',width:'100%'}}>
           <div style={OngoingTutorialsStyle}>
             <h3>Ongoing</h3>
-            <OngoingTutorials tutorials={this.state.ongoing} />
+            <OngoingTutorials tutorials={this.state.ongoing} infoBoxStyle={InfoBoxStyle} />
           </div>
           <div style={CompletedTutorialsStyle}>
             <h3>Completed</h3>
-            <CompletedTutorials tutorials={this.state.completed} />
+            <CompletedTutorials tutorials={this.state.completed} infoBoxStyle={InfoBoxStyle} />
           </div>
         </div>
       )
@@ -42,6 +42,15 @@ const OngoingTutorialsStyle={
 const CompletedTutorialsStyle={
   flex:'1',
   paddingLeft:'5%',
+}
+
+const InfoBoxStyle ={
+  display:'flex',
+  minWidth:'100pt',
+  maxWidth: '300pt',
+  height:'45pt',
+  margin: '2pt 0pt 4pt',
+  flexDirection:'row',
 }
 
 export default StudentAssignment

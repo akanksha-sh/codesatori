@@ -5,7 +5,7 @@ export class StudentCompletedTutorialInformation extends Component {
     
     render() {
         return (
-            <div style={InfoBoxStyle}>
+            <div style={this.props.infoBoxStyle}>
                     <div style={StatusBoxStyle}>
                         <Link to="/tutorial" style={{color:'#000'}}>
                             {(this.props.tutorial.score === '-') ? 'Submitted' : 'Marked'}
@@ -23,18 +23,11 @@ export class StudentCompletedTutorialInformation extends Component {
 
 export default StudentCompletedTutorialInformation
 
-const InfoBoxStyle ={
-    display:'flex',
-    width:'100%',
-    height:'35pt',
-    margin: '2pt 0pt 4pt',
-    flexDirection:'row',
-}
-
 const StatusBoxStyle={
     display:'flex',
     background:'#f2f2f2',
     flex:'2',
+    maxWidth:'50pt',
     color:'#000',
     fontSize:'8pt',
     textAlign:'center',

@@ -8,6 +8,7 @@ export class StudentOngoingTutorialInformation extends Component {
             display:'flex',
             background: (daysLeft > 0) ? '#000' : '#b73e3a',
             flex:'3',
+            maxWidth:'50pt',
             color:'#fff',
             fontSize:'8pt',
             textAlign:'center',
@@ -19,7 +20,7 @@ export class StudentOngoingTutorialInformation extends Component {
     
     render() {
         return (
-            <div style={InfoBoxStyle}>
+            <div style={this.props.infoBoxStyle}>
                         <div style={this.getCountdownBoxStyle(this.props.tutorial.daysLeft)}>
                             <Link to="/tutorial" style={{color:'#f2f2f2'}}>
                                 {this.props.tutorial.daysLeft} Days Left
@@ -36,14 +37,6 @@ export class StudentOngoingTutorialInformation extends Component {
 }
 
 export default StudentOngoingTutorialInformation
-
-const InfoBoxStyle ={
-    display:'flex',
-    width:'100%',
-    height:'35pt',
-    margin: '2pt 0pt 4pt',
-    flexDirection:'row',
-}
 
 const NameBoxStyle={
     display:'flex',

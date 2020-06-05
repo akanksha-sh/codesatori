@@ -35,7 +35,6 @@ export class StudentClasses extends Component {
 	});
 
 	render() {
-		console.log(this.state)
 		return (
 			<div>
 				<div>
