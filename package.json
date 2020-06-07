@@ -25,7 +25,7 @@
   },
   "scripts": {
     "dev": "export $(cat .env | xargs) && react-scripts start",
-    "start": "serve -s build -l $PORT || serve -s build -l 5000",
+    "start": "export $(cat .env | xargs) && (serve -s build -l $PORT || serve -s build -l 5000)",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

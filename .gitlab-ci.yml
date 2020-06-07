@@ -10,6 +10,7 @@ stages:
 
 before_script:
   - docker info
+  - echo "$FIREBASE_KEYS" > ".env"
 
 after_script:
   - docker system prune -f --all
@@ -24,7 +25,7 @@ deploy-vm:
   stage: deploy-vm
   script:
     - docker build --target RUN -t codesatori-frontend .
-    - timeout --preserve-status "$TIME_TO_LIVE_IN_SECONDS" docker run --env-file="$FIREBASE_KEYS" -p "$VM_IP":"$VM_DEPLOYMENT_PORT" codesatori-frontend
+    - timeout --preserve-status "$TIME_TO_LIVE_IN_SECONDS" docker run -p "$VM_IP":"$VM_DEPLOYMENT_PORT" codesatori-frontend
 
 deploy-heroku:
   stage: deploy-heroku
