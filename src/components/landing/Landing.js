@@ -43,7 +43,7 @@ export class Landing extends Component {
                   <Button color="primary">Coming soon</Button>
                 </p>
               </Jumbotron>
-              <Jumbotron style={{ "background-color": "transparent" }}>
+              <Jumbotron style={{ backgroundColor: "transparent" }}>
                 <h3 className="text-center">
                   We're currently still in development.
                 </h3>{" "}

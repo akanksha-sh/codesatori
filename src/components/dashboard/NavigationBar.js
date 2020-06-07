@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   NavLink,
 } from "reactstrap";
+import SignOut from "./settings/SignOut";
 
 export class NavigationBar extends Component {
   constructor(props) {
@@ -53,7 +54,9 @@ export class NavigationBar extends Component {
               <NavItem>
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav>Settings</DropdownToggle>
-                  <DropdownMenu right></DropdownMenu>
+                  <DropdownMenu right>
+                    <SignOut/>
+                  </DropdownMenu>
                 </UncontrolledDropdown>
               </NavItem>
             </Nav>

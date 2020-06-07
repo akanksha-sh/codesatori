@@ -15,8 +15,8 @@ const config = {
 class Firebase {
   constructor() {
     app.initializeApp(config);
-
     this.auth = app.auth();
+    this.googleProvider = new app.auth.GoogleAuthProvider();
   }
 
   // *** Auth API ***
@@ -27,7 +27,7 @@ class Firebase {
     this.auth.signInWithEmailAndPassword(email, password);
 
   doSignInWithGoogle = () =>
-    this.auth.signInWithPopup(new this.GoogleAuthProvider());
+    this.auth.signInWithPopup(this.googleProvider);
 
   doSignOut = () => this.auth.signOut();
 
