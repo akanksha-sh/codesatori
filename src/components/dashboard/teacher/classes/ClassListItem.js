@@ -33,18 +33,22 @@ export default class ClassListItem extends Component {
   };
 
   render() {
-    const {id, title} = this.props.class
+    const { id, title } = this.props.class;
     if (!this.props.class.active) {
       return (
         <ListGroupItem
-          // disabled
-          // tag={RRLink}
-          // exact
-          // to={"/classes/" + id}
-          // action
+        // disabled
+        // tag={RRLink}
+        // exact
+        // to={"/classes/" + id}
+        // action
         >
           {this.props.class.title}
-          <Button style={{margin:"6px"}} onClick={this.props.delClass.bind(this, id)} close/>
+          <Button
+            style={{ margin: "6px" }}
+            onClick={this.props.delClass.bind(this, id)}
+            close
+          />
         </ListGroupItem>
       );
     }
@@ -77,7 +81,11 @@ export default class ClassListItem extends Component {
               <i class="material-icons md-dark">info</i>
             </DropdownToggle>
           </UncontrolledDropdown>
-          <Button style={{margin:"6px"}} onClick={this.props.delClass.bind(this, id)} close/>
+          <Button
+            style={{ margin: "6px" }}
+            onClick={this.props.delClass.bind(this, id)}
+            close
+          />
         </div>
 
         <div style={{ paddingTop: "25px" }}>
@@ -155,7 +163,6 @@ export default class ClassListItem extends Component {
           </Collapse>
         </div>
       </ListGroupItem>
-
     );
   }
 }

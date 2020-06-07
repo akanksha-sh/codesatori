@@ -55,7 +55,7 @@ export class NavigationBar extends Component {
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav>Settings</DropdownToggle>
                   <DropdownMenu right>
-                    <SignOut/>
+                    <SignOut />
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </NavItem>

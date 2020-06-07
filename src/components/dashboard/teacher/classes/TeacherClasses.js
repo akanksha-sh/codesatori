@@ -12,8 +12,8 @@ export default class TeacherClasses extends Component {
   }
 
   state = {
-    classes: []
-  }
+    classes: [],
+  };
 
   componentDidMount() {
     this.setState({
@@ -22,34 +22,35 @@ export default class TeacherClasses extends Component {
   }
 
   delClass = (id) => {
-    this.setState(
-      {classes: [...this.state.classes.filter(i => i.id !== id)]})
-  }
+    this.setState({
+      classes: [...this.state.classes.filter((i) => i.id !== id)],
+    });
+  };
 
   addClass = (title) => {
     const newClass = {
       id: 7,
       title,
       active: true,
-      ongoingAssignments:[]
-    }
-    this.setState({classes: [...this.state.classes, newClass]})
-  }
+      ongoingAssignments: [],
+    };
+    this.setState({ classes: [...this.state.classes, newClass] });
+  };
 
   render() {
-    const del = this.delClass
+    const del = this.delClass;
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Classes </h2>
-        <AddClass addClass={this.addClass}/>
-        <br/>
-        <br/>
+        <AddClass addClass={this.addClass} />
+        <br />
+        <br />
         <div>
           <h4>Active</h4>
           <ListGroup style={listGroup}>
             {this.state.classes.map(function (d, idx) {
               if (d.active) {
-                return <ClassListItem key={idx} class={d} delClass={del}/>;
+                return <ClassListItem key={idx} class={d} delClass={del} />;
               }
             })}
           </ListGroup>
@@ -57,7 +58,7 @@ export default class TeacherClasses extends Component {
           <ListGroup style={listGroup}>
             {this.state.classes.map(function (d, idx) {
               if (!d.active) {
-                return <ClassListItem key={idx} class={d}  delClass={del} />;
+                return <ClassListItem key={idx} class={d} delClass={del} />;
               }
             })}
           </ListGroup>
@@ -68,8 +69,8 @@ export default class TeacherClasses extends Component {
 }
 
 TeacherClasses.propTypes = {
-  delTodo: PropTypes.func.isRequired
-}
+  delTodo: PropTypes.func.isRequired,
+};
 
 const retrievedClasses = [
   {

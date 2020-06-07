@@ -10,20 +10,20 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  Button, 
+  Button,
   ModalBody,
-  Modal, 
-  ModalFooter
+  Modal,
+  ModalFooter,
 } from "reactstrap";
 import Login from "./Login";
-import SignUp, { SignUpLink } from './SignUp'
+import SignUp, { SignUpLink } from "./SignUp";
 
 export class LandingHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
-      signUpOpen: false
+      signUpOpen: false,
     };
   }
 
@@ -31,18 +31,23 @@ export class LandingHeader extends Component {
 
   signUpToggle = (e) => {
     e.preventDefault();
-    this.setState({signUpOpen: !this.state.signUpOpen});
-  }
+    this.setState({ signUpOpen: !this.state.signUpOpen });
+  };
 
   render() {
     return (
       <div>
-        <Modal isOpen={this.state.signUpOpen} toggle={this.signUpToggle} centered style={{width: "25em"}}>
+        <Modal
+          isOpen={this.state.signUpOpen}
+          toggle={this.signUpToggle}
+          centered
+          style={{ width: "25em" }}
+        >
           <ModalBody>
             <SignUp />
           </ModalBody>
           <ModalFooter>
-            <SignUpLink/>
+            <SignUpLink />
           </ModalFooter>
         </Modal>
         <Navbar color="dark" dark expand="md" fixed="top">
@@ -62,7 +67,9 @@ export class LandingHeader extends Component {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>
-                <NavLink onClick={this.signUpToggle} href="">Sign Up</NavLink>
+                <NavLink onClick={this.signUpToggle} href="">
+                  Sign Up
+                </NavLink>
               </NavItem>
             </Nav>
           </Collapse>

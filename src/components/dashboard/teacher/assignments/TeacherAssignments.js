@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { ListGroup } from "reactstrap";
 import { listGroup } from "../../../../Style";
-import AddAssignment from "./AddAssignment"
-import AssignmentListItem from "./AssignmentListItem"
+import AddAssignment from "./AddAssignment";
+import AssignmentListItem from "./AssignmentListItem";
 import { pageTitle, contentDiv } from "../../../../Style";
 
 export default class TeacherAssignment extends Component {
@@ -24,18 +24,18 @@ export default class TeacherAssignment extends Component {
       id: 7,
       title,
       ongoing: true,
-    }
-    this.setState({assignments: [...this.state.assignments, newAssignment]})
-  }
+    };
+    this.setState({ assignments: [...this.state.assignments, newAssignment] });
+  };
 
   render() {
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
-        <br/>
-        <AddAssignment addAssignment={this.addAssignment}/> 
-        <br/>
-        <br/>
+        <br />
+        <AddAssignment addAssignment={this.addAssignment} />
+        <br />
+        <br />
         <div>
           <h4>Ongoing</h4>
           <ListGroup style={listGroup}>

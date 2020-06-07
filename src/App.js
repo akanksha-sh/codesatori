@@ -42,7 +42,7 @@ class App extends Component {
 
   // check if user signed in, and update
   componentDidMount() {
-    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
+    this.listener = this.props.firebase.auth.onAuthStateChanged((authUser) => {
       console.log(authUser);
       authUser
         ? this.setState({ authUser })

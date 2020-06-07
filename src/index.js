@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import Firebase, { FirebaseContext } from './firebase';
-import 'bootstrap-css-only/css/bootstrap.min.css';
+import Firebase, { FirebaseContext } from "./firebase";
+import "bootstrap-css-only/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>

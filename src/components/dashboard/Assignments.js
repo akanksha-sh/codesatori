@@ -14,11 +14,8 @@ export default class Assignments extends Component {
     const user = this.context;
 
     if (user.isTeacher) {
-      return (
-        <TeacherAssignments />
-      );
+      return <TeacherAssignments />;
     }
     return <StudentAssignments />;
   }
 }
-

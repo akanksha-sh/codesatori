@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { withFirebase } from '../../../firebase';
-import { DropdownItem  } from "reactstrap";
+import React, { Component } from "react";
+import { withFirebase } from "../../../firebase";
+import { DropdownItem } from "reactstrap";
 
 const SignOutButton = ({ firebase }) => (
-    <DropdownItem onClick={firebase.doSignOut}>Sign Out</DropdownItem>
-  );
+  <DropdownItem onClick={firebase.doSignOut}>Sign Out</DropdownItem>
+);
 
-export default withFirebase(SignOutButton)
+export default withFirebase(SignOutButton);
