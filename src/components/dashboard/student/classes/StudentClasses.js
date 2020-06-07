@@ -1,20 +1,34 @@
 import React, { Component } from 'react'
+import { Collapse } from 'reactstrap'
+import { ListGroup } from "reactstrap"
 import uuid from 'uuid'
-import ActiveClasses from './StudentActiveClasses';
-import InactiveClasses from './StudentInactiveClasses';
-import { Collapse } from 'reactstrap';
+import AddClass from './StudentAddClass'
+import ClassListItem from './StudentClassListItem'
+import { pageTitle, contentDiv } from "../../../../Style";
 
 export class StudentClasses extends Component {
 
 	state={
-		activeClasses: [],
-		inactiveClasses: [],
+		classes: [],
 		inactiveShown: false,
 	};
 
+	addClass = (name) => {
+		const newClass = {
+			id: uuid.v4(),
+			name: name,
+			status: "pending",
+			overdue: 0,
+			tasks: 0,
+			completed: 0,
+			marked: 0,
+		}
+		this.setState({classes: [...this.state.classes, newClass]})
+	}
+
 	getBtnStyle = () => {
 		return ({
-			background: (!this.state.inactiveShown) ? '#b73e3a' : '#e5e5e5',
+			background: (!this.state.inactiveShown) ? '#000000' : '#e5e5e5',
 			color: (!this.state.inactiveShown) ? '#ffffff' : '#000000',
 			border: 'none',
 			height: '20px',
@@ -27,7 +41,7 @@ export class StudentClasses extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({activeClasses: DummyClassValues.classes})
+		this.setState({classes: DummyClassValues.classes})
 	}
 
 	toggleShow = () => this.setState({
@@ -35,36 +49,58 @@ export class StudentClasses extends Component {
 	});
 
 	render() {
+		var inactiveClasses=[...this.state.classes.filter((c)=>c.status==='inactive')]
+		var pendingClasses=[...this.state.classes.filter((c)=>c.status==='pending')]
 		return (
-			<div>
-				<div>
-					<h3>Active Classes</h3>
-					<div style={ClassesStyle}>
-						<ActiveClasses classes={this.state.activeClasses}/>
-					</div>
+			<div style={contentDiv}>
+				<h2 style={pageTitle}> Classes </h2>
+        		<AddClass addClass={this.addClass}/>
+				<div style={ClassGroupStyle}>
+					<Collapse isOpen={pendingClasses.length > 0}>
+						<h4>Pending</h4>
+						<ListGroup style={ListStyle}>
+							{pendingClasses.map((c)=><ClassListItem key={c.id} class={c}/>)}
+						</ListGroup>
+					</Collapse>
 				</div>
-				<div style={{marginTop:'30px'}}>
-					<div style={{display:'flex', flexDirection:'column', alignItems:'left', alignContent:'center'}}>
-						<h3>Inactive Classes</h3>
-						<button style={this.getBtnStyle()} onClick={this.toggleShow}> 
-							{(this.state.inactiveShown) ? 'hide' : 'show' }
-						</button>
-					</div>
-					<div  style={ClassesStyle}>
-						<Collapse isOpen={this.state.inactiveShown}>
-							<InactiveClasses classes={this.state.inactiveClasses}/>
-						</Collapse>
-					</div>
+				<div style={ClassGroupStyle}>
+					<h4>Active Classes</h4>
+					<ListGroup style={ListStyle}>
+						{this.state.classes.map(function (d, idx) {
+						if (d.status === 'active') {
+							return <ClassListItem key={idx} class={d}/>;
+						}
+						})}
+					</ListGroup>
+				</div>
+				<div style={ClassGroupStyle}>
+					<h4>Inactive Classes</h4>
+					<button style={this.getBtnStyle()} onClick={this.toggleShow}> 
+						{(this.state.inactiveShown) ? 'hide' : 'show' }
+					</button>
+					<br />
+					<Collapse isOpen={this.state.inactiveShown}>
+						{(inactiveClasses.length === 0) ?
+							<div style={{fontSize:'8pt'}}>Nothing to show</div> :
+							<ListGroup style={ListStyle}>
+								{inactiveClasses.map((c) => <ClassListItem key={c.id} class={c}/>)}
+							</ListGroup>
+						}
+					</Collapse>
 				</div>
 			</div>
 		)
 	}
 }
 
-const ClassesStyle={
-	width:'80%', 
-	marginTop:'3%', 
-	marginLeft:'1%',
+const ClassGroupStyle={
+	marginTop:'30px',
+}
+
+const ListStyle={
+	marginTop:'20px',
+	marginBottom:'20px',
+	padding:'0px',
 }
 
 // Temporary values before hooking up the database
@@ -73,11 +109,21 @@ const DummyClassValues={
 		{
 			id: uuid.v4(),
 			name: "Mr William's class",
+			status: "active",
 			overdue: 0,
 			tasks: 1,
 			completed: 1,
 			marked: 1,
 		},
+		{
+			id: uuid.v4(),
+			name: "Mrs William's class",
+			status: "inactive",
+			overdue: 0,
+			tasks: 1,
+			completed: 1,
+			marked: 1,
+		}
 	],
 };
 
