@@ -19,7 +19,7 @@ build:
   stage: build
   script:
     - docker build --target BUILD -t codesatori-frontend .
-    - docker run --env-file="$FIREBASE_KEYS" codesatori-frontend
+    - docker run codesatori-frontend
 
 deploy-vm:
   stage: deploy-vm
