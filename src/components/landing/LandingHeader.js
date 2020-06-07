@@ -10,13 +10,13 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  Button,
   ModalBody,
   Modal,
   ModalFooter,
 } from "reactstrap";
 import Login from "./Login";
-import SignUp, { SignUpLink } from "./SignUp";
+import SignUp from "./SignUp";
+import { SignUpLink } from "./SignUp";
 
 export class LandingHeader extends Component {
   constructor(props) {
@@ -46,9 +46,6 @@ export class LandingHeader extends Component {
           <ModalBody>
             <SignUp />
           </ModalBody>
-          <ModalFooter>
-            <SignUpLink />
-          </ModalFooter>
         </Modal>
         <Navbar color="dark" dark expand="md" fixed="top">
           <NavbarBrand href="/">codesatori</NavbarBrand>
@@ -64,6 +61,9 @@ export class LandingHeader extends Component {
                 <DropdownToggle nav>Log In</DropdownToggle>
                 <DropdownMenu right>
                   <Login handleLogIn={this.props.handleLogIn} />
+                  <ModalFooter>
+                    <SignUpLink />
+                  </ModalFooter>
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>

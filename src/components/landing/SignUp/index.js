@@ -16,7 +16,7 @@ import {
 const SignUp = () => (
   <div className="container" style={signUpStyle}>
     <h1 className="display-5 text-center" style={{ marginBottom: "30px" }}>
-      Join us now
+      Start coding today!
     </h1>
     <div className="container">
       <SignUpForm />
@@ -195,6 +195,19 @@ class SignUpFormBase extends Component {
             <FormFeedback valid={false}>
               The passwords don't match!
             </FormFeedback>
+          </InputGroup>
+        </FormGroup>
+        <FormGroup>
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>
+                <i className="material-icons md-dark">layers</i>
+              </InputGroupText>
+            </InputGroupAddon>
+            <Input type="select" name="role" id="role">
+              <option>Student</option>
+              <option>Teacher</option>
+            </Input>
           </InputGroup>
         </FormGroup>
         {error && <FormText className="mb-2">{error.message}</FormText>}

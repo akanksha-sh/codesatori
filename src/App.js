@@ -18,7 +18,7 @@ class App extends Component {
     };
   }
 
-  Logged = (username, password) => {
+  logged = (username, password) => {
     if (this.authenticateUser(username, password)) {
       this.setState({ isLoggedIn: true });
     } else {
@@ -68,7 +68,7 @@ class App extends Component {
     } else {
       return (
         <div style={appStyle}>
-          <Landing handleLogIn={this.Logged} error />
+          <Landing handleLogIn={this.logged} error />
         </div>
       );
     }

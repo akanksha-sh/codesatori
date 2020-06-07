@@ -67,11 +67,6 @@ export class Landing extends Component {
   }
 }
 
-const image1 = "/wide_1.jfif";
-const image2 = "/wide_2.jfif";
-const image3 = "/wide_3.png";
-const image4 = "/wide_4.jfif";
-
 const appStyle = {
   fontFamily: "Roboto",
 };
