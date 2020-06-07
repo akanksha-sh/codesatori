@@ -18,13 +18,13 @@ build:
   stage: build
   script:
     - docker build --target BUILD -t codesatori-frontend .
-    - docker run -env-file="$FIREBASE_KEYS" codesatori-frontend
+    - docker run --env-file="$FIREBASE_KEYS" codesatori-frontend
 
 deploy-vm:
   stage: deploy-vm
   script:
     - docker build --target RUN -t codesatori-frontend .
-    - timeout --preserve-status "$TIME_TO_LIVE_IN_SECONDS" docker run -env-file="$FIREBASE_KEYS" -p "$VM_IP":"$VM_DEPLOYMENT_PORT" codesatori-frontend
+    - timeout --preserve-status "$TIME_TO_LIVE_IN_SECONDS" docker run --env-file="$FIREBASE_KEYS" -p "$VM_IP":"$VM_DEPLOYMENT_PORT" codesatori-frontend
 
 deploy-heroku:
   stage: deploy-heroku
