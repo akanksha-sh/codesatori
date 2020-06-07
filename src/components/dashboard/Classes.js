@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UserContext from "../../contexts/UserContext";
 import TeacherClasses from "./teacher/classes/TeacherClasses";
+import StudentClasses from './student/classes/StudentClasses'
 
 export default class Classes extends Component {
   static contextType = UserContext;
@@ -13,7 +14,9 @@ export default class Classes extends Component {
         <TeacherClasses />
       );
     }
-    return <div></div>;
+    return (
+      <StudentClasses/>
+    )
   }
 }
 
