@@ -25,8 +25,8 @@
   },
   "scripts": {
     "dev": "export $(cat .env | xargs) && react-scripts start",
-    "start": "export $(cat .env | xargs) && (serve -s build -l $PORT || serve -s build -l 5000)",
-    "build": "export $(cat .env | xargs) && react-scripts build",
+    "start": "serve -s build -l $PORT || serve -s build -l 5000",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm install && npm run build",

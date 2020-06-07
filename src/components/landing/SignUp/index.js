@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withFirebase } from '../../firebase';
+import { withFirebase } from '../../../firebase';
 import { Link } from 'react-router-dom';
 import { Button, Form, FormGroup, FormFeedback, FormText, Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
  
@@ -56,13 +56,13 @@ class SignUpFormBase extends Component {
         return "Password is too short!"; //too short
     } else if (str.length > 50) {
         return "Password is too long!"; //too long
-    } else if (str.search(/\d/) == -1) {
+    } else if (str.search(/\d/) === -1) {
         return "Password does not contain a number!"; // no number
-    } else if (str.search(/[A-Z]/) == -1) {
+    } else if (str.search(/[A-Z]/) === -1) {
       return "Password does not contain a capital letter!"; // no capital letter
-    } else if (str.search(/[a-zA-Z]/) == -1) {
+    } else if (str.search(/[a-zA-Z]/) === -1) {
         return "Password does not contain a letter!"; //no letter
-    } else if (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1) {
+    } else if (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) !== -1) {
         return "Password contains a bad character!";
     }
     return 0; //valid
