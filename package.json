@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.0",
+    "firebase": "^7.15.0",
     "material-design-icons": "^3.0.1",
     "prettier": "^2.0.5",
     "react": "^16.13.1",
@@ -23,13 +24,14 @@
     "table": "^5.4.6"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build -l $PORT || serve -s build -l 5000",
-    "build": "react-scripts build",
+    "dev": "export $(cat .env | xargs) && react-scripts start",
+    "start": "export $(cat .env | xargs) && (serve -s build -l $PORT || serve -s build -l 5000)",
+    "build": "export $(cat .env | xargs) && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm install && npm run build",
-    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
+    "env": "export $(cat .env | xargs) && env"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -5,7 +5,7 @@ import { UserProvider } from "./contexts/UserContext";
 
 export default class App extends Component {
   state = {
-    isLoggedIn: true,
+    isLoggedIn: false,
     userDetails: {
       userId: 1,
       isTeacher: true,

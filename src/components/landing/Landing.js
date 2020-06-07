@@ -14,10 +14,11 @@ export class Landing extends Component {
     super(props);
   }
 
+
   render() {
     return (
       <Router>
-        <LandingHeader handleLogIn={this.props.handleLogIn} />
+        <LandingHeader handleLogIn={this.props.handleLogIn}/>
         <Redirect from="*" to="/" />
         <Route
           exact
