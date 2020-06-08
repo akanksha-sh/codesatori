@@ -25,7 +25,8 @@ const SignUp = () => (
 );
 
 const INITIAL_STATE = {
-  username: "",
+  firstName: "",
+  lastName: "",
   email: "",
   passwordOne: "",
   passwordTwo: "",
@@ -40,7 +41,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = (event) => {
-    const { username, email, passwordOne } = this.state;
+    const { email, passwordOne } = this.state;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -81,22 +82,21 @@ class SignUpFormBase extends Component {
   };
 
   render() {
-    const { username, email, passwordOne, passwordTwo, error } = this.state;
+    const { firstName, lastName, email, passwordOne, passwordTwo, error } = this.state;
 
     const passwordValidState = this.checkPwdValid(passwordOne);
 
     const isEmailInvalid = !this.checkEmailValid(email); //check email
-    const isUsernameInvalid = false; //check if username taken
     const isPasswordInvalid = passwordValidState !== 0; //check if password contains stuff
     const isPasswordNotTheSame = passwordOne !== passwordTwo;
     const isFormIncomplete =
       passwordOne === "" ||
       passwordTwo === "" ||
       email === "" ||
-      username === "";
+      firstName === "" ||
+      lastName === "";
     const isInvalid =
       isEmailInvalid ||
-      isUsernameInvalid ||
       isPasswordInvalid ||
       isPasswordNotTheSame ||
       isFormIncomplete;
@@ -111,16 +111,40 @@ class SignUpFormBase extends Component {
               </InputGroupText>
             </InputGroupAddon>
             <Input
-              type="username"
-              name="username"
-              value={username}
+              type="firstName"
+              name="firstName"
+              value={firstName}
               onChange={this.onChange}
-              id="username"
-              placeholder="Username"
-              invalid={username !== "" && isUsernameInvalid}
-              valid={username !== "" && !isUsernameInvalid}
+              id="firstName"
+              placeholder="First Name"
+              invalid={firstName !== ""}
+              valid={firstName !== ""}
             />
-            <FormFeedback valid={false}>Username already taken!</FormFeedback>
+            <FormFeedback valid={false}>
+              Please enter your first name.
+            </FormFeedback>
+          </InputGroup>
+        </FormGroup>
+        <FormGroup className="mb-3">
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>
+                <i className="material-icons md-dark">account_circle</i>
+              </InputGroupText>
+            </InputGroupAddon>
+            <Input
+              type="lastName"
+              name="lastName"
+              value={lastName}
+              onChange={this.onChange}
+              id="lastName"
+              placeholder="Last Name"
+              invalid={lastName !== ""}
+              valid={lastName !== ""}
+            />
+            <FormFeedback valid={false}>
+              Please enter your last name.
+            </FormFeedback>
           </InputGroup>
         </FormGroup>
         <FormGroup className="mb-3">
