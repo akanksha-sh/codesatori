@@ -14,11 +14,11 @@ import {
 } from "reactstrap";
 
 const SignUp = () => (
-  <div className="container" style={signUpStyle}>
-    <h1 className="display-5 text-center" style={{ marginBottom: "30px" }}>
+  <div className="container pl-3 pr-3" style={signUpStyle}>
+    <h1 className="display-5 text-center mb-3">
       Start coding today!
     </h1>
-    <div className="container">
+    <div className="container" style={{width: "85%"}}>
       <SignUpForm />
     </div>
   </div>
@@ -117,12 +117,8 @@ class SignUpFormBase extends Component {
               onChange={this.onChange}
               id="firstName"
               placeholder="First Name"
-              invalid={firstName !== ""}
               valid={firstName !== ""}
             />
-            <FormFeedback valid={false}>
-              Please enter your first name.
-            </FormFeedback>
           </InputGroup>
         </FormGroup>
         <FormGroup className="mb-3">
@@ -139,12 +135,8 @@ class SignUpFormBase extends Component {
               onChange={this.onChange}
               id="lastName"
               placeholder="Last Name"
-              invalid={lastName !== ""}
               valid={lastName !== ""}
             />
-            <FormFeedback valid={false}>
-              Please enter your last name.
-            </FormFeedback>
           </InputGroup>
         </FormGroup>
         <FormGroup className="mb-3">

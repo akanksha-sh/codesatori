@@ -4,6 +4,20 @@ import Dashboard from "./components/dashboard/Dashboard";
 import { UserProvider } from "./contexts/UserContext";
 import { withFirebase } from "./firebase";
 import { AuthUserContext } from "./session";
+import axios from 'axios';
+import * as Globals from './Globals';
+
+const DemoTeacherDetails = {
+    uuid: 'd8b64d49-c5d2-3756-89bb-6d3172e73f5d',
+    role: 'ROLE_TEACHER',
+    school: 'Demo High School'
+}
+
+const DemoStudentDetails = {
+  uuid: '93c8d05c-6438-3c4b-a34f-7cb3926fe730',
+  role: 'ROLE_STUDENT',
+  school: 'Demo High School'
+}
 
 class App extends Component {
   constructor(props) {
@@ -11,10 +25,11 @@ class App extends Component {
 
     this.state = {
       userDetails: {
-        userId: 1,
-        isTeacher: true,
+        uuid: '',
+        role: '',
+        school: ''
       },
-      authUser: null,
+      authUser: null
     };
   }
 
@@ -29,12 +44,12 @@ class App extends Component {
   authenticateUser = (username, password) => {
     if (username === "teacher" && password === "password") {
       this.setState({ authUser: { userId: 1 } });
-      this.setState({ userDetails: { isTeacher: true } });
+      this.setState({ userDetails: DemoTeacherDetails });
       return true;
     }
     if (username === "student" && password === "password") {
       this.setState({ authUser: { userId: 2 } });
-      this.setState({ userDetails: { isTeacher: false } });
+      this.setState({ userDetails: DemoTeacherDetails });
       return true;
     }
     return false;
@@ -42,11 +57,18 @@ class App extends Component {
 
   // check if user signed in, and update
   componentDidMount() {
-    this.listener = this.props.firebase.auth.onAuthStateChanged((authUser) => {
-      console.log(authUser);
-      authUser
-        ? this.setState({ authUser })
-        : this.setState({ authUser: null });
+    this.listener = this.props.firebase.auth.onAuthStateChanged((authUserRet) => {
+      console.log(authUserRet);
+      if (authUserRet !== null) {
+        this.setState({ authUser: authUserRet });
+        // ALWAYS USE getIdToken() !! If not it may be expired
+        this.state.authUser.getIdToken().then((idToken) => {
+          // get UserDetails from backend
+          this.getUserDetails(idToken);
+        });
+      } else {
+        this.setState({authUser: null});
+      }
     });
   }
 
@@ -54,14 +76,35 @@ class App extends Component {
     this.listener();
   }
 
+  getUserDetails = (uid) => {
+    if (uid != null) {
+      axios({
+        url: Globals.BACKEND_URL + "user/" + uid,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + uid,
+        },
+      })
+        .then((res) => {
+          const result = JSON.stringify(res.data)
+          console.log("Retrieved User Details: " + result);
+          if (result !== null) {
+            this.setState({ userDetails: JSON.parse(result) });
+          }
+          console.log("Current state: " + JSON.stringify(this.state));
+        })
+        .catch((error) => {
+          console.log("Error from backend: ", error);
+        });
+    }
+  }
+
   render() {
     if (this.state.authUser !== null) {
       return (
         <div style={appStyle}>
-          <AuthUserContext.Provider value={this.state.authUser}>
-            <UserProvider value={this.state.userDetails}>
+          <AuthUserContext.Provider value={this.state}>
               <Dashboard />
-            </UserProvider>
           </AuthUserContext.Provider>
         </div>
       );

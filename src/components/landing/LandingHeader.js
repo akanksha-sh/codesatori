@@ -41,7 +41,7 @@ export class LandingHeader extends Component {
           isOpen={this.state.signUpOpen}
           toggle={this.signUpToggle}
           centered
-          style={{ width: "25em" }}
+          style={{ width: "30em" }}
         >
           <ModalBody>
             <SignUp />

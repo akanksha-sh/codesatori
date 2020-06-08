@@ -12,6 +12,7 @@ import {
   InputGroupText,
   Label,
 } from "reactstrap";
+import firebase from "firebase/app";
 
 const INITIAL_STATE = {
   email: "",
@@ -57,7 +58,6 @@ class LoginFormBase extends Component {
       .doSignInWithGoogle()
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        //this.props.history.push(ROUTES.HOME);
       })
       .catch((error) => {
         this.setState({ error });
@@ -127,9 +127,9 @@ class LoginFormBase extends Component {
             </Button>
           </div>
         </Form>
-        {/* <div className="text-center pb-2 pt-2">
+        <div className="text-center pb-2 pt-2">
           <Button color="light" style={{ width: "100%"}} onClick={this.onGoogleSubmit}> <div class="col-md-12"> <img className="mr-1" src="https://img.icons8.com/color/16/000000/google-logo.png"/> Log in with Google </div></Button>
-        </div> */}
+        </div>
       </div>
     );
   }
