@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Landing from "./components/landing/Landing";
+import Loading from "./components/dashboard/Loading";
 import Dashboard from "./components/dashboard/Dashboard";
 import { withFirebase } from "./firebase";
 import { AuthUserContext } from "./session";
@@ -17,7 +18,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      userDetails: INITIAL_USER_DETAILS,
+      userDetails: null,
       authUser: null,
       newUserDetails: null,
     };
@@ -37,9 +38,11 @@ class App extends Component {
             this.getUserDetails(this.state.authUser.uid);
           }
         } else {
-          this.setState({ authUser: null });
-          this.setState({ userDetails: INITIAL_USER_DETAILS });
-          this.setState({ newUserDetails: null });
+          this.setState({
+            authUser: null,
+            userDetails: null,
+            newUserDetails: null,
+          });
         }
       }
     );
@@ -112,20 +115,21 @@ class App extends Component {
 
   render() {
     if (this.state.authUser !== null) {
-      return (
-        <div style={appStyle}>
-          <AuthUserContext.Provider value={this.state}>
-            <Dashboard />
-          </AuthUserContext.Provider>
-        </div>
-      );
+      if (this.state.userDetails !== null) {
+        return (
+          <div style={appStyle}>
+            <AuthUserContext.Provider value={this.state}>
+              <Dashboard />
+            </AuthUserContext.Provider>
+          </div>
+        );
+      } else {
+        return <Loading />;
+      }
     } else {
       return (
         <div style={appStyle}>
-          <Landing
-            setNewUserDetails={this.setNewUserDetails}
-            error
-          />
+          <Landing setNewUserDetails={this.setNewUserDetails} error />
         </div>
       );
     }
