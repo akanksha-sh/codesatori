@@ -26,7 +26,7 @@ export class NavigationBar extends Component {
     return (
       <div>
         <Navbar color="dark" dark expand="md" fixed="top">
-          <NavbarBrand href="/">codesatori</NavbarBrand>
+          <NavbarBrand>codesatori</NavbarBrand>
           <NavbarToggler onClick={this.toggleNav} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar></Nav>

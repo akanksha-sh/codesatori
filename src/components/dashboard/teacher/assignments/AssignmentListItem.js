@@ -5,7 +5,6 @@ import {
   DropdownMenu,
   ListGroupItem,
   DropdownToggle,
-  ButtonGroup,
 } from "reactstrap";
 
 export default class AssignmentListItem extends Component {
@@ -95,10 +94,3 @@ export default class AssignmentListItem extends Component {
     );
   }
 }
-
-const buttonStyle = {
-  "background-color": "transparent",
-  outline: "none",
-  paddingBottom: "0px",
-  border: "none",
-};

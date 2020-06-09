@@ -52,6 +52,7 @@ export default class TeacherClasses extends Component {
               if (d.active) {
                 return <ClassListItem key={idx} class={d} delClass={del} />;
               }
+              return null;
             })}
           </ListGroup>
           <h4>Inactive</h4>
@@ -60,6 +61,7 @@ export default class TeacherClasses extends Component {
               if (!d.active) {
                 return <ClassListItem key={idx} class={d} delClass={del} />;
               }
+              return null;
             })}
           </ListGroup>
         </div>

@@ -76,6 +76,7 @@ export class StudentClasses extends Component {
               if (d.status === "active") {
                 return <ClassListItem key={idx} class={d} />;
               }
+              return null;
             })}
           </ListGroup>
         </div>
@@ -111,12 +112,6 @@ const ListStyle = {
   marginBottom: "20px",
   border: "solid 1px #ccc",
   borderRadius: "10",
-};
-
-const ClassesStyle = {
-  width: "80%",
-  marginTop: "3%",
-  marginLeft: "1%",
 };
 
 // Temporary values before hooking up the database

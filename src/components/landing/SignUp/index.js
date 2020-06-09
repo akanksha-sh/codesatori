@@ -12,17 +12,12 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "reactstrap";
-import axios from 'axios';
-import * as Globals from '../../../Globals';
-
 
 const SignUp = (props) => (
   <div className="container pl-3 pr-3" style={signUpStyle}>
-    <h1 className="display-5 text-center mb-3">
-      Start coding today!
-    </h1>
-    <div className="container" style={{width: "85%"}}>
-      <SignUpForm {... props}/>
+    <h1 className="display-5 text-center mb-3">Start coding today!</h1>
+    <div className="container" style={{ width: "85%" }}>
+      <SignUpForm {...props} />
     </div>
   </div>
 );
@@ -50,7 +45,7 @@ class SignUpFormBase extends Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       role: this.state.role,
-    }
+    };
     this.props.setNewUserDetails(userDetails);
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -66,13 +61,12 @@ class SignUpFormBase extends Component {
     event.preventDefault();
   };
 
-
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
   checkEmailValid = (email) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   };
 
@@ -87,14 +81,21 @@ class SignUpFormBase extends Component {
       return "Password does not contain a capital letter!"; // no capital letter
     } else if (str.search(/[a-zA-Z]/) === -1) {
       return "Password does not contain a letter!"; //no letter
-    } else if (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) !== -1) {
+    } else if (str.search(/[^a-zA-Z0-9!@#$%^&*()_+]/) !== -1) {
       return "Password contains a bad character!";
     }
     return 0; //valid
   };
 
   render() {
-    const { firstName, lastName, email, passwordOne, passwordTwo, role, error } = this.state;
+    const {
+      firstName,
+      lastName,
+      email,
+      passwordOne,
+      passwordTwo,
+      error,
+    } = this.state;
 
     const passwordValidState = this.checkPwdValid(passwordOne);
 
@@ -232,7 +233,13 @@ class SignUpFormBase extends Component {
                 <i className="material-icons md-dark">layers</i>
               </InputGroupText>
             </InputGroupAddon>
-            <Input type="select" name="role" id="role" value={this.state.value} onChange={this.onChange}>
+            <Input
+              type="select"
+              name="role"
+              id="role"
+              value={this.state.value}
+              onChange={this.onChange}
+            >
               <option value={0}>Student</option>
               <option value={1}>Teacher</option>
             </Input>

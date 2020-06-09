@@ -43,6 +43,7 @@ export default class TeacherAssignment extends Component {
               if (d.ongoing) {
                 return <AssignmentListItem key={idx} assignment={d} />;
               }
+              return null;
             })}
           </ListGroup>
           <h4>Recieved</h4>
@@ -51,6 +52,7 @@ export default class TeacherAssignment extends Component {
               if (!d.ongoing) {
                 return <AssignmentListItem key={idx} assignment={d} />;
               }
+              return null;
             })}
           </ListGroup>
         </div>

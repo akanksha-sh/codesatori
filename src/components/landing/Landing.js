@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 import LandingHeader from "./LandingHeader";
@@ -17,7 +16,10 @@ export class Landing extends Component {
   render() {
     return (
       <Router>
-        <LandingHeader handleLogIn={this.props.handleLogIn} setNewUserDetails={this.props.setNewUserDetails} />
+        <LandingHeader
+          handleLogIn={this.props.handleLogIn}
+          setNewUserDetails={this.props.setNewUserDetails}
+        />
         <Redirect from="*" to="/" />
         <Route
           exact
@@ -51,11 +53,8 @@ export class Landing extends Component {
                   className="lead text-center"
                   style={{ marginBottom: "10px" }}
                 >
-                  But feel free to have a look at our demo pages.
-                </p>
-                <p className="text-center">
-                  Use username: teacher and password: password to log in and
-                  take a look!
+                  But feel free to email us at contact.codesatori@gmail.com with
+                  any suggestions!
                 </p>
               </Jumbotron>
             </div>

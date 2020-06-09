@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link as RRLink } from "react-router-dom";
 import {
   UncontrolledDropdown,
   DropdownMenu,
@@ -10,7 +9,6 @@ import {
   Button,
 } from "reactstrap";
 import AddStudent from "./AddStudent";
-import ClassInfo from "./ClassInfo";
 
 export default class ClassListItem extends Component {
   constructor(props) {

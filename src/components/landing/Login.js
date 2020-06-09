@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { withFirebase } from "../../firebase";
-import { Link } from "react-router-dom";
 import {
   Button,
   Form,
@@ -10,9 +9,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Label,
 } from "reactstrap";
-import firebase from "firebase/app";
 
 const INITIAL_STATE = {
   email: "",
@@ -37,19 +34,15 @@ class LoginFormBase extends Component {
 
   onSubmit = (event) => {
     const { email, password } = this.state;
-    if (this.state.demo) {
-      this.props.handleLogIn(email, password);
-    } else {
-      this.props.firebase
-        .doSignInWithEmailAndPassword(email, password)
-        .then(() => {
-          this.setState({ ...INITIAL_STATE });
-          //this.props.history.push(ROUTES.HOME);
-        })
-        .catch((error) => {
-          this.setState({ error });
-        });
-    }
+    this.props.firebase
+      .doSignInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.setState({ ...INITIAL_STATE });
+        //this.props.history.push(ROUTES.HOME);
+      })
+      .catch((error) => {
+        this.setState({ error });
+      });
     event.preventDefault();
   };
 
@@ -103,17 +96,6 @@ class LoginFormBase extends Component {
               />
             </InputGroup>
           </FormGroup>
-          <FormGroup check className="mb-2">
-            <Label check>
-              <Input
-                type="checkbox"
-                id="checkbox2"
-                name="demo"
-                onChange={this.handleCheck}
-              />
-              Use demo login
-            </Label>
-          </FormGroup>
           {error && (
             <FormText className="mb-2">Invalid email or password</FormText>
           )}
@@ -128,7 +110,22 @@ class LoginFormBase extends Component {
           </div>
         </Form>
         <div className="text-center pb-2 pt-2">
-          <Button color="light" style={{ width: "100%"}} onClick={this.onGoogleSubmit}> <div class="col-md-12"> <img className="mr-1" src="https://img.icons8.com/color/16/000000/google-logo.png"/> Log in with Google </div></Button>
+          <Button
+            color="light"
+            style={{ width: "100%" }}
+            onClick={this.onGoogleSubmit}
+          >
+            {" "}
+            <div class="col-md-12">
+              {" "}
+              <img
+                className="mr-1"
+                src="https://img.icons8.com/color/16/000000/google-logo.png"
+                alt=""
+              />{" "}
+              Log in with Google{" "}
+            </div>
+          </Button>
         </div>
       </div>
     );
