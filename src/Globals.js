@@ -1,1 +1,1 @@
-export const BACKEND_URL = "http://localhost:8090/"
+export const BACKEND_URL = (process.env.REACT_APP_CODESATORI_PROD ? "https://codesatori-backend.herokuapp.com/" : "http://localhost:8090/");

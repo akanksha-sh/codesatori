@@ -44,7 +44,7 @@ export class LandingHeader extends Component {
           style={{ width: "30em" }}
         >
           <ModalBody>
-            <SignUp />
+            <SignUp setNewUserDetails={this.props.setNewUserDetails} />
           </ModalBody>
         </Modal>
         <Navbar color="dark" dark expand="md" fixed="top">

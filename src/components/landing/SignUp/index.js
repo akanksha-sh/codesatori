@@ -12,14 +12,17 @@ import {
   InputGroupAddon,
   InputGroupText,
 } from "reactstrap";
+import axios from 'axios';
+import * as Globals from '../../../Globals';
 
-const SignUp = () => (
+
+const SignUp = (props) => (
   <div className="container pl-3 pr-3" style={signUpStyle}>
     <h1 className="display-5 text-center mb-3">
       Start coding today!
     </h1>
     <div className="container" style={{width: "85%"}}>
-      <SignUpForm />
+      <SignUpForm {... props}/>
     </div>
   </div>
 );
@@ -30,6 +33,7 @@ const INITIAL_STATE = {
   email: "",
   passwordOne: "",
   passwordTwo: "",
+  role: 0,
   error: null,
 };
 
@@ -42,10 +46,17 @@ class SignUpFormBase extends Component {
 
   onSubmit = (event) => {
     const { email, passwordOne } = this.state;
-
+    const userDetails = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      role: this.state.role,
+    }
+    this.props.setNewUserDetails(userDetails);
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
+        console.log("User created successfully with payload:", authUser);
+        //Write code to use authData to add to Users
         this.setState({ ...INITIAL_STATE });
       })
       .catch((error) => {
@@ -54,6 +65,7 @@ class SignUpFormBase extends Component {
 
     event.preventDefault();
   };
+
 
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -82,7 +94,7 @@ class SignUpFormBase extends Component {
   };
 
   render() {
-    const { firstName, lastName, email, passwordOne, passwordTwo, error } = this.state;
+    const { firstName, lastName, email, passwordOne, passwordTwo, role, error } = this.state;
 
     const passwordValidState = this.checkPwdValid(passwordOne);
 
@@ -220,9 +232,9 @@ class SignUpFormBase extends Component {
                 <i className="material-icons md-dark">layers</i>
               </InputGroupText>
             </InputGroupAddon>
-            <Input type="select" name="role" id="role">
-              <option>Student</option>
-              <option>Teacher</option>
+            <Input type="select" name="role" id="role" value={this.state.value} onChange={this.onChange}>
+              <option value={0}>Student</option>
+              <option value={1}>Teacher</option>
             </Input>
           </InputGroup>
         </FormGroup>

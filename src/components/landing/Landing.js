@@ -17,7 +17,7 @@ export class Landing extends Component {
   render() {
     return (
       <Router>
-        <LandingHeader handleLogIn={this.props.handleLogIn} />
+        <LandingHeader handleLogIn={this.props.handleLogIn} setNewUserDetails={this.props.setNewUserDetails} />
         <Redirect from="*" to="/" />
         <Route
           exact

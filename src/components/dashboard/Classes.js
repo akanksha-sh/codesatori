@@ -8,7 +8,7 @@ export default class Classes extends Component {
 
   render() {
     const user = this.context;
-    if (user.userDetails.role === 'ROLE_TEACHER') {
+    if (user.userDetails.role === 1) {
       return <TeacherClasses />;
     }
     return <StudentClasses />;

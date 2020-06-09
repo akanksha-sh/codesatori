@@ -19,17 +19,20 @@ const DemoStudentDetails = {
   school: 'Demo High School'
 }
 
+const INITIAL_USER_DETAILS = {
+  firstName: '',
+  lastName: '',
+  role: 0
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userDetails: {
-        uuid: '',
-        role: '',
-        school: ''
-      },
-      authUser: null
+      userDetails: INITIAL_USER_DETAILS,
+      authUser: null,
+      newUserDetails: null
     };
   }
 
@@ -61,13 +64,16 @@ class App extends Component {
       console.log(authUserRet);
       if (authUserRet !== null) {
         this.setState({ authUser: authUserRet });
-        // ALWAYS USE getIdToken() !! If not it may be expired
-        this.state.authUser.getIdToken().then((idToken) => {
-          // get UserDetails from backend
-          this.getUserDetails(idToken);
-        });
+        if (this.state.newUserDetails !== null) {
+          this.initialiseUserDetails();
+        } else {
+          // ALWAYS USE getIdToken() !! If not it may be expired
+          this.getUserDetails(this.state.authUser.uid);
+        }
       } else {
         this.setState({authUser: null});
+        this.setState({userDetails: INITIAL_USER_DETAILS});
+        this.setState({newUserDetails: null});
       }
     });
   }
@@ -77,26 +83,61 @@ class App extends Component {
   }
 
   getUserDetails = (uid) => {
-    if (uid != null) {
-      axios({
-        url: Globals.BACKEND_URL + "user/" + uid,
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + uid,
-        },
-      })
-        .then((res) => {
-          const result = JSON.stringify(res.data)
-          console.log("Retrieved User Details: " + result);
-          if (result !== null) {
-            this.setState({ userDetails: JSON.parse(result) });
-          }
-          console.log("Current state: " + JSON.stringify(this.state));
+    this.state.authUser.getIdToken().then((idToken) => {
+      console.log("idToken: " + idToken);
+      console.log("uid: " + uid);
+      // get UserDetails from backend
+      console.log("Getting user details from: " + Globals.BACKEND_URL);
+      if (uid != null) {
+        axios({
+          url: Globals.BACKEND_URL + "user/" + uid,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        })
+          .then((res) => {
+            const result = JSON.stringify(res.data)
+            console.log("Retrieved User Details: " + result);
+            if (result !== null) {
+              this.setState({ userDetails: JSON.parse(result) });
+            }
+            console.log("Current state: " + JSON.stringify(this.state));
+          })
+          .catch((error) => {
+            console.log("Error from backend: ", error);
+          });
+      }
+    });
+  }
+
+  initialiseUserDetails = () => {
+    this.state.authUser.getIdToken().then((idToken) => {
+      console.log("Initialising new user details: " + JSON.stringify(this.state.newUserDetails));
+      // add data to PostgresSQL
+      if (idToken != null) {
+        axios({
+          url: Globals.BACKEND_URL + "user",
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+          data: { id: '', ... this.state.newUserDetails }
+        })
+        .then ((res) => {
+          console.log("Initialised new user details: " + JSON.stringify(res));
+          this.getUserDetails(this.state.authUser.uid);
+          this.setState({newUserDetails: null});
         })
         .catch((error) => {
           console.log("Error from backend: ", error);
         });
-    }
+      }
+    });
+  }
+
+  setNewUserDetails = (newDetails) => {
+    this.setState({newUserDetails: newDetails});
   }
 
   render() {
@@ -111,7 +152,7 @@ class App extends Component {
     } else {
       return (
         <div style={appStyle}>
-          <Landing handleLogIn={this.logged} error />
+          <Landing handleLogIn={this.logged} setNewUserDetails={this.setNewUserDetails} error />
         </div>
       );
     }

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import UserContext from "../../contexts/UserContext";
+import AuthUserContext from "../../session/Context";
 import TeacherAssignments from "./teacher/assignments/TeacherAssignments";
 import StudentAssignments from "./student/assignments/StudentAssignments";
 
 export default class Assignments extends Component {
-  static contextType = UserContext;
+  static contextType = AuthUserContext;
 
   constructor(props) {
     super(props);
@@ -13,7 +13,7 @@ export default class Assignments extends Component {
   render() {
     const user = this.context;
 
-    if (user.isTeacher) {
+    if (user.userDetails.role === 1) {
       return <TeacherAssignments />;
     }
     return <StudentAssignments />;
