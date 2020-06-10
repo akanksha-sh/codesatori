@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   NavLink,
 } from "reactstrap";
+import SignOut from "./settings/SignOut";
 
 export class NavigationBar extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ export class NavigationBar extends Component {
     return (
       <div>
         <Navbar color="dark" dark expand="md" fixed="top">
-          <NavbarBrand href="/">codesatori</NavbarBrand>
+          <NavbarBrand>codesatori</NavbarBrand>
           <NavbarToggler onClick={this.toggleNav} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="mr-auto" navbar></Nav>
@@ -55,7 +56,9 @@ export class NavigationBar extends Component {
               <NavItem>
                 <UncontrolledDropdown nav>
                   <DropdownToggle nav>Settings</DropdownToggle>
-                  <DropdownMenu right></DropdownMenu>
+                  <DropdownMenu right>
+                    <SignOut />
+                  </DropdownMenu>
                 </UncontrolledDropdown>
               </NavItem>
             </Nav>

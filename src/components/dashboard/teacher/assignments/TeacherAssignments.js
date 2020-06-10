@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { ListGroup } from "reactstrap";
-import { listGroup, pageTitle, contentDiv } from "../../../../Style";
-import AssignmentListItem from "./AssignmentListItem"
-import AddAssignment from "./AddAssignment"
+import { listGroup } from "../../../../Style";
+import AddAssignment from "./AddAssignment";
+import AssignmentListItem from "./AssignmentListItem";
+import { pageTitle, contentDiv } from "../../../../Style";
 
 export default class TeacherAssignment extends Component {
   constructor(props) {
@@ -23,18 +24,18 @@ export default class TeacherAssignment extends Component {
       id: 7,
       title,
       ongoing: true,
-    }
-    this.setState({assignments: [...this.state.assignments, newAssignment]})
-  }
+    };
+    this.setState({ assignments: [...this.state.assignments, newAssignment] });
+  };
 
   render() {
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
-        <br/>
-        <AddAssignment addAssignment={this.addAssignment}/> 
-        <br/>
-        <br/>
+        <br />
+        <AddAssignment addAssignment={this.addAssignment} />
+        <br />
+        <br />
         <div>
           <h4>Ongoing</h4>
           <ListGroup style={listGroup}>
@@ -42,6 +43,7 @@ export default class TeacherAssignment extends Component {
               if (d.ongoing) {
                 return <AssignmentListItem key={idx} assignment={d} />;
               }
+              return null;
             })}
           </ListGroup>
           <h4>Recieved</h4>
@@ -50,6 +52,7 @@ export default class TeacherAssignment extends Component {
               if (!d.ongoing) {
                 return <AssignmentListItem key={idx} assignment={d} />;
               }
+              return null;
             })}
           </ListGroup>
         </div>
@@ -62,26 +65,31 @@ const retrievedAssignments = [
   {
     id: 1,
     title: "Tutorial 2 : Programming in Python",
+    marked: false,
     ongoing: true,
   },
   {
     id: 2,
     title: "Tutorial 1 : Linked-Lists",
+    marked: false,
     ongoing: true,
   },
   {
     id: 3,
     title: "Tutorial 2 : Microprocessors",
+    marked: false,
     ongoing: true,
   },
   {
     id: 4,
     title: "Tutorial 1 : Programming in Python",
+    marked: false,
     ongoing: false,
   },
   {
     id: 5,
     title: "Tutorial 2 : What are supercomputers?",
+    marked: true,
     ongoing: false,
   },
 ];

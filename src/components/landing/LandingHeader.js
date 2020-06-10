@@ -5,27 +5,48 @@ import {
   NavbarToggler,
   NavbarBrand,
   Nav,
+  NavItem,
+  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
+  ModalBody,
+  Modal,
+  ModalFooter,
 } from "reactstrap";
 import Login from "./Login";
-import Signup from "./Signup";
+import SignUp from "./SignUp";
+import { SignUpLink } from "./SignUp";
 
 export class LandingHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
+      signUpOpen: false,
     };
   }
 
   toggleNav = () => this.setState({ isOpen: !this.state.isOpen });
 
+  signUpToggle = (e) => {
+    e.preventDefault();
+    this.setState({ signUpOpen: !this.state.signUpOpen });
+  };
+
   render() {
     return (
       <div>
+        <Modal
+          isOpen={this.state.signUpOpen}
+          toggle={this.signUpToggle}
+          centered
+          style={{ width: "30em" }}
+        >
+          <ModalBody>
+            <SignUp setNewUserDetails={this.props.setNewUserDetails} />
+          </ModalBody>
+        </Modal>
         <Navbar color="dark" dark expand="md" fixed="top">
           <NavbarBrand href="/">codesatori</NavbarBrand>
           <NavbarToggler onClick={this.toggleNav} />
@@ -40,14 +61,16 @@ export class LandingHeader extends Component {
                 <DropdownToggle nav>Log In</DropdownToggle>
                 <DropdownMenu right>
                   <Login handleLogIn={this.props.handleLogIn} />
+                  <ModalFooter>
+                    <SignUpLink />
+                  </ModalFooter>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <UncontrolledDropdown nav>
-                <DropdownToggle nav>Sign Up</DropdownToggle>
-                <DropdownMenu right>
-                  <Signup />
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                <NavLink onClick={this.signUpToggle} href="">
+                  Sign Up
+                </NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>

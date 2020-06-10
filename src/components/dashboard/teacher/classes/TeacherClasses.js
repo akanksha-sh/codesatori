@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { ListGroup } from "reactstrap";
 import { listGroup } from "../../../../Style";
 import ClassListItem from "./ClassListItem";
+import PropTypes from "prop-types";
 import { pageTitle, contentDiv } from "../../../../Style";
 import AddClass from "./AddClass";
 
@@ -11,8 +12,8 @@ export default class TeacherClasses extends Component {
   }
 
   state = {
-    classes: []
-  }
+    classes: [],
+  };
 
   componentDidMount() {
     this.setState({
@@ -21,8 +22,9 @@ export default class TeacherClasses extends Component {
   }
 
   delClass = (id) => {
-    this.setState(
-      {classes: [...this.state.classes.filter(i => i.id !== id)]})
+    this.setState({
+      classes: [...this.state.classes.filter((i) => i.id !== id)],
+    });
   }
 
   addClass = (title) => {
@@ -31,34 +33,35 @@ export default class TeacherClasses extends Component {
       title,
       active: true,
       ongoingAssignments: [],
-    }
-    this.setState({classes: [...this.state.classes, newClass]})
-  }
+    };
+    this.setState({ classes: [...this.state.classes, newClass] });
+  };
 
   render() {
-    const del = this.delClass
-
+    const del = this.delClass;
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Classes </h2>
-        <AddClass addClass={this.addClass}/>
-        <br/>
-        <br/>
+        <AddClass addClass={this.addClass} />
+        <br />
+        <br />
         <div>
           <h4>Active</h4>
           <ListGroup style={listGroup}>
             {this.state.classes.map(function (d, idx) {
               if (d.active) {
-                return <ClassListItem key={idx} class={d} delClass={del}/>;
+                return <ClassListItem key={idx} class={d} delClass={del} />;
               }
+              return null;
             })}
           </ListGroup>
           <h4>Inactive</h4>
           <ListGroup style={listGroup}>
             {this.state.classes.map(function (d, idx) {
               if (!d.active) {
-                return <ClassListItem key={idx} class={d}  delClass={del} />;
+                return <ClassListItem key={idx} class={d} delClass={del} />;
               }
+              return null;
             })}
           </ListGroup>
         </div>
@@ -66,6 +69,10 @@ export default class TeacherClasses extends Component {
     );
   }
 }
+
+TeacherClasses.propTypes = {
+  delTodo: PropTypes.func.isRequired,
+};
 
 const retrievedClasses = [
   {

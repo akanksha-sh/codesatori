@@ -7,6 +7,10 @@ import ClassListItem from './StudentClassListItem'
 import { pageTitle, contentDiv } from "../../../../Style";
 
 export class StudentClasses extends Component {
+  state = {
+    classes: [],
+    inactiveShown: false,
+  };
 
 	state={
 		classes: [],
@@ -44,9 +48,10 @@ export class StudentClasses extends Component {
 		this.setState({classes: DummyClassValues.classes})
 	}
 
-	toggleShow = () => this.setState({
-		inactiveShown: !this.state.inactiveShown
-	});
+  toggleShow = () =>
+    this.setState({
+      inactiveShown: !this.state.inactiveShown,
+    });
 
 	render() {
 		var inactiveClasses=[...this.state.classes.filter((c)=>c.status==='inactive')]
@@ -127,4 +132,4 @@ const DummyClassValues={
 	],
 };
 
-export default StudentClasses
+export default StudentClasses;

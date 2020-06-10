@@ -54,6 +54,12 @@ th {
   display: block;
 }
 
+/* Prevent modal from shifting the content */
+body { 
+  padding-right: 0 !important;
+  overflow-y: scroll !important; 
+}
+
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd;}
 

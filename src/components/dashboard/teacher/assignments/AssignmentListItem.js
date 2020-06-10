@@ -5,7 +5,6 @@ import {
   DropdownMenu,
   ListGroupItem,
   DropdownToggle,
-  ButtonGroup,
 } from "reactstrap";
 
 export default class AssignmentListItem extends Component {
@@ -19,19 +18,18 @@ export default class AssignmentListItem extends Component {
 
   render() {
     if (!this.props.assignment.ongoing) {
-
       const renderButton = () => {
-        if(this.props.assignment.marked) {
-          return <i class="material-icons md-dark">assessment</i>
+        if (this.props.assignment.marked) {
+          return <i class="material-icons md-dark">assessment</i>;
         } else {
-          return <i class="material-icons md-dark">check</i>
+          return <i class="material-icons md-dark">check</i>;
         }
-      }
+      };
 
       const renderStatus = () => {
-        let status = this.props.assignment.marked? 'Marked' : 'Pending';
+        let status = this.props.assignment.marked ? "Marked" : "Pending";
         return status;
-      }
+      };
 
       return (
         <ListGroupItem
@@ -45,14 +43,17 @@ export default class AssignmentListItem extends Component {
 
           <div style={{ float: "right" }}>
             {renderStatus()}
-          <UncontrolledDropdown onClick={this.clickHandler}>
-            <DropdownToggle color="light" className="transparentDropdownToggle">
-              {renderButton()}
-            </DropdownToggle>
-            <DropdownMenu right>
-              {/* <ClassInfo class={this.props.class} /> */}
-            </DropdownMenu>
-          </UncontrolledDropdown>
+            <UncontrolledDropdown onClick={this.clickHandler}>
+              <DropdownToggle
+                color="light"
+                className="transparentDropdownToggle"
+              >
+                {renderButton()}
+              </DropdownToggle>
+              <DropdownMenu right>
+                {/* <ClassInfo class={this.props.class} /> */}
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </div>
         </ListGroupItem>
       );
@@ -67,22 +68,18 @@ export default class AssignmentListItem extends Component {
       >
         {this.props.assignment.title}
         <div style={{ float: "right" }}>
-          1 w {" "}
+          1 w{" "}
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
               <i class="material-icons md-dark">chat_bubble_outline</i>
             </DropdownToggle>
-            <DropdownMenu right>
-              {/* <AddStudent /> */}
-            </DropdownMenu>
+            <DropdownMenu right>{/* <AddStudent /> */}</DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
               <i class="material-icons md-dark">update</i>
             </DropdownToggle>
-            <DropdownMenu right>
-              {/* <AddStudent /> */}
-            </DropdownMenu>
+            <DropdownMenu right>{/* <AddStudent /> */}</DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
@@ -97,10 +94,3 @@ export default class AssignmentListItem extends Component {
     );
   }
 }
-
-const buttonStyle = {
-  "background-color": "transparent",
-  outline: "none",
-  paddingBottom: "0px",
-  border: "none",
-};
