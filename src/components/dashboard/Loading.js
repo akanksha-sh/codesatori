@@ -1,25 +1,13 @@
-import React, { Component } from "react";
-import { Navbar, NavbarBrand, Spinner } from "reactstrap";
+import React from "react";
+import { Spinner } from "reactstrap";
 
-export default class Loading extends Component {
-  render() {
-    return (
-      <div>
-        <Navbar color="dark" dark expand="md" fixed="top">
-          <NavbarBrand>codesatori</NavbarBrand>
-        </Navbar>
-        <div
-          style={{
-            left: "50%",
-            position: "fixed",
-            top: "50%",
-          }}
-        >
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </div>
-      </div>
-    );
-  }
-}
+const Loading = () => (
+  <div className="d-flex justify-content-center text-center min-vh-100 align-items-center">
+    <div>
+      <Spinner color="dark" className="mb-2" />
+      <p>Logging you in...</p>
+    </div>
+  </div>
+);
+
+export default Loading;

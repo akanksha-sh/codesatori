@@ -70,6 +70,13 @@ class SignUpFormBase extends Component {
     return re.test(String(email).toLowerCase());
   };
 
+  checkNameValid = (name) => {
+    if (name.search(/[^a-zA-Z]/) !== -1) {
+      return false;
+    }
+    return true;
+  }
+
   checkPwdValid = (str) => {
     if (str.length < 6) {
       return "Password is too short!"; //too short
@@ -94,11 +101,13 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      role,
       error,
     } = this.state;
 
     const passwordValidState = this.checkPwdValid(passwordOne);
-
+    const isFirstNameInvalid = !this.checkNameValid(firstName);
+    const isLastNameInvalid = !this.checkNameValid(lastName);
     const isEmailInvalid = !this.checkEmailValid(email); //check email
     const isPasswordInvalid = passwordValidState !== 0; //check if password contains stuff
     const isPasswordNotTheSame = passwordOne !== passwordTwo;
@@ -109,6 +118,8 @@ class SignUpFormBase extends Component {
       firstName === "" ||
       lastName === "";
     const isInvalid =
+      isFirstNameInvalid ||
+      isLastNameInvalid ||
       isEmailInvalid ||
       isPasswordInvalid ||
       isPasswordNotTheSame ||
@@ -130,8 +141,12 @@ class SignUpFormBase extends Component {
               onChange={this.onChange}
               id="firstName"
               placeholder="First Name"
-              valid={firstName !== ""}
+              invalid={firstName !== "" && isFirstNameInvalid}
+              valid={firstName !== "" && !isFirstNameInvalid}
             />
+            <FormFeedback valid={false}>
+              Please enter a valid first name.
+            </FormFeedback>
           </InputGroup>
         </FormGroup>
         <FormGroup className="mb-3">
@@ -148,8 +163,12 @@ class SignUpFormBase extends Component {
               onChange={this.onChange}
               id="lastName"
               placeholder="Last Name"
-              valid={lastName !== ""}
+              invalid={lastName !== "" && isLastNameInvalid}
+              valid={lastName !== "" && !isLastNameInvalid}
             />
+            <FormFeedback valid={false}>
+              Please enter a valid last name.
+            </FormFeedback>
           </InputGroup>
         </FormGroup>
         <FormGroup className="mb-3">
@@ -237,7 +256,7 @@ class SignUpFormBase extends Component {
               type="select"
               name="role"
               id="role"
-              value={this.state.value}
+              value={role}
               onChange={this.onChange}
             >
               <option value={0}>Student</option>
