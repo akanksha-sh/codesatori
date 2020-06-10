@@ -22,6 +22,8 @@ export class NavigationBar extends Component {
     };
   }
 
+  toggleNav = () => this.setState({isOpen: !this.state.isOpen});
+
   render() {
     return (
       <div>

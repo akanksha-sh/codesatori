@@ -161,6 +161,7 @@ export default class ClassListItem extends Component {
           </Collapse>
         </div>
       </ListGroupItem>
+
     );
   }
 }
