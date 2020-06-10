@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "npm install && npm run build",
+    "heroku-postbuild": "npm update && npm install && npm run build",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
     "env": "export $(cat .env | xargs) && env"
   },
