@@ -32,4 +32,4 @@ deploy-heroku:
   only:
     - master
   script:
-    - dpl --provider=heroku --app=codesatori --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=codesatori --api-key=$HEROKU_API_KEY --skip_cleanup
