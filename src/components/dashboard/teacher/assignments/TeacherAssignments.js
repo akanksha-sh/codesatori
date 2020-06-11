@@ -6,7 +6,8 @@ import AssignmentListItem from "./AssignmentListItem";
 import { pageTitle, contentDiv } from "../../../../Style";
 import * as Globals from '../../../../Globals';
 import axios from 'axios';
-import AuthUserContext from '../../../../session/Context'
+import AuthUserContext from '../../../../session/Context';
+import { Link as RRLink } from "react-router-dom";
 
 export default class TeacherAssignment extends Component {
   static contextType = AuthUserContext;
@@ -35,6 +36,7 @@ export default class TeacherAssignment extends Component {
   };
 
   getAssignments = () => {
+    this.setState({ isLoading: true });
     const userContext = this.context;
     userContext.authUser.getIdToken().then(async (idToken) => 
       {
@@ -74,7 +76,7 @@ export default class TeacherAssignment extends Component {
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
-        <Button className="float-right">Create new assignment</Button>
+        <Button tag={RRLink} exact to="create" className="float-right">Create new assignment</Button>
         <br />
         {
           isLoading ? 
@@ -88,7 +90,7 @@ export default class TeacherAssignment extends Component {
             <ListGroupItem>You have no current assignments.</ListGroupItem> : 
             <div>
               {ongoingAssignments.map((d, idx) => {
-                return <AssignmentListItem key={idx} assignment={d} classNames={this.state.classNames} />;
+                return <AssignmentListItem key={idx} assignment={d} classNames={this.state.classNames} refresh={this.getAssignments} />;
             })}
             </div>
             }

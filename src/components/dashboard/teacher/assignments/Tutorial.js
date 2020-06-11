@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { pageTitle, contentDiv } from "../../../../Style";
-import { ListGroup } from "reactstrap";
+import { ListGroup, Input } from "reactstrap";
 import { listGroup } from "../../../../Style";
 import AddQuestion from './AddQuestion';
 import TutorialListItem from './TutorialListItem';
@@ -32,7 +32,8 @@ export class Tutorial extends Component {
         const del = this.delQuestion
         return (
           <div>
-            <h2 style={pageTitle}> Assignment 1: Intro to Python </h2>
+            <h3>Assignment Title: </h3>
+            <Input type="text" name="title" id="title" placeholder="Title" />
             <br/>
 
             <AddQuestion addQuestion={this.addQuestion} />

@@ -33,52 +33,20 @@ export default class AssignmentListItem extends Component {
     e.stopPropagation();
   }
 
+  onEditClick = (e) => {
+    //Edit button
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   render() {
     const assignmentStatuses = this.props.assignment.assignmentStatus;
     const classNames = this.props.classNames;
+    const publishedClassIds = assignmentStatuses.map(({classId}) => (classId));
+    const classesNotPublished = classNames.filter((className) => {
+      return !publishedClassIds.includes(className.classId);
+    });
     const dateNow = Date.now();
- 
-    // if (false) {
-    //   const renderButton = () => {
-    //     if (this.props.assignment.marked) {
-    //       return <i class="material-icons md-dark">assessment</i>;
-    //     } else {
-    //       return <i class="material-icons md-dark">check</i>;
-    //     }
-    //   };
-
-    //   const renderStatus = () => {
-    //     let status = this.props.assignment.marked ? "Marked" : "Pending";
-    //     return status;
-    //   };
-
-    //   return (
-    //     <ListGroupItem
-    //       // disabled
-    //       tag={RRLink}
-    //       exact
-    //       to={"/assignments/" + this.props.assignment.id}
-    //       action
-    //     >
-    //       {this.props.assignment.title}
-
-    //       <div style={{ float: "right" }}>
-    //         {renderStatus()}
-    //         <UncontrolledDropdown onClick={this.clickHandler}>
-    //           <DropdownToggle
-    //             color="light"
-    //             className="transparentDropdownToggle"
-    //           >
-    //             {renderButton()}
-    //           </DropdownToggle>
-    //           <DropdownMenu right>
-    //             {/* <ClassInfo class={this.props.class} /> */}
-    //           </DropdownMenu>
-    //         </UncontrolledDropdown>
-    //       </div>
-    //     </ListGroupItem>
-    //   );
-    // }
 
     return (
       <ListGroupItem
@@ -96,14 +64,20 @@ export default class AssignmentListItem extends Component {
             <Container>
               <Row>
                 <Col xs="auto">
-                <Button onClick={this.onClick}>Edit</Button> 
+                <Button onClick={this.onEditClick}>Edit</Button> 
                 </Col>
                 <Col className="ml-3">
-                  <AddAssignment classes={this.props.classNames}/>
+                  <AddAssignment 
+                    classes={classesNotPublished} 
+                    assignmentId={this.props.assignment.assignmentId} 
+                    refresh={this.props.refresh}/>
                 </Col>
               </Row>
+              <Row className="mt-4 mx-1">
+                <h5>Classes published to</h5>
+              </Row>
               <Row>
-              <ListGroup className="mt-3 mx-3" style={{width: "100%"}}>
+              <ListGroup className="mt-1 mx-3" style={{width: "100%"}}>
                 {assignmentStatuses.length === 0 ? 
                 <ListGroupItem className="justify-content-between">Not published to any classes yet. </ListGroupItem>
                 : assignmentStatuses.map((status) => {
@@ -131,7 +105,7 @@ export default class AssignmentListItem extends Component {
                         </UncontrolledDropdown>
                       </div> : 
                       <div className="float-right">
-                      Marked
+                        Marked
                         <UncontrolledDropdown onClick={this.clickHandler}>
                         <DropdownToggle
                           color="light"
