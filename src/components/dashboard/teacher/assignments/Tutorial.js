@@ -4,14 +4,12 @@ import { ListGroup } from "reactstrap";
 import { listGroup } from "../../../../Style";
 import AddQuestion from './AddQuestion';
 import TutorialListItem from './TutorialListItem';
-// import UniqueId from 'react-html-id'
 
 export class Tutorial extends Component {
     constructor() {
         super();
         this.state = {
             questions: [],
-            id_next: 1,
           };
     }
     
@@ -33,14 +31,17 @@ export class Tutorial extends Component {
     render() {
         const del = this.delQuestion
         return (
-          <div style={contentDiv}>
+          <div>
             <h2 style={pageTitle}> Assignment 1: Intro to Python </h2>
+            <br/>
+
             <AddQuestion addQuestion={this.addQuestion} />
             <br />
             <br />
             <div>
               <ListGroup style={listGroup}>
                 {this.state.questions.map(function (d, idx) {
+                    d.id = idx;
                     return <TutorialListItem key={idx} question={d} delQuestion={del} />;
                   }
                 )}              

@@ -18,10 +18,10 @@ export class AddQuestion extends Component {
     render() {
         return (
             <Form onSubmit={this.onSubmit} style={{ display: "flex" }}>
-                <FormGroup style={formElemStyle} className="mb-2 mr-sm-2 mb-sm-0">
-                <Label for="title" className="mr-sm-2">
+                <FormGroup>
+                <Label for="title">
                     {/* {" "} */}
-                    Title
+                    Question
                 </Label>
                 <Input
                     type="text"
