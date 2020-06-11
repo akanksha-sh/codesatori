@@ -1,22 +1,28 @@
 import React, { Component } from "react";
-import { ListGroup } from "reactstrap";
+import { ListGroup, ListGroupItem, Spinner } from "reactstrap";
 import { listGroup } from "../../../../Style";
 import AddAssignment from "./AddAssignment";
 import AssignmentListItem from "./AssignmentListItem";
 import { pageTitle, contentDiv } from "../../../../Style";
+import * as Globals from '../../../../Globals';
+import axios from 'axios';
+import AuthUserContext from '../../../../session/Context'
 
 export default class TeacherAssignment extends Component {
+  static contextType = AuthUserContext;
+
   constructor(props) {
     super(props);
     this.state = {
       assignments: [],
+      classes: [],
+      isLoading: true,
+      error: null
     };
   }
 
   componentDidMount() {
-    this.setState({
-      assignments: retrievedAssignments,
-    });
+    this.getAssignments();
   }
 
   addAssignment = (title) => {
@@ -28,7 +34,38 @@ export default class TeacherAssignment extends Component {
     this.setState({ assignments: [...this.state.assignments, newAssignment] });
   };
 
+  getAssignments = () => {
+    const userContext = this.context;
+    userContext.authUser.getIdToken().then(async (idToken) => {
+      let [classRet, assignmentRet] = await Promise.all([axios({
+        url: Globals.BACKEND_URL + "classes/teacher",
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + idToken,
+        },
+      }), axios({
+        url: Globals.BACKEND_URL + "assignments/teacher",
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + idToken,
+        },
+      })]);
+      console.log("Retrieved classes: " + JSON.stringify(classRet.data));
+      console.log("Retrieved assignment: " + JSON.stringify(assignmentRet.data));
+      this.setState({ assignments: assignmentRet.data, classes: classRet.data });
+      this.setState({ isLoading: false });
+    }).catch((errorRet) => {
+      console.log("Error from backend: ", errorRet);
+      this.setState({ error: errorRet });
+      this.setState({ isLoading: false });
+    });
+  }
+    
+
   render() {
+    const { assignments, isLoading} = this.state;
+    const ongoingAssignments = assignments.filter((a) => {return a.ongoing;});
+    const receivedAssignments = assignments.filter((a) => {return !a.ongoing;});
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
@@ -36,26 +73,37 @@ export default class TeacherAssignment extends Component {
         <AddAssignment addAssignment={this.addAssignment} />
         <br />
         <br />
-        <div>
+        {
+          isLoading ? 
+          <div className="text-center">
+            <Spinner color="dark" className="mb-2" />
+          </div> : 
+          <div>
           <h4>Ongoing</h4>
           <ListGroup style={listGroup}>
-            {this.state.assignments.map(function (d, idx) {
-              if (d.ongoing) {
+            {ongoingAssignments.length === 0 ? 
+            <ListGroupItem>You currently have no ongoing assignments.</ListGroupItem> : 
+            <div>
+              {ongoingAssignments.map(function (d, idx) {
                 return <AssignmentListItem key={idx} assignment={d} />;
-              }
-              return null;
             })}
+            </div>
+            }
           </ListGroup>
-          <h4>Recieved</h4>
+          <h4>Received</h4>
           <ListGroup style={listGroup}>
-            {this.state.assignments.map(function (d, idx) {
-              if (!d.ongoing) {
-                return <AssignmentListItem key={idx} assignment={d} />;
-              }
-              return null;
-            })}
+            {
+              receivedAssignments.length === 0 ? 
+              <ListGroupItem>You currently have no received assignments.</ListGroupItem> : 
+              <div>
+                {receivedAssignments.map(function (d, idx) {
+                  return <AssignmentListItem key={idx} assignment={d} />;
+                })}
+              </div>
+            }
           </ListGroup>
         </div>
+        }
       </div>
     );
   }
