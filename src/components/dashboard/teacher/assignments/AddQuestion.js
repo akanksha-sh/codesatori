@@ -58,12 +58,21 @@ export class AddQuestion extends Component {
                   </InputGroupText>
                 </InputGroupAddon>
                 <Input
+<<<<<<< HEAD
                   type="textarea"
                   name="title"
                   id="title"
                   placeholder="Write a description of what you want your student to program..."
                   value={this.state.value}
                   onChange={this.onChange}
+=======
+                    type="textarea"
+                    name="title"
+                    id="title"
+                    placeholder="Write a function ..."
+                    value={this.state.value}
+                    onChange={this.onChange}
+>>>>>>> dfd85f1bebf2e7e53a907c0c7a4decd8f3e46325
                 />
               </InputGroup>
             </FormGroup>
