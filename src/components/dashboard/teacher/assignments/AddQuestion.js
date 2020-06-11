@@ -4,16 +4,16 @@ import { Button, Form, FormGroup, Label, Input, ListGroupItem, Container } from 
 export class AddQuestion extends Component {
 
     state = {
-        title: " ",
-      };
+      title: " ",
+    };
     
-      onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-    
-      onSubmit = (e) => {
-        e.preventDefault();
-        this.props.addQuestion(this.state.title);
-        this.setState({ title: "" });
-      };
+    onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+  
+    onSubmit = (e) => {
+      e.preventDefault();
+      this.props.addQuestion(this.state.title);
+      this.setState({ title: "" });
+    };
 
     render() {
         return (
@@ -30,7 +30,7 @@ export class AddQuestion extends Component {
                     type="textarea"
                     name="title"
                     id="title"
-                    placeholder="Write a fuction ..."
+                    placeholder="Write a function ..."
                     value={this.state.value}
                     onChange={this.onChange}
                 />

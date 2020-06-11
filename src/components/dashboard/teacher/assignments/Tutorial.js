@@ -9,8 +9,8 @@ export class Tutorial extends Component {
     constructor() {
         super();
         this.state = {
-            questions: [],
-          };
+          questions: [],
+        };
     }
     
 
