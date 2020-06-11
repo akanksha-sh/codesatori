@@ -84,7 +84,7 @@ export default class TeacherAssignment extends Component {
           <h4>Current</h4>
           <ListGroup style={listGroup}>
             {ongoingAssignments.length === 0 ? 
-            <ListGroupItem>You currently have no current assignments.</ListGroupItem> : 
+            <ListGroupItem>You have no current assignments.</ListGroupItem> : 
             <div>
               {ongoingAssignments.map((d, idx) => {
                 return <AssignmentListItem key={idx} assignment={d} classNames={this.state.classNames} />;
@@ -96,7 +96,7 @@ export default class TeacherAssignment extends Component {
           <ListGroup style={listGroup}>
             {
               archivedAssignments.length === 0 ? 
-              <ListGroupItem>You currently have no received assignments.</ListGroupItem> : 
+              <ListGroupItem>You have no archived assignments.</ListGroupItem> : 
               <div>
                 {archivedAssignments.map(function (d, idx) {
                   return <AssignmentListItem key={idx} assignment={d} />;

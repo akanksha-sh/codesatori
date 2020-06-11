@@ -36,8 +36,8 @@ export default class AssignmentListItem extends Component {
   render() {
     const assignmentStatuses = this.props.assignment.assignmentStatus;
     const classNames = this.props.classNames;
+    const dateNow = Date.now();
  
-
     if (false) {
       const renderButton = () => {
         if (this.props.assignment.marked) {
@@ -103,13 +103,49 @@ export default class AssignmentListItem extends Component {
                 </Col>
               </Row>
               <Row>
-              <ListGroup className="mt-3" style={{width: "100%"}}>
+              <ListGroup className="mt-3 mx-3" style={{width: "100%"}}>
                 {assignmentStatuses.length === 0 ? 
                 <ListGroupItem className="justify-content-between">Not published to any classes yet. </ListGroupItem>
                 : assignmentStatuses.map((status) => {
                   const className = classNames.find(cls => cls.classId === status.classId).name;
+                  const deadline = new Date(status.deadline);
+                  const ongoing = deadline > dateNow;
                   return (
-                  <ListGroupItem className="justify-content-between">{className}</ListGroupItem>
+                  <ListGroupItem className="justify-content-between">
+                    {className}
+                    <span className="float-right">
+                      {ongoing ? ("Deadline: " + deadline) 
+                      : (status.status === 0 ? 
+                      <div className="float-right">
+                        Pending
+                        <UncontrolledDropdown onClick={this.clickHandler}>
+                        <DropdownToggle
+                          color="light"
+                          className="transparentDropdownToggle"
+                        >
+                        <i class="material-icons md-dark">check</i>
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                          {/* Pending dropdown */}
+                        </DropdownMenu>
+                        </UncontrolledDropdown>
+                      </div> : 
+                      <div className="float-right">
+                      Marked
+                        <UncontrolledDropdown onClick={this.clickHandler}>
+                        <DropdownToggle
+                          color="light"
+                          className="transparentDropdownToggle"
+                        >
+                        <i class="material-icons md-dark">assessment</i>
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                          {/* Marked dropdown */}
+                        </DropdownMenu>
+                        </UncontrolledDropdown>
+                      </div> )}
+                    </span>
+                  </ListGroupItem>
                   );
                 })}
 							</ListGroup>
