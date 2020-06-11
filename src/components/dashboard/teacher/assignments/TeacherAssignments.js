@@ -75,9 +75,6 @@ export default class TeacherAssignment extends Component {
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
         <br />
-        <AddAssignment addAssignment={this.addAssignment} />
-        <br />
-        <br />
         {
           isLoading ? 
           <div className="text-center">

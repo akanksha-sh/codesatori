@@ -7,6 +7,7 @@ import {
   Collapse,
   UncontrolledDropdown,
   DropdownMenu,
+  ListGroup,
   ListGroupItem,
   Row,
   DropdownToggle,
@@ -22,12 +23,21 @@ export default class AssignmentListItem extends Component {
     }
   }
 
-  clickHandler = (e) => {
+  open = (e) => {
     this.setState({isInfoOpen: !this.state.isInfoOpen});
     e.preventDefault();
   };
 
+  onClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   render() {
+    const assignmentStatuses = this.props.assignment.assignmentStatus;
+    const classNames = this.props.classNames;
+ 
+
     if (false) {
       const renderButton = () => {
         if (this.props.assignment.marked) {
@@ -75,7 +85,7 @@ export default class AssignmentListItem extends Component {
         tag="a"
         href=""
         action
-        onClick={this.clickHandler}
+        onClick={this.open}
       >
         <span style={{width: "80%"}}>{this.props.assignment.name}</span>
         <i className="material-icons md-dark float-right">expand_more</i>
@@ -86,11 +96,23 @@ export default class AssignmentListItem extends Component {
             <Container>
               <Row>
                 <Col xs="auto">
-                <Button>Edit</Button> 
+                <Button onClick={this.onClick}>Edit</Button> 
                 </Col>
-                <Col xs="auto">
-                <AddAssignment />
+                <Col className="ml-3">
+                  <AddAssignment classes={this.props.classNames}/>
                 </Col>
+              </Row>
+              <Row>
+              <ListGroup className="mt-3" style={{width: "100%"}}>
+                {assignmentStatuses.length === 0 ? 
+                <ListGroupItem className="justify-content-between">Not published to any classes yet. </ListGroupItem>
+                : assignmentStatuses.map((status) => {
+                  const className = classNames.find(cls => cls.classId === status.classId).name;
+                  return (
+                  <ListGroupItem className="justify-content-between">{className}</ListGroupItem>
+                  );
+                })}
+							</ListGroup>
               </Row>
             </Container>
             </div>
@@ -124,3 +146,6 @@ export default class AssignmentListItem extends Component {
 //             </DropdownMenu>
 //           </UncontrolledDropdown>
 //         </div> }
+
+// [{"classId":"88082810-0614-3091-8084-2c7173ef0793","assignmentId":"88082810-0614-3091-8084-2c7173ef0793",
+// "deadline":"2018-01-01T00:00:00.000+00:00","status":0}]}

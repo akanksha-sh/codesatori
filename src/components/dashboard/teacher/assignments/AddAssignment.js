@@ -25,10 +25,12 @@ export class AddAssignment extends Component {
   };
 
   render() {
+    const classes = this.props.classes;
+
     return (
       <Form onSubmit={this.onSubmit} inline>
-        <FormGroup>
-          <Label for="date">
+        <FormGroup className="mr-2">
+          <Label for="date" className="mr-2">
             {" "}
             Deadline
           </Label>
@@ -39,10 +41,11 @@ export class AddAssignment extends Component {
             value={this.state.value}
             onChange={this.onChange}
             onClick={this.onClick}
+            className="mr-2"
           />
         </FormGroup>
-        <FormGroup>
-          <Label for="group">
+        <FormGroup className="mr-2">
+          <Label for="group" className="mr-2">
             Class
           </Label>
           <Input
@@ -51,15 +54,15 @@ export class AddAssignment extends Component {
             id="group"
             placeholder="e.g. Class 19B"
             onClick={this.onClick}
+            className="mr-2"
           >
-            <option>For class</option>
-            <option>AL Comptuing</option>
-            <option>IGCSE Computing</option>
-            <option>AL Maths</option>
+            {classes.map((d, idx) => {
+                return <option key={idx}>{d.name}</option>;
+            })}
           </Input>
         </FormGroup>
         <Button onClick={this.onClick}>
-          Submit
+          Publish
         </Button>
       </Form>
     );
