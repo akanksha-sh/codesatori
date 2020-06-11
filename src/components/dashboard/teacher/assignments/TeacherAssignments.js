@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListGroup, ListGroupItem, Spinner } from "reactstrap";
+import { Button, ListGroup, ListGroupItem, Spinner } from "reactstrap";
 import { listGroup } from "../../../../Style";
 import AddAssignment from "./AddAssignment";
 import AssignmentListItem from "./AssignmentListItem";
@@ -74,6 +74,7 @@ export default class TeacherAssignment extends Component {
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
+        <Button className="float-right">Create new assignment</Button>
         <br />
         {
           isLoading ? 

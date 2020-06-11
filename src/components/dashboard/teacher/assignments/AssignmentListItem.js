@@ -38,47 +38,47 @@ export default class AssignmentListItem extends Component {
     const classNames = this.props.classNames;
     const dateNow = Date.now();
  
-    if (false) {
-      const renderButton = () => {
-        if (this.props.assignment.marked) {
-          return <i class="material-icons md-dark">assessment</i>;
-        } else {
-          return <i class="material-icons md-dark">check</i>;
-        }
-      };
+    // if (false) {
+    //   const renderButton = () => {
+    //     if (this.props.assignment.marked) {
+    //       return <i class="material-icons md-dark">assessment</i>;
+    //     } else {
+    //       return <i class="material-icons md-dark">check</i>;
+    //     }
+    //   };
 
-      const renderStatus = () => {
-        let status = this.props.assignment.marked ? "Marked" : "Pending";
-        return status;
-      };
+    //   const renderStatus = () => {
+    //     let status = this.props.assignment.marked ? "Marked" : "Pending";
+    //     return status;
+    //   };
 
-      return (
-        <ListGroupItem
-          // disabled
-          tag={RRLink}
-          exact
-          to={"/assignments/" + this.props.assignment.id}
-          action
-        >
-          {this.props.assignment.title}
+    //   return (
+    //     <ListGroupItem
+    //       // disabled
+    //       tag={RRLink}
+    //       exact
+    //       to={"/assignments/" + this.props.assignment.id}
+    //       action
+    //     >
+    //       {this.props.assignment.title}
 
-          <div style={{ float: "right" }}>
-            {renderStatus()}
-            <UncontrolledDropdown onClick={this.clickHandler}>
-              <DropdownToggle
-                color="light"
-                className="transparentDropdownToggle"
-              >
-                {renderButton()}
-              </DropdownToggle>
-              <DropdownMenu right>
-                {/* <ClassInfo class={this.props.class} /> */}
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </div>
-        </ListGroupItem>
-      );
-    }
+    //       <div style={{ float: "right" }}>
+    //         {renderStatus()}
+    //         <UncontrolledDropdown onClick={this.clickHandler}>
+    //           <DropdownToggle
+    //             color="light"
+    //             className="transparentDropdownToggle"
+    //           >
+    //             {renderButton()}
+    //           </DropdownToggle>
+    //           <DropdownMenu right>
+    //             {/* <ClassInfo class={this.props.class} /> */}
+    //           </DropdownMenu>
+    //         </UncontrolledDropdown>
+    //       </div>
+    //     </ListGroupItem>
+    //   );
+    // }
 
     return (
       <ListGroupItem
@@ -158,30 +158,3 @@ export default class AssignmentListItem extends Component {
     );
   }
 }
-
-// { <div style={{ float: "right" }}>
-//           1 w{" "}
-//           <UncontrolledDropdown onClick={this.clickHandler}>
-//             <DropdownToggle color="light" className="transparentDropdownToggle">
-//               <i class="material-icons md-dark">chat_bubble_outline</i>
-//             </DropdownToggle>
-//             <DropdownMenu right>{/* <AddStudent /> */}</DropdownMenu>
-//           </UncontrolledDropdown>
-//           <UncontrolledDropdown onClick={this.clickHandler}>
-//             <DropdownToggle color="light" className="transparentDropdownToggle">
-//               <i class="material-icons md-dark">update</i>
-//             </DropdownToggle>
-//             <DropdownMenu right>{/* <AddStudent /> */}</DropdownMenu>
-//           </UncontrolledDropdown>
-//           <UncontrolledDropdown onClick={this.clickHandler}>
-//             <DropdownToggle color="light" className="transparentDropdownToggle">
-//               <i class="material-icons md-dark">assignment</i>
-//             </DropdownToggle>
-//             <DropdownMenu right>
-//               {/* <ClassInfo class={this.props.class} /> */}
-//             </DropdownMenu>
-//           </UncontrolledDropdown>
-//         </div> }
-
-// [{"classId":"88082810-0614-3091-8084-2c7173ef0793","assignmentId":"88082810-0614-3091-8084-2c7173ef0793",
-// "deadline":"2018-01-01T00:00:00.000+00:00","status":0}]}
