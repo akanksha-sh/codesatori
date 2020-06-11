@@ -9,6 +9,7 @@ import {
   Button,
 } from "reactstrap";
 import AddStudent from "./AddStudent";
+import { Link as RRLink } from "react-router-dom";
 
 export default class ClassListItem extends Component {
   constructor(props) {
@@ -61,6 +62,9 @@ export default class ClassListItem extends Component {
       >
         {title}
         <div style={{ float: "right" }}>
+        <Button color="light" className="transparentDropdownToggle" tag={RRLink} exact to="assignments/create">
+              <i class="material-icons md-dark">create</i>
+            </Button>
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
               <i class="material-icons md-dark">person_add</i>
