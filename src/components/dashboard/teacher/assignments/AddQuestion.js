@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, ListGroupItem, Container } from "reactstrap";
 
 export class AddQuestion extends Component {
 
@@ -17,25 +17,35 @@ export class AddQuestion extends Component {
 
     render() {
         return (
-            <Form onSubmit={this.onSubmit} style={{ display: "flex" }}>
-                <FormGroup>
+          <>
+            <Form onSubmit={this.onSubmit} style={formStyle}>
+            <Container className="themed-container" fluid="lg">
+                <FormGroup row>
                 <Label for="title">
                     {/* {" "} */}
-                    Question
+                    <h5>Enter Question </h5>
                 </Label>
+                <br/>
                 <Input
-                    type="text"
+                    type="textarea"
                     name="title"
                     id="title"
-                    placeholder="e.g. Tutorial 1: Intro to example"
+                    placeholder="Write a fuction ..."
                     value={this.state.value}
                     onChange={this.onChange}
                 />
                 </FormGroup>
-                <Button style={{ marginLeft: "40px", marginTop: "13px" }}>
+                </Container>
+
+                <br/>
+                
+                <FormGroup row>
+                <Button style={{marginLeft: "40px", marginTop: "35px" }}>
                   Add
                 </Button>
+                </FormGroup>
             </Form>
+            </>
         )
     }
 }
@@ -47,3 +57,9 @@ const formElemStyle = {
     marginBottom: "40px",
     marginRight: "40px",
   };
+
+  const formStyle =  {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+}
