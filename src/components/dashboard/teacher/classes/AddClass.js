@@ -3,9 +3,11 @@ import { Row, Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { contentDiv } from "../../../../Style";
 
 export class AddClass extends Component {
-  state = {
-    className: " ",
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = { className: " " };
+  }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
@@ -30,22 +32,6 @@ export class AddClass extends Component {
             value={this.state.value}
             onChange={this.onChange}
           />
-        </FormGroup>
-        <FormGroup style={formElemStyle} className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="group" className="mr-sm-2">
-            Group
-          </Label>
-          <Input
-            type="select"
-            name="group"
-            id="group"
-            placeholder="e.g. Class 19B"
-          >
-            <option>Add group</option>
-            <option>Class 17S</option>
-            <option>Class 16H</option>
-            <option>Class 17B</option>
-          </Input>
         </FormGroup>
         <Button style={{ marginLeft: "40px", marginTop: "13px" }}>
           Submit

@@ -42,7 +42,7 @@ export class AddAssignment extends Component {
       .getIdToken()
       .then((idToken) =>
         axios({
-          url: Globals.BACKEND_URL + "assignments/publish",
+          url: Globals.BACKEND_URL + "assignmentstatus/publish",
           method: "POST",
           headers: {
             Authorization: "Bearer " + idToken,

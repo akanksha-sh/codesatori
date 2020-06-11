@@ -1,24 +1,76 @@
 import React, { Component } from "react";
-import { ListGroup } from "reactstrap";
+import { ListGroup, Spinner } from "reactstrap";
 import { listGroup } from "../../../../Style";
 import ClassListItem from "./ClassListItem";
 import PropTypes from "prop-types";
 import { pageTitle, contentDiv } from "../../../../Style";
 import AddClass from "./AddClass";
+import * as Globals from "../../../../Globals";
+import AuthUserContext from "../../../../session/Context";
+import axios from "axios";
 
 export default class TeacherClasses extends Component {
+  static contextType = AuthUserContext;
+
   constructor(props) {
     super(props);
+
+    this.state = { classes: [], assignments: [], isLoading: true };
   }
 
-  state = {
-    classes: [],
-  };
+  refreshClasses() {
+    this.setState({ isLoading: true });
+    const userContext = this.context;
+    userContext.authUser.getIdToken().then(async (idToken) => {
+      console.log(
+        "Contextual User: " + JSON.stringify(userContext.userDetails)
+      );
+      let [classesRet, assignmentsRet] = await Promise.all([
+        axios({
+          url: Globals.BACKEND_URL + "classes/teacher",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        }),
+        axios({
+          url: Globals.BACKEND_URL + "assignments/teacher",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        }),
+      ]);
+      console.log("Retrieved Classes: " + JSON.stringify(classesRet.data));
+      console.log(
+        "Retrieved Assignments: " + JSON.stringify(assignmentsRet.data)
+      );
+      const newAssignments = assignmentsRet.data;
+      const newClasses = classesRet.data.map(function (c) {
+        const ongoingAssignments = c.assignmentStatus
+          .filter(function (a) {
+            console.log(new Date(a.deadline));
+            console.log(new Date());
+            return new Date(a.deadline) > new Date();
+          })
+          .map(function (a) {
+            return newAssignments.filter(
+              (assignment) => assignment.assignmentId == a.assignmentId
+            )[0];
+          });
+        return { ...c, ongoingAssignments: ongoingAssignments };
+      });
+      console.log("New Classes: " + newClasses);
+      this.setState({
+        classes: newClasses,
+        assignments: newAssignments,
+        isLoading: false,
+      });
+    });
+  }
 
   componentDidMount() {
-    this.setState({
-      classes: retrievedClasses,
-    });
+    this.refreshClasses();
   }
 
   delClass = (id) => {
@@ -28,43 +80,70 @@ export default class TeacherClasses extends Component {
   };
 
   addClass = (title) => {
-    const newClass = {
-      id: 7,
-      title,
-      active: true,
-      ongoingAssignments: [],
-    };
-    this.setState({ classes: [...this.state.classes, newClass] });
+    const userContext = this.context;
+    userContext.authUser.getIdToken().then(async (idToken) => {
+      console.log(
+        "Contextual User: " + JSON.stringify(userContext.userDetails)
+      );
+      axios({
+        url: Globals.BACKEND_URL + "classes",
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + idToken,
+        },
+        data: {
+          name: title,
+          teacherId: userContext.userDetails.id,
+          active: true,
+        },
+      })
+        .then((classRet) => {
+          const newClass = classRet.data;
+          console.log("Retrieved Class: " + JSON.stringify(newClass));
+          this.refreshClasses();
+        })
+        .catch((error) => {
+          console.log("Error from backend: ", error);
+        });
+    });
   };
 
   render() {
     const del = this.delClass;
     return (
-      <div style={contentDiv}>
-        <h2 style={pageTitle}> Classes </h2>
-        <AddClass addClass={this.addClass} />
-        <br />
-        <br />
-        <div>
-          <h4>Active</h4>
-          <ListGroup style={listGroup}>
-            {this.state.classes.map(function (d, idx) {
-              if (d.active) {
-                return <ClassListItem key={idx} class={d} delClass={del} />;
-              }
-              return null;
-            })}
-          </ListGroup>
-          <h4>Inactive</h4>
-          <ListGroup style={listGroup}>
-            {this.state.classes.map(function (d, idx) {
-              if (!d.active) {
-                return <ClassListItem key={idx} class={d} delClass={del} />;
-              }
-              return null;
-            })}
-          </ListGroup>
-        </div>
+      <div>
+        {this.state.isLoading ? (
+          <div className="text-center">
+            <Spinner color="dark" className="mb-2" />
+          </div>
+        ) : (
+          <div style={contentDiv}>
+            <h2 style={pageTitle}> Classes </h2>
+            <AddClass addClass={this.addClass} />
+            <br />
+            <br />
+            <div>
+              <h4>Active</h4>
+              <ListGroup style={listGroup}>
+                {this.state.classes.map(function (d, idx) {
+                  if (d.active) {
+                    return <ClassListItem key={idx} class={d} delClass={del} />;
+                  }
+                  return null;
+                })}
+              </ListGroup>
+              <h4>Inactive</h4>
+              <ListGroup style={listGroup}>
+                {this.state.classes.map(function (d, idx) {
+                  if (!d.active) {
+                    return <ClassListItem key={idx} class={d} delClass={del} />;
+                  }
+                  return null;
+                })}
+              </ListGroup>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

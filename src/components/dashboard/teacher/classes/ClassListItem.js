@@ -32,7 +32,7 @@ export default class ClassListItem extends Component {
   };
 
   render() {
-    const { id, title } = this.props.class;
+    const { id, name } = this.props.class;
     if (!this.props.class.active) {
       return (
         <ListGroupItem
@@ -42,7 +42,7 @@ export default class ClassListItem extends Component {
         // to={"/classes/" + id}
         // action
         >
-          {this.props.class.title}
+          {this.props.class.name}
           <Button
             style={{ margin: "6px" }}
             onClick={this.props.delClass.bind(this, id)}
@@ -60,9 +60,9 @@ export default class ClassListItem extends Component {
         // action
         style={{ fontWeight: "bold" }}
       >
-        {title}
+        {name}
         <div style={{ float: "right" }}>
-        <Button color="light" className="transparentDropdownToggle" tag={RRLink} exact to="assignments/create">
+        <Button color="light" className="transparentDropdownToggle" tag={RRLink} exact to="/assignments/create">
               <i class="material-icons md-dark">create</i>
             </Button>
           <UncontrolledDropdown onClick={this.clickHandler}>
@@ -103,7 +103,7 @@ export default class ClassListItem extends Component {
                         fontWeight: "normal",
                       }}
                     >
-                      {d.title}
+                      {d.name}
                     </th>
                     <td>
                       <UncontrolledDropdown

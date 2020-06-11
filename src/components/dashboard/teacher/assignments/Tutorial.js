@@ -44,18 +44,7 @@ export class Tutorial extends Component {
       console.log(
         "Contextual User: " + JSON.stringify(userContext.userDetails)
       );
-      let [userRet] = await Promise.all([
-        axios({
-          url: Globals.BACKEND_URL + "user/" + userContext.userDetails.id,
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + idToken,
-          },
-        }),
-      ]);
-      const user = userRet.data;
-      console.log("Retrieved user: " + JSON.stringify(user));
-      let [assignmentRet] = await Promise.all([
+      await Promise.all([
         axios({
           url: Globals.BACKEND_URL + "assignments",
           method: "POST",
