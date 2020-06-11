@@ -50,7 +50,6 @@ export class StudentClassListItem extends Component {
 						<tr>
 							<th>Title</th>
 							<th>Status</th>
-							<th>On Time/Late</th>
 							<th>No. Of Tests Passed</th>
 							<th>Score</th>
 						</tr>

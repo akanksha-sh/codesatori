@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link as RRLink } from "react-router-dom";
 import {
   UncontrolledDropdown,
-  DropdownMenu,
   ListGroupItem,
   DropdownToggle,
 } from "reactstrap";
@@ -30,8 +29,13 @@ export class StudentCompletedTutorialInformation extends Component {
             <ListGroupItem
                 // disabled
                 tag={RRLink}
-                exact
-                to={"/tutorial/" + this.props.tutorial.id}
+                to={{
+                    pathname: "/tutorial/" + this.props.tutorial.id,
+                    state: {
+                        deadline: this.props.tutorial.deadline,
+                        submitted: this.props.tutorial.submissionDate !== ""
+                    } 
+                }}
                 action
                 style={{alignItems:'center', display:'flex'}}
             >
@@ -44,8 +48,7 @@ export class StudentCompletedTutorialInformation extends Component {
                     </DropdownToggle>
                     </UncontrolledDropdown>
                 </div>
-
-        </ListGroupItem>
+            </ListGroupItem>
         );
     }
 }

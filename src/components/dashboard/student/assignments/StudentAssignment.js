@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import uuid from 'uuid'
 import { ListGroup } from 'reactstrap'
+import uuid from 'uuid'
 import OngoingListItem from './StudentOngoingTutorialInformation'
 import CompletedListItem from './StudentCompletedTutorialInformation'
 import { pageTitle, contentDiv } from "../../../../Style"
+
 
 export class StudentAssignments extends Component {
 
@@ -65,12 +66,12 @@ const DummyTutorialValues = {
 			id: uuid.v4(),
 			name: 'Tutorial 2 : Linked-Lists',
 			ongoing: true,
-      tardy: '-',
-			testsPassed: '-',
+			testsPassed: '',
 			totalTests: 2,
 			score: '',
       totalScore: 20,
-      daysLeft:'2',
+      submissionDate: '',
+      deadline:'2020-07-01 00:00:00+00',
       classId: 0,
       className: "Mr William's class",
 		},
@@ -78,12 +79,12 @@ const DummyTutorialValues = {
 			id: uuid.v4(),
 			name: 'Tutorial 1 : Arrays',
 			ongoing: false,
-			tardy: false,
 			testsPassed: 2,
 			totalTests: 2,
 			score: '',
 			totalScore: 20,
-      daysLeft:'-',
+      submissionDate: '2019-12-31 00:00:00+00',
+      deadline:'2020-01-01 00:00:00+00',
       classId: 0,
       className: "Mr William's class",
 		},
@@ -91,12 +92,12 @@ const DummyTutorialValues = {
 			id: uuid.v4(),
 			name: 'Tutorial 0 : Programming in Python',
 			ongoing: false,
-			tardy: true,
 			testsPassed: 1,
 			totalTests: 1,
 			score: 10,
 			totalScore: 10,
-      daysLeft:'-',
+      submissionDate: '2020-01-01 12:00:00+00',
+      deadline:'2020-01-01 00:00:00+00',
       classId: 0,
       className: "Mr William's class",
 		}
