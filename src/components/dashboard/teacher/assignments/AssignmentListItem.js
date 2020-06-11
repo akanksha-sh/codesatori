@@ -1,23 +1,34 @@
 import React, { Component } from "react";
 import { Link as RRLink } from "react-router-dom";
 import {
+  Button,
+  Col,
+  Container,
+  Collapse,
   UncontrolledDropdown,
   DropdownMenu,
   ListGroupItem,
+  Row,
   DropdownToggle,
 } from "reactstrap";
+import AddAssignment from './AddAssignment';
 
 export default class AssignmentListItem extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isInfoOpen:false
+    }
   }
 
   clickHandler = (e) => {
+    this.setState({isInfoOpen: !this.state.isInfoOpen});
     e.preventDefault();
   };
 
   render() {
-    if (!this.props.assignment.ongoing) {
+    if (false) {
       const renderButton = () => {
         if (this.props.assignment.marked) {
           return <i class="material-icons md-dark">assessment</i>;
@@ -61,36 +72,55 @@ export default class AssignmentListItem extends Component {
 
     return (
       <ListGroupItem
-        tag={RRLink}
-        exact
-        to={"/assignments/" + this.props.assignment.id}
+        tag="a"
+        href=""
         action
+        onClick={this.clickHandler}
       >
-        {this.props.assignment.title}
-        <div style={{ float: "right" }}>
-          1 w{" "}
-          <UncontrolledDropdown onClick={this.clickHandler}>
-            <DropdownToggle color="light" className="transparentDropdownToggle">
-              <i class="material-icons md-dark">chat_bubble_outline</i>
-            </DropdownToggle>
-            <DropdownMenu right>{/* <AddStudent /> */}</DropdownMenu>
-          </UncontrolledDropdown>
-          <UncontrolledDropdown onClick={this.clickHandler}>
-            <DropdownToggle color="light" className="transparentDropdownToggle">
-              <i class="material-icons md-dark">update</i>
-            </DropdownToggle>
-            <DropdownMenu right>{/* <AddStudent /> */}</DropdownMenu>
-          </UncontrolledDropdown>
-          <UncontrolledDropdown onClick={this.clickHandler}>
-            <DropdownToggle color="light" className="transparentDropdownToggle">
-              <i class="material-icons md-dark">assignment</i>
-            </DropdownToggle>
-            <DropdownMenu right>
-              {/* <ClassInfo class={this.props.class} /> */}
-            </DropdownMenu>
-          </UncontrolledDropdown>
+        <span style={{width: "80%"}}>{this.props.assignment.name}</span>
+        <i className="material-icons md-dark float-right">expand_more</i>
+        {/*here*/}
+        <div>
+          <Collapse isOpen={this.state.isInfoOpen}>
+            <div className="pt-3 pb-2">
+            <Container>
+              <Row>
+                <Col xs="auto">
+                <Button>Edit</Button> 
+                </Col>
+                <Col xs="auto">
+                <AddAssignment />
+                </Col>
+              </Row>
+            </Container>
+            </div>
+          </Collapse>
         </div>
       </ListGroupItem>
     );
   }
 }
+
+// { <div style={{ float: "right" }}>
+//           1 w{" "}
+//           <UncontrolledDropdown onClick={this.clickHandler}>
+//             <DropdownToggle color="light" className="transparentDropdownToggle">
+//               <i class="material-icons md-dark">chat_bubble_outline</i>
+//             </DropdownToggle>
+//             <DropdownMenu right>{/* <AddStudent /> */}</DropdownMenu>
+//           </UncontrolledDropdown>
+//           <UncontrolledDropdown onClick={this.clickHandler}>
+//             <DropdownToggle color="light" className="transparentDropdownToggle">
+//               <i class="material-icons md-dark">update</i>
+//             </DropdownToggle>
+//             <DropdownMenu right>{/* <AddStudent /> */}</DropdownMenu>
+//           </UncontrolledDropdown>
+//           <UncontrolledDropdown onClick={this.clickHandler}>
+//             <DropdownToggle color="light" className="transparentDropdownToggle">
+//               <i class="material-icons md-dark">assignment</i>
+//             </DropdownToggle>
+//             <DropdownMenu right>
+//               {/* <ClassInfo class={this.props.class} /> */}
+//             </DropdownMenu>
+//           </UncontrolledDropdown>
+//         </div> }

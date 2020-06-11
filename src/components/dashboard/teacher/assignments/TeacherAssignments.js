@@ -15,7 +15,7 @@ export default class TeacherAssignment extends Component {
     super(props);
     this.state = {
       assignments: [],
-      classes: [],
+      classNames: [],
       isLoading: true,
       error: null
     };
@@ -36,25 +36,30 @@ export default class TeacherAssignment extends Component {
 
   getAssignments = () => {
     const userContext = this.context;
-    userContext.authUser.getIdToken().then(async (idToken) => {
-      let [classRet, assignmentRet] = await Promise.all([axios({
-        url: Globals.BACKEND_URL + "classes/teacher",
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + idToken,
-        },
-      }), axios({
-        url: Globals.BACKEND_URL + "assignments/teacher",
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + idToken,
-        },
-      })]);
-      console.log("Retrieved classes: " + JSON.stringify(classRet.data));
-      console.log("Retrieved assignment: " + JSON.stringify(assignmentRet.data));
-      this.setState({ assignments: assignmentRet.data, classes: classRet.data });
-      this.setState({ isLoading: false });
-    }).catch((errorRet) => {
+    userContext.authUser.getIdToken().then(async (idToken) => 
+      {
+        let [classRet, assignmentRet] = await Promise.all([
+        axios({
+          url: Globals.BACKEND_URL + "classes/teacher",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        }),
+        axios({
+          url: Globals.BACKEND_URL + "assignments/teacher",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        })]);
+        const classNamesRet = classRet.data.map(({ classId, name }) => ({classId, name}));
+        console.log("Retrieved classes: " + JSON.stringify(classNamesRet));
+        console.log("Retrieved assignments: " + JSON.stringify(assignmentRet.data));
+        this.setState({ assignments: assignmentRet.data, classNames: classNamesRet });
+        this.setState({ isLoading: false });
+    }
+    ).catch((errorRet) => {
       console.log("Error from backend: ", errorRet);
       this.setState({ error: errorRet });
       this.setState({ isLoading: false });
@@ -64,8 +69,8 @@ export default class TeacherAssignment extends Component {
 
   render() {
     const { assignments, isLoading} = this.state;
-    const ongoingAssignments = assignments.filter((a) => {return a.ongoing;});
-    const receivedAssignments = assignments.filter((a) => {return !a.ongoing;});
+    const ongoingAssignments = assignments;
+    const archivedAssignments = [];
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
@@ -79,29 +84,29 @@ export default class TeacherAssignment extends Component {
             <Spinner color="dark" className="mb-2" />
           </div> : 
           <div>
-          <h4>Ongoing</h4>
+          <h4>Current</h4>
           <ListGroup style={listGroup}>
             {ongoingAssignments.length === 0 ? 
-            <ListGroupItem>You currently have no ongoing assignments.</ListGroupItem> : 
+            <ListGroupItem>You currently have no current assignments.</ListGroupItem> : 
             <div>
-              {ongoingAssignments.map(function (d, idx) {
-                return <AssignmentListItem key={idx} assignment={d} />;
+              {ongoingAssignments.map((d, idx) => {
+                return <AssignmentListItem key={idx} assignment={d} classNames={this.state.classNames} />;
             })}
             </div>
             }
           </ListGroup>
-          <h4>Received</h4>
+          <h4>Archived</h4>
           <ListGroup style={listGroup}>
             {
-              receivedAssignments.length === 0 ? 
+              archivedAssignments.length === 0 ? 
               <ListGroupItem>You currently have no received assignments.</ListGroupItem> : 
               <div>
-                {receivedAssignments.map(function (d, idx) {
+                {archivedAssignments.map(function (d, idx) {
                   return <AssignmentListItem key={idx} assignment={d} />;
                 })}
               </div>
             }
-          </ListGroup>
+            </ListGroup>
         </div>
         }
       </div>
