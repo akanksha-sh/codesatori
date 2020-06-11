@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import LandingHeader from "./LandingHeader";
 import LandingFooter from "./LandingFooter";
 import { Jumbotron, Button } from "reactstrap";

@@ -1,40 +1,76 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import AuthUserContext from "../../../../session/Context";
+import axios from "axios";
+import * as Globals from "../../../../Globals";
 
 export class AddAssignment extends Component {
-  state = {
-    title: " ",
-    date: " ",
+  static contextType = AuthUserContext;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: "",
+      classId: 0,
+    };
+  }
+
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+    e.preventDefault();
   };
 
-  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+  onClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
+  onSubmitClick = (e) => {
+    e.stopPropagation();
+  };
 
   onSubmit = (e) => {
+    console.log("Submitting!");
+    const userContext = this.context;
+    const publishAssignment = {
+      classId: this.state.classId,
+      assignmentId: this.props.assignmentId,
+      deadline: this.state.date,
+      status: 0,
+    };
+    userContext.authUser
+      .getIdToken()
+      .then((idToken) =>
+        axios({
+          url: Globals.BACKEND_URL + "assignments/publish",
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+          data: { ...publishAssignment },
+        })
+      )
+      .then((res) => {
+        this.props.refresh();
+      })
+      .catch((errorRet) => {
+        console.log("Error from backend: ", errorRet);
+      });
     e.preventDefault();
-    this.props.addAssignment(this.state.title);
-    this.setState({ title: "" });
-    // this.setState({date: ''})     ideally store this (but dummy data anyway)
+    // this.props.addAssignment(this.state.title);
+    // this.setState({ title: "" });
+    // // this.setState({date: ''})     ideally store this (but dummy data anyway)
   };
 
   render() {
+    const classes = this.props.classes;
+
+    const { date, classId } = this.state;
+
     return (
-      <Form onSubmit={this.onSubmit} style={{ display: "flex" }} inline>
-        <FormGroup style={formElemStyle} className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="title" className="mr-sm-2">
-            {" "}
-            Title
-          </Label>
-          <Input
-            type="text"
-            name="title"
-            id="title"
-            placeholder="e.g. Tutorial 1: Intro to example"
-            value={this.state.value}
-            onChange={this.onChange}
-          />
-        </FormGroup>
-        <FormGroup style={formElemStyle} className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="date" className="mr-sm-2">
+      <Form onSubmit={this.onSubmit} inline>
+        <FormGroup className="mr-2">
+          <Label for="date" className="mr-2">
             {" "}
             Deadline
           </Label>
@@ -42,28 +78,40 @@ export class AddAssignment extends Component {
             type="date"
             name="date"
             id="title"
-            value={this.state.value}
+            value={date}
             onChange={this.onChange}
+            onClick={this.onClick}
+            className="mr-2"
           />
         </FormGroup>
-        <FormGroup style={formElemStyle} className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="group" className="mr-sm-2">
+        <FormGroup className="mr-2">
+          <Label for="group" className="mr-2">
             Class
           </Label>
           <Input
             type="select"
-            name="group"
-            id="group"
+            name="classId"
+            id="classId"
             placeholder="e.g. Class 19B"
+            onClick={this.onClick}
+            onChange={this.onChange}
+            value={classId}
+            className="mr-2"
           >
-            <option>For class</option>
-            <option>AL Comptuing</option>
-            <option>IGCSE Computing</option>
-            <option>AL Maths</option>
+            <option value={0} disabled>
+              Select class...
+            </option>
+            {classes.map((d, idx) => {
+              return (
+                <option key={idx} value={d.classId}>
+                  {d.name}
+                </option>
+              );
+            })}
           </Input>
         </FormGroup>
-        <Button style={{ marginLeft: "40px", marginTop: "13px" }}>
-          Submit
+        <Button type="submit" onClick={this.onSubmitClick}>
+          Publish
         </Button>
       </Form>
     );
@@ -71,9 +119,3 @@ export class AddAssignment extends Component {
 }
 
 export default AddAssignment;
-
-const formElemStyle = {
-  margin: "20px",
-  marginBottom: "40px",
-  marginRight: "40px",
-};

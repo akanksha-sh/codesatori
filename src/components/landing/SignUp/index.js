@@ -75,7 +75,7 @@ class SignUpFormBase extends Component {
       return false;
     }
     return true;
-  }
+  };
 
   checkPwdValid = (str) => {
     if (str.length < 6) {

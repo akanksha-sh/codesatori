@@ -25,7 +25,7 @@ export default class TeacherClasses extends Component {
     this.setState({
       classes: [...this.state.classes.filter((i) => i.id !== id)],
     });
-  }
+  };
 
   addClass = (title) => {
     const newClass = {

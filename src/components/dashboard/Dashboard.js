@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import NavigationBar from "./NavigationBar";
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Classes from "./Classes";
 import Assignments from "./Assignments";
 import Tutorial from "./teacher/assignments/Tutorial";
@@ -24,6 +20,7 @@ export class Dashboard extends Component {
               <Route exact path="/classes" component={Classes} />
               <Route exact path="/assignments" component={Assignments} />
               <Route exact path="/assignments/1" component={Tutorial} />
+              <Route exact path="/assignments/create" component={Tutorial} />
             </div>
             <Redirect exact from="/" to="/classes" />
           </div>
