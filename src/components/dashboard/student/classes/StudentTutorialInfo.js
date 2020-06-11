@@ -73,5 +73,5 @@ export default StudentTutorialInfo;
 
 const LateTagStyle = {
   background:'#b73e3a',
-  color:'f2f2f2',
+  color:'#f2f2f2',
 }

@@ -21,7 +21,7 @@ const INITIAL_STATE = {
   // it is best to initialise their fields as empty first instead of setting the whole object to null.
   //
   userDetails: {
-    id: '44782d74-7e0b-3759-b2da-542b0c9fa38d',
+    id: '',
     firstName: '',
     lastName: '',
     role: 0
@@ -38,25 +38,25 @@ class App extends Component {
     this.state = { ... INITIAL_STATE};
   }
 
-  // // check if user signed in, and update
-  // componentDidMount() {
-  //   this.listener = this.props.firebase.auth.onAuthStateChanged(
-  //     (authUserRet) => {
-  //       this.setState({isLoading: true});
-  //       console.log(authUserRet);
-  //       if (authUserRet !== null) {
-  //         this.setState({ authUser: authUserRet });
-  //         if (this.state.newUserDetails !== null) {
-  //           this.initialiseUserDetails();
-  //         } else {
-  //           this.getCurrentUserDetails();
-  //         }
-  //       } else {
-  //         this.setState({ ... INITIAL_STATE });
-  //       }
-  //     }
-  //   );
-  // }
+  // check if user signed in, and update
+  componentDidMount() {
+    this.listener = this.props.firebase.auth.onAuthStateChanged(
+      (authUserRet) => {
+        this.setState({isLoading: true});
+        console.log(authUserRet);
+        if (authUserRet !== null) {
+          this.setState({ authUser: authUserRet });
+          if (this.state.newUserDetails !== null) {
+            this.initialiseUserDetails();
+          } else {
+            this.getCurrentUserDetails();
+          }
+        } else {
+          this.setState({ ... INITIAL_STATE });
+        }
+      }
+    );
+  }
 
   componentWillUnmount() {
     this.listener();
@@ -142,7 +142,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.authUser === null) {
+    if (this.state.authUser !== null) {
       if (!this.state.isLoading) {
         if (this.state.userDetails.id === '') {
           return (<div style={appStyle}>
@@ -159,6 +159,7 @@ class App extends Component {
       }
       return <Loading />;
     }
+
     return (
         <div style={appStyle}>
           <Landing setNewUserDetails={this.setNewUserDetails} error />
