@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Classes from "./Classes";
 import Assignments from "./Assignments";
 import Tutorial from "./teacher/assignments/Tutorial";
-import StudentTutorial from "./student/assignments/StudentTutorial";
+import StudentTutorial from "./student/tutorial/StudentTutorial";
 
 export class Dashboard extends Component {
   constructor(props) {

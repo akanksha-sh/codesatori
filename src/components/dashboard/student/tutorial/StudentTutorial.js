@@ -1,13 +1,58 @@
 import React, { Component } from "react"
 import Countdown from "./Countdown"
-import { Collapse } from "reactstrap"
+import { Collapse, ListGroup } from "reactstrap"
 import moment from 'moment'
-import { pageTitle, contentDiv } from "../../Style"
+import { pageTitle, contentDiv, listGroup } from "../../../../Style"
+import TutorialListItem from './TutorialListItem';
 
-export class StudentTutorial extends Component {
+export class Tutorial extends Component {
   constructor(props) {
     super(props);
-    this.saveAndExit = this.saveAndExit.bind(this);
+    this.state = {
+      id: this.props.match.params.id,
+      name: "(Tutorial Name)",
+      questions: [],
+    };
+  }
+
+  
+  componentDidMount() {
+    this.getTutorialQuestions()
+  }
+
+  getTutorialQuestions = () => {
+    //access database
+    console.log("This tutorial's id is: " + this.state.id)
+    if (this.state.id === 'fc5d4ff6-7300-4765-a629-280afa06d01b') {
+      const question1 = "Write a public method with signature 'createIntList()' that will return an empty LinkedList of type 'Integer'."
+
+      this.setState({
+        name: 'Java Homework 2 : Linked-List', 
+        questions:[{
+          id:1, 
+          questionText:question1,
+          studentAnswer:""
+        }]
+      })
+    } else if (this.state.id === 'd57b350e-b599-48a5-9c05-9c1147869267') {
+      this.setState({
+        name: 'Java Homework 1 : Arrays',
+        questions:[{
+          id:1, 
+          questionText:"Write a public method with sigature 'max(int[] is)' that returns the largest integer in the array.",
+          studentAnswer:" "
+        }]
+      })
+    } else if (this.state.id === '08c56c8b-a940-4e20-ae9a-d4c6bdb1a5c8') {
+      this.setState({
+        name: 'Java Introduction : Programming in Python',
+        questions:[{
+          id:1, 
+          questionText:"Write a static public method with signature 'hello()' that prints 'Hello World' to console.",
+          studentAnswer:'public static void hello() { printf("Hello World");  }'
+        }]
+      })
+    }
   }
 
   getCountdownBoxStyle = (isOverdue) => {
@@ -30,7 +75,7 @@ export class StudentTutorial extends Component {
 
     if (isOverdue) {
       return (
-        <div style={countdownBoxStyle}>Deadline has passed.</div>
+        <div style={countdownBoxStyle}>This tutorial has been locked.</div>
       )
     } else {
       return (
@@ -43,7 +88,6 @@ export class StudentTutorial extends Component {
 	getBtnStyle = (isSave) => {
 		return ({
       background: (isSave) ? '#f2f2f2' : '#e0e0e0',
-      hoverColor: (!isSave) ? '#fff' : '#e0e0e0',
 			color: '#000',
 			border: 'none',
 			height: '30px',
@@ -118,25 +162,30 @@ export class StudentTutorial extends Component {
   }
 
   render() {
-    const { id } = this.props.match.params
     const { deadline, submitted } = this.props.location.state
     
     return (
       <div style={contentDiv}>
-        <h2 style={pageTitle}>(Tutorial Name)</h2>
+        <h2 style={pageTitle}>{this.state.name}</h2>
         <Collapse isOpen={moment().diff(moment(deadline)) > 0} style={TimeLeftStyle}>
           <div style={{margin:'8px'}}>
             Time left: 
           </div>
           {this.getCountdownBox(deadline)}
         </ Collapse>
+        <ListGroup style={listGroup}>
+          {this.state.questions.map((q) => {
+              return <TutorialListItem key={q.id} question={q} />;
+            }
+          )}              
+        </ListGroup>
         {this.getButtons(submitted)}
       </div>
     );
   }
 }
 
-export default StudentTutorial;
+export default Tutorial;
 
 const TimeLeftStyle = {
   display: 'flex',

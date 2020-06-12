@@ -164,6 +164,7 @@ class App extends Component {
       }
       return <Loading />;
     }
+
     return (
       <div style={appStyle}>
         <Landing setNewUserDetails={this.setNewUserDetails} error />
