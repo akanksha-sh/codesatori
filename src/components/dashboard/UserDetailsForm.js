@@ -43,6 +43,7 @@ export class UserDetailsForm extends Component {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       role: this.state.role,
+      email: this.props.authUser.email,
     };
     this.setState({ isLoading: true });
     this.props.authUser.getIdToken().then((idToken) => {

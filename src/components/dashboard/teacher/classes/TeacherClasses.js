@@ -79,12 +79,13 @@ export default class TeacherClasses extends Component {
     });
   };
 
-  addClass = (title) => {
+  addClass = (title, emailList) => {
     const userContext = this.context;
-    userContext.authUser.getIdToken().then(async (idToken) => {
-      console.log(
-        "Contextual User: " + JSON.stringify(userContext.userDetails)
-      );
+    console.log(
+      "Contextual User: " + JSON.stringify(userContext.userDetails)
+    );
+    userContext.authUser.getIdToken()
+    .then((idToken) => (
       axios({
         url: Globals.BACKEND_URL + "classes",
         method: "POST",
@@ -93,35 +94,34 @@ export default class TeacherClasses extends Component {
         },
         data: {
           name: title,
-          teacherId: userContext.userDetails.id,
-          active: true,
+          emails: emailList,
         },
-      })
-        .then((classRet) => {
-          const newClass = classRet.data;
-          console.log("Retrieved Class: " + JSON.stringify(newClass));
-          this.refreshClasses();
-        })
-        .catch((error) => {
-          console.log("Error from backend: ", error);
-        });
+      })))
+    .then((classRet) => {
+      const newClass = classRet.data;
+      console.log("Retrieved Class: " + JSON.stringify(newClass));
+      this.refreshClasses();
+    })
+    .catch((error) => {
+      console.log("Error from backend: ", error);
     });
-  };
+  }
 
   render() {
     const del = this.delClass;
     return (
       <div>
-        {this.state.isLoading ? (
-          <div className="text-center">
-            <Spinner color="dark" className="mb-2" />
-          </div>
-        ) : (
           <div style={contentDiv}>
             <h2 style={pageTitle}> Classes </h2>
             <AddClass addClass={this.addClass} />
             <br />
             <br />
+            {
+              this.state.isLoading ? (
+                <div className="text-center">
+                  <Spinner color="dark" className="mb-2" />
+                </div>
+              ) : 
             <div>
               <h4>Active</h4>
               <ListGroup style={listGroup}>
@@ -142,8 +142,8 @@ export default class TeacherClasses extends Component {
                 })}
               </ListGroup>
             </div>
-          </div>
-        )}
+          }
+        </div>
       </div>
     );
   }
