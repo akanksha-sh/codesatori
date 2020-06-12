@@ -47,7 +47,7 @@ export class StudentOngoingTutorialInformation extends Component {
             >
                 <div>{this.props.tutorial.name}</div>
                 <div style={{marginLeft:'auto'}}>
-                    {days} d   
+                    deadline: {this.props.tutorial.deadline}    
                     <UncontrolledDropdown onClick={this.clickHandler}>
                     <DropdownToggle color="light" className="transparentDropdownToggle">
                         <i class="material-icons md-dark">chat_bubble_outline</i>
