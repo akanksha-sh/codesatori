@@ -1,13 +1,37 @@
 import React, { Component } from "react"
 import Countdown from "./Countdown"
-import { Collapse } from "reactstrap"
+import { Collapse, ListGroup } from "reactstrap"
 import moment from 'moment'
 import { pageTitle, contentDiv } from "../../Style"
+import { listGroup } from "../../Style";
+import TutorialListItem from './student/tutorial/TutorialListItem';
 
 export class Tutorial extends Component {
   constructor(props) {
     super(props);
-    this.saveAndExit = this.saveAndExit.bind(this);
+    this.state = {
+      id: this.props.match.params.id,
+      name: "(Tutorial Name)",
+      questions: [],
+    };
+  }
+
+  
+  componentDidMount() {
+    this.getTutorialQuestions()
+  }
+
+  getTutorialQuestions = () => {
+    //access database
+    console.log("This tutorial's id is: " + this.state.id)
+    if (this.state.id === 'fc5d4ff6-7300-4765-a629-280afa06d01b') {
+      const question1 = "Write a public method with signature 'createIntList()' that will return an empty LinkedList of type 'Integer'."
+
+      this.setState({
+        name: 'Tutorial 2 : Linked-Lists', 
+        questions:[{id:1, question:question1}]
+      })
+    }
   }
 
   getCountdownBoxStyle = (isOverdue) => {
@@ -43,7 +67,6 @@ export class Tutorial extends Component {
 	getBtnStyle = (isSave) => {
 		return ({
       background: (isSave) ? '#f2f2f2' : '#e0e0e0',
-      hoverColor: (!isSave) ? '#fff' : '#e0e0e0',
 			color: '#000',
 			border: 'none',
 			height: '30px',
@@ -118,18 +141,23 @@ export class Tutorial extends Component {
   }
 
   render() {
-    const { id } = this.props.match.params
     const { deadline, submitted } = this.props.location.state
     
     return (
       <div style={contentDiv}>
-        <h2 style={pageTitle}>(Tutorial Name)</h2>
+        <h2 style={pageTitle}>{this.state.name}</h2>
         <Collapse isOpen={moment().diff(moment(deadline)) > 0} style={TimeLeftStyle}>
           <div style={{margin:'8px'}}>
             Time left: 
           </div>
           {this.getCountdownBox(deadline)}
         </ Collapse>
+        <ListGroup style={listGroup}>
+          {this.state.questions.map((q) => {
+              return <TutorialListItem key={q.id} question={q} />;
+            }
+          )}              
+        </ListGroup>
         {this.getButtons(submitted)}
       </div>
     );

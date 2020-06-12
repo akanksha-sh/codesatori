@@ -149,28 +149,5 @@ const ListStyle={
 	padding:'0px',
 }
 
-// Temporary values before hooking up the database
-const DummyClassValues={
-	classes: [
-		{
-			id: uuid.v4(),
-			name: "Mr William's class",
-			status: "active",
-			overdue: 0,
-			tasks: 1,
-			completed: 1,
-			marked: 1,
-		},
-		{
-			id: uuid.v4(),
-			name: "Mrs William's class",
-			status: "inactive",
-			overdue: 0,
-			tasks: 1,
-			completed: 1,
-			marked: 1,
-		}
-	],
-};
 
 export default StudentClasses;

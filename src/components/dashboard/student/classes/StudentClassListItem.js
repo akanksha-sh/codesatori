@@ -1,12 +1,10 @@
 import React, { Component} from 'react'
 import {
 	UncontrolledDropdown,
-	DropdownMenu,
 	DropdownToggle,
 	Collapse,
 	ListGroupItem,
 	Table,
-	Button,
   } from "reactstrap";
 import StudentClassInfo from './StudentClassInfo'
 

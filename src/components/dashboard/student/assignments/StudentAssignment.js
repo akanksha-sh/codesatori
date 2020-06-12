@@ -63,7 +63,7 @@ export default StudentAssignments
 const DummyTutorialValues = {
 	tutorials: [
 		{
-			id: uuid.v4(),
+      id: 'fc5d4ff6-7300-4765-a629-280afa06d01b',
 			name: 'Tutorial 2 : Linked-Lists',
 			ongoing: true,
 			testsPassed: '',
@@ -73,10 +73,10 @@ const DummyTutorialValues = {
       submissionDate: '',
       deadline:'2020-07-01 00:00:00+00',
       classId: 0,
-      className: "Mr William's class",
+      className: "Mr Richard Xiong's class",
 		},
 		{
-			id: uuid.v4(),
+			id: 'd57b350e-b599-48a5-9c05-9c1147869267',
 			name: 'Tutorial 1 : Arrays',
 			ongoing: false,
 			testsPassed: 2,
@@ -86,10 +86,10 @@ const DummyTutorialValues = {
       submissionDate: '2019-12-31 00:00:00+00',
       deadline:'2020-01-01 00:00:00+00',
       classId: 0,
-      className: "Mr William's class",
-		},
-		{
-			id: uuid.v4(),
+      className: "Mr Richard Xiong's class",
+    },
+    {
+      id: '08c56c8b-a940-4e20-ae9a-d4c6bdb1a5c8',
 			name: 'Tutorial 0 : Programming in Python',
 			ongoing: false,
 			testsPassed: 1,
@@ -99,7 +99,7 @@ const DummyTutorialValues = {
       submissionDate: '2020-01-01 12:00:00+00',
       deadline:'2020-01-01 00:00:00+00',
       classId: 0,
-      className: "Mr William's class",
-		}
+      className: "Mr Richard Xiong's class",
+    },
 	]
 };
