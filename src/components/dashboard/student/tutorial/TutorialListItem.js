@@ -55,27 +55,48 @@ export class TutorialListItem extends Component {
     });
   };
 
+  getAnswerBody = (studentAnswer) => {
+    if (studentAnswer === "") {
+      return (
+        <Input
+          type="textarea"
+          name="value"
+          id="value"
+          rows="10"
+          value={this.state.value}
+          placeholder='public class Solution {
+            public static void main(String[] args) {
+              System.out.println("Hello World!");
+            }
+          }'
+          onChange={this.onChange}
+        />
+      )
+    } 
+
+    return (
+      <Input
+        type="textarea"
+        name="value"
+        id="value"
+        rows="10"
+        value={studentAnswer}
+        // placeholder={studentAnswer}
+        onChange={this.onChange}
+        disabled={true}
+      />
+    )
+  }
+
   render() {
-    const { id, questionText } = this.props.question;
+    const { id, questionText, studentAnswer } = this.props.question;
 
     return (
       <ListGroupItem>
-        <h5> Question {id + 1} </h5>
+        <h5> Question {id} </h5>
         {questionText}
         <FormGroup>
-          <Input
-            type="textarea"
-            name="value"
-            id="value"
-            rows="10"
-            value={this.state.value}
-            placeholder='public class Solution {
-              public static void main(String[] args) {
-                System.out.println("Hello World!");
-              }
-            }'
-            onChange={this.onChange}
-          />
+          {this.getAnswerBody(studentAnswer)}
           <Button onClick={this.onClick} style={{ width: "100%" }}>
             Compile
           </Button>
