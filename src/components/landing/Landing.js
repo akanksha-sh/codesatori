@@ -45,8 +45,9 @@ export class Landing extends Component {
                     <Col xs="auto">
                     <ReactPlayer
                       url={process.env.PUBLIC_URL +  "/demo.mp4"}
-                      playing
-                      loop
+                      playing="true"
+                      loop="true"
+                      muted="true"
                     />
                     </Col>
                   </Row>
