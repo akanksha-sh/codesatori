@@ -63,7 +63,7 @@ export default class ClassListItem extends Component {
         {name}
         <div style={{ float: "right" }}>
         <Button color="light" className="transparentDropdownToggle" tag={RRLink} exact to="/assignments/create">
-              <i class="material-icons md-dark">create</i>
+              <i class="material-icons md-dark">add</i>
             </Button>
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
