@@ -24,8 +24,8 @@ export default class AssignmentListItem extends Component {
   }
 
   open = (e) => {
-    this.setState({ isInfoOpen: !this.state.isInfoOpen });
     e.preventDefault();
+    this.setState({ isInfoOpen: !this.state.isInfoOpen });
   };
 
   onClick = (e) => {
@@ -50,7 +50,12 @@ export default class AssignmentListItem extends Component {
 
     return (
       <ListGroupItem tag="a" href="" action onClick={this.open}>
-        <span style={{ width: "80%" }}>{this.props.assignment.name}</span>
+        <span  style={{ width: "80%" }}>{this.props.assignment.name}</span>
+        <Button
+            style={{ marginLeft: "16px" }}
+            onClick={this.props.delAssignment.bind(this, this.props.assignment.id)}
+            close
+          />
         <i className="material-icons md-dark float-right">expand_more</i>
         {/*here*/}
         <div>

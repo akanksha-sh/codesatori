@@ -35,6 +35,12 @@ export default class TeacherAssignment extends Component {
     this.setState({ assignments: [...this.state.assignments, newAssignment] });
   };
 
+  delAssignment = (id) => {
+    this.setState({
+      assignments: [...this.state.assignments.filter((i) => i.id !== id)],
+    });
+  };
+
   getAssignments = () => {
     this.setState({ isLoading: true });
     const userContext = this.context;
@@ -82,6 +88,8 @@ export default class TeacherAssignment extends Component {
     const { assignments, isLoading } = this.state;
     const ongoingAssignments = assignments;
     const archivedAssignments = [];
+    const delAssignment = this.delAssignment;
+
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Assignments </h2>
@@ -102,10 +110,12 @@ export default class TeacherAssignment extends Component {
               ) : (
                 <div>
                   {ongoingAssignments.map((d, idx) => {
+                    d.id = idx;
                     return (
                       <AssignmentListItem
                         key={idx}
                         assignment={d}
+                        delAssignment = {delAssignment}
                         classNames={this.state.classNames}
                         refresh={this.getAssignments}
                       />
