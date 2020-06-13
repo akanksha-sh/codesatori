@@ -101,7 +101,7 @@ export class AddClass extends Component {
         <Container>
         <Row>
         <Col xs="auto">
-        <FormGroup style={formElemStyle} className="mb-2 mr-sm-2 mb-sm-0">
+        <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
           <Label for="title" className="mr-sm-2">
             Class Name
           </Label>
@@ -116,7 +116,7 @@ export class AddClass extends Component {
         </FormGroup>
         </Col>
         <Col xs="4">
-        <FormGroup style={formElemStyle} className="mb-2 mr-sm-2 mb-sm-0">
+        <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
           <>
           <Label for="title" className="mr-sm-2">
             Students:
@@ -149,7 +149,7 @@ export class AddClass extends Component {
         </FormGroup>
         </Col>
         <Col xs="auto">
-        <Button style={formElemStyle} className="mb-2 mr-sm-2 mb-sm-0">
+        <Button  className="mb-2 mr-sm-2 mb-sm-0">
           Add class
         </Button>
         </Col>
@@ -162,8 +162,8 @@ export class AddClass extends Component {
 
 export default AddClass;
 
-const formElemStyle = {
-  margin: "20px",
-  marginBottom: "40px",
-  marginRight: "40px",
-};
+// const formElemStyle = {
+//   margin: "20px",
+//   marginBottom: "40px",
+//   marginRight: "40px",
+// };

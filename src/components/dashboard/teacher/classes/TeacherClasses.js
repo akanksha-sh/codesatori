@@ -123,7 +123,7 @@ export default class TeacherClasses extends Component {
                 </div>
               ) : 
             <div>
-              <h4>Active</h4>
+              <h4>Current</h4>
               <ListGroup style={listGroup}>
                 {this.state.classes.map(function (d, idx) {
                   if (d.active) {
@@ -133,7 +133,7 @@ export default class TeacherClasses extends Component {
                   return null;
                 })}
               </ListGroup>
-              <h4>Inactive</h4>
+              <h4>Archived</h4>
               <ListGroup style={listGroup}>
                 {this.state.classes.map(function (d, idx) {
                   if (!d.active) {
