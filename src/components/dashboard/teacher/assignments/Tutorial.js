@@ -6,6 +6,7 @@ import TutorialListItem from "./TutorialListItem";
 import * as Globals from "../../../../Globals";
 import AuthUserContext from "../../../../session/Context";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export class Tutorial extends Component {
   static contextType = AuthUserContext;
@@ -83,11 +84,22 @@ export class Tutorial extends Component {
             <Spinner color="dark" className="mb-2" />
           </div>
         ) : (
+          <>
           <div>
             <Button onClick={this.saveAssignment} style={{ width: "100%" }}>
               Save Assignment
             </Button>
           </div>
+          <br/>
+           <div>
+            <Link to="/classes">
+            <Button color="success" style={{ width: "100%" }}>
+              Exit Assignment
+            </Button>
+            </Link>
+           
+         </div>
+         </>
         )}
         <br />
         <br />
