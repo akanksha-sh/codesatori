@@ -127,6 +127,7 @@ export default class TeacherClasses extends Component {
               <ListGroup style={listGroup}>
                 {this.state.classes.map(function (d, idx) {
                   if (d.active) {
+                    d.id = idx;
                     return <ClassListItem key={idx} class={d} delClass={del} />;
                   }
                   return null;
