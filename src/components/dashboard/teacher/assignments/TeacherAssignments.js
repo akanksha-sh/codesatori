@@ -36,9 +36,21 @@ export default class TeacherAssignment extends Component {
   };
 
   delAssignment = (id) => {
-    this.setState({
-      assignments: [...this.state.assignments.filter((i) => i.id !== id)],
-    });
+    const userContext = this.context;
+    userContext.authUser.getIdToken().then(idToken => 
+      axios({
+        url: Globals.BACKEND_URL + "assignments/" + id,
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + idToken,
+        },
+      }))
+    .then((res) => {
+      this.getAssignments();
+    })
+    .catch((error) => {
+      console.log("Error deleting assignment: " + error);
+    })
   };
 
   getAssignments = () => {
@@ -130,7 +142,8 @@ export default class TeacherAssignment extends Component {
                 <ListGroupItem>You have no archived assignments.</ListGroupItem>
               ) : (
                 <div>
-                  {archivedAssignments.map(function (d, idx) {
+                  {archivedAssignments.map((d, idx) => {
+                    d.id=idx;
                     return <AssignmentListItem key={idx} assignment={d} />;
                   })}
                 </div>

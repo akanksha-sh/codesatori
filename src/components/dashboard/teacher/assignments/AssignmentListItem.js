@@ -11,10 +11,16 @@ import {
   ListGroupItem,
   Row,
   DropdownToggle,
+  UncontrolledPopover,
+  PopoverBody,
+  PopoverHeader,
 } from "reactstrap";
 import AddAssignment from "./AddAssignment";
+import AuthUserContext from "../../../../session/Context";
 
 export default class AssignmentListItem extends Component {
+  static contextType = AuthUserContext;
+
   constructor(props) {
     super(props);
 
@@ -39,6 +45,13 @@ export default class AssignmentListItem extends Component {
     e.stopPropagation();
   };
 
+  onDeleteClick = (e) => {
+    const assignmentId = this.props.assignment.assignmentId;
+    this.props.delAssignment(assignmentId);
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   render() {
     const assignmentStatuses = this.props.assignment.assignmentStatus;
     const classNames = this.props.classNames;
@@ -47,15 +60,26 @@ export default class AssignmentListItem extends Component {
       return !publishedClassIds.includes(className.classId);
     });
     const dateNow = Date.now();
+    const assignmentId = this.props.assignment.assignmentId;
 
     return (
       <ListGroupItem tag="a" href="" action onClick={this.open}>
         <span  style={{ width: "80%" }}>{this.props.assignment.name}</span>
         <Button
             style={{ marginLeft: "16px" }}
-            onClick={this.props.delAssignment.bind(this, this.props.assignment.id)}
+            id={"deletePopover" + this.props.assignment.id}
+            onClick={this.onClick}
             close
           />
+        <UncontrolledPopover trigger="legacy" placement="bottom" target={"deletePopover" + this.props.assignment.id}>
+          <PopoverHeader>Delete this assignment</PopoverHeader>
+          <PopoverBody>This cannot be undone! Are you sure?</PopoverBody>
+          <Button color="danger" 
+            style={{width: "100%"}} 
+            onClick={this.onDeleteClick}>
+              Delete Assignment
+          </Button>
+        </UncontrolledPopover>
         <i className="material-icons md-dark float-right">expand_more</i>
         {/*here*/}
         <div>
@@ -69,7 +93,7 @@ export default class AssignmentListItem extends Component {
                   <Col className="ml-3">
                     <AddAssignment
                       classes={classesNotPublished}
-                      assignmentId={this.props.assignment.assignmentId}
+                      assignmentId={assignmentId}
                       refresh={this.props.refresh}
                     />
                   </Col>

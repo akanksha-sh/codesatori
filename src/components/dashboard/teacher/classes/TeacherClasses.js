@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ListGroup, Spinner } from "reactstrap";
+import { ListGroup, ListGroupItem, Spinner } from "reactstrap";
 import { listGroup } from "../../../../Style";
 import ClassListItem from "./ClassListItem";
 import PropTypes from "prop-types";
@@ -46,14 +46,14 @@ export default class TeacherClasses extends Component {
         "Retrieved Assignments: " + JSON.stringify(assignmentsRet.data)
       );
       const newAssignments = assignmentsRet.data;
-      const newClasses = classesRet.data.map(function (c) {
+      const newClasses = classesRet.data.map((c) => {
         const ongoingAssignments = c.assignmentStatus
-          .filter(function (a) {
+          .filter((a) => {
             console.log(new Date(a.deadline));
             console.log(new Date());
             return new Date(a.deadline) > new Date();
           })
-          .map(function (a) {
+          .map((a) => {
             return newAssignments.filter(
               (assignment) => assignment.assignmentId == a.assignmentId
             )[0];
@@ -74,9 +74,21 @@ export default class TeacherClasses extends Component {
   }
 
   delClass = (id) => {
-    this.setState({
-      classes: [...this.state.classes.filter((i) => i.id !== id)],
-    });
+    const userContext = this.context;
+    userContext.authUser.getIdToken().then(idToken => 
+      axios({
+        url: Globals.BACKEND_URL + "classes/" + id,
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + idToken,
+        },
+      }))
+    .then((res) => {
+      this.refreshClasses();
+    })
+    .catch((error) => {
+      console.log("Error deleting class: " + error);
+    })
   };
 
   addClass = (title, emailList) => {
@@ -109,6 +121,8 @@ export default class TeacherClasses extends Component {
 
   render() {
     const del = this.delClass;
+    const currentClasses = this.state.classes.filter((cls) => {return cls.active;});
+    const archivedClasses = this.state.classes.filter((cls) => {return !cls.active;});
     return (
       <div>
           <div style={contentDiv}>
@@ -125,22 +139,29 @@ export default class TeacherClasses extends Component {
             <div>
               <h4>Current</h4>
               <ListGroup style={listGroup}>
-                {this.state.classes.map(function (d, idx) {
-                  if (d.active) {
-                    d.id = idx;
-                    return <ClassListItem key={idx} class={d} delClass={del} />;
-                  }
-                  return null;
-                })}
+                {
+                  currentClasses.length === 0 ?
+                  <ListGroupItem>You have no current classes.</ListGroupItem> : 
+                  <>
+                  {currentClasses.map((d, idx) => {
+                      d.id=idx;
+                      return <ClassListItem key={idx} classInfo={d} delClass={del} />;
+                  })}
+                  </>
+                }
               </ListGroup>
               <h4>Archived</h4>
               <ListGroup style={listGroup}>
-                {this.state.classes.map(function (d, idx) {
-                  if (!d.active) {
-                    return <ClassListItem key={idx} class={d} delClass={del} />;
-                  }
-                  return null;
-                })}
+                {
+                  archivedClasses.length === 0 ?
+                  <ListGroupItem>You have no archived classes.</ListGroupItem> : 
+                  <>
+                  {archivedClasses.map((d, idx) => {
+                    d.id=idx;
+                    return <ClassListItem key={idx} classInfo={d} delClass={del} />;
+                  })}
+                  </>
+                }
               </ListGroup>
             </div>
           }

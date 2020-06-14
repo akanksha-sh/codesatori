@@ -7,6 +7,9 @@ import {
   ListGroupItem,
   Table,
   Button,
+  UncontrolledPopover,
+  PopoverBody,
+  PopoverHeader
 } from "reactstrap";
 import AddStudent from "./AddStudent";
 import { Link as RRLink } from "react-router-dom";
@@ -14,6 +17,7 @@ import { Link as RRLink } from "react-router-dom";
 export default class ClassListItem extends Component {
   constructor(props) {
     super(props);
+
     this.state = { isInfoOpen: false, areAssignmentsOpen: false };
   }
 
@@ -32,8 +36,8 @@ export default class ClassListItem extends Component {
   };
 
   render() {
-    const { id, name } = this.props.class;
-    if (!this.props.class.active) {
+    const { id, classId, name, active } = this.props.classInfo;
+    if (!active) {
       return (
         <ListGroupItem
         // disabled
@@ -42,12 +46,17 @@ export default class ClassListItem extends Component {
         // to={"/classes/" + id}
         // action
         >
-          {this.props.class.name}
+          {name}
           <Button
             style={{ margin: "6px" }}
-            onClick={this.props.delClass.bind(this, id)}
+            id={"deletePopover"+id}
             close
           />
+          <UncontrolledPopover trigger="legacy" placement="bottom" target={"deletePopover"+id}>
+            <PopoverHeader>Delete this class</PopoverHeader>
+            <PopoverBody>This cannot be undone! Are you sure?</PopoverBody>
+            <Button color="danger" style={{width: "100%"}} onClick={this.props.delClass.bind(this,classId)}>Delete Class</Button>
+          </UncontrolledPopover>
         </ListGroupItem>
       );
     }
@@ -56,7 +65,7 @@ export default class ClassListItem extends Component {
       <ListGroupItem
         // tag={RRLink}
         // exact
-        // to={"/classes/" + this.props.class.id}
+        // to={"/classes/" + this.props.classInfo.id}
         // action
         style={{ fontWeight: "bold" }}
       >
@@ -85,15 +94,20 @@ export default class ClassListItem extends Component {
           </UncontrolledDropdown>
           <Button
             style={{ margin: "6px" }}
-            onClick={this.props.delClass.bind(this, id)}
+            id={"deletePopover"+id}
             close
           />
+          <UncontrolledPopover trigger="legacy" placement="bottom" target={"deletePopover"+id}>
+            <PopoverHeader>Delete this class</PopoverHeader>
+            <PopoverBody>This cannot be undone! Are you sure?</PopoverBody>
+            <Button color="danger" style={{width: "100%"}} onClick={this.props.delClass.bind(this,classId)}>Delete Class</Button>
+          </UncontrolledPopover>
         </div>
 
         <div style={{ paddingTop: "25px" }}>
           <Collapse isOpen={this.state.areAssignmentsOpen}>
             <tbody>
-              {this.props.class.ongoingAssignments.map(function (d, idx) {
+              {this.props.classInfo.ongoingAssignments.map((d, idx) => {
                 return (
                   <tr>
                     <th
@@ -134,31 +148,31 @@ export default class ClassListItem extends Component {
                   <th scope="row" style={infoTabStyle}>
                     No. of students:
                   </th>
-                  <td>{this.props.class.students}</td>
+                  <td>{this.props.classInfo.students}</td>
                 </tr>
                 <tr>
                   <th scope="row" style={infoTabStyle}>
                     No. of assignments:
                   </th>
-                  <td>{this.props.class.noAssignments}</td>
+                  <td>{this.props.classInfo.noAssignments}</td>
                 </tr>
                 <tr>
                   <th scope="row" style={infoTabStyle}>
                     Ongoing assignments:
                   </th>
-                  <td>{this.props.class.ongoing}</td>
+                  <td>{this.props.classInfo.ongoing}</td>
                 </tr>
                 <tr>
                   <th scope="row" style={infoTabStyle}>
                     Pending assignments:
                   </th>
-                  <td>{this.props.class.pending}</td>
+                  <td>{this.props.classInfo.pending}</td>
                 </tr>
                 <tr>
                   <th scope="row" style={infoTabStyle}>
                     Marked assignments:
                   </th>
-                  <td>{this.props.class.marked}</td>
+                  <td>{this.props.classInfo.marked}</td>
                 </tr>
               </tbody>
             </Table>
