@@ -22,12 +22,20 @@ export class Tutorial extends Component {
       publishClasses:[],
       isLoading: true,
       isSaving: false,
+      editAssignmentId: ""
     };
   }
 
   componentDidMount() {
-    const { classIdSelected } = this.props.location.state;
-    this.setState({classIdInput: classIdSelected});
+    if (this.props.isEdit) {
+      const { assignmentInfo } = this.props.location.state;
+      this.loadAssignmentInfo(assignmentInfo);
+      return;
+    }
+    if (this.props.location.state != null) {
+      const { classIdSelected} = this.props.location.state;
+      this.setState({classIdInput: classIdSelected});
+    }
     this.getClasses();
   }
 
@@ -39,6 +47,15 @@ export class Tutorial extends Component {
   onClick = (e) => {
     e.preventDefault();
   };
+
+  loadAssignmentInfo = (assignmentInfo) => {
+    this.setState({
+      questions: assignmentInfo.assignmentTemplate.questions, 
+      title: assignmentInfo.name, 
+      editAssignmentId: assignmentInfo.assignmentId, 
+      isLoading: false
+    });
+  }
 
   onPublishSubmit = (e) => {
     const publishName = this.state.classNames.find((className) => {return className.classId === this.state.classIdInput}).name;
@@ -109,13 +126,18 @@ export class Tutorial extends Component {
     this.setState({ isSaving: true });
     const userContext = this.context;
     const publishClasses = this.state.publishClasses;
+    const isEdit = this.props.isEdit;
+    const SAVE_URL = isEdit ? 
+      Globals.BACKEND_URL + "assignments/edit/" + this.state.editAssignmentId :
+      Globals.BACKEND_URL + "assignments";
+    const SAVE_METHOD = isEdit ? "PUT" : "POST";
     userContext.authUser.getIdToken().then(async (idToken) => {
       console.log(
         "Contextual User: " + JSON.stringify(userContext.userDetails)
       );
       const assignmentRet = await axios({
-          url: Globals.BACKEND_URL + "assignments",
-          method: "POST",
+          url: SAVE_URL,
+          method: SAVE_METHOD,
           headers: {
             Authorization: "Bearer " + idToken,
           },
@@ -125,7 +147,7 @@ export class Tutorial extends Component {
             assignmentTemplate: { questions: this.state.questions },
           },
         });
-      if (publishClasses.length !== 0) {
+      if (!isEdit && publishClasses.length !== 0) {
         for (let publishClass of publishClasses) {
           const publishAssignment = {
             classId: publishClass.classId,
@@ -173,6 +195,10 @@ export class Tutorial extends Component {
           onChange={this.onChange}
           placeholder="Title"
         />
+        {
+          this.props.isEdit ? 
+          <></> : 
+        <>
         <h5 className="mt-3">Publish assignment to: </h5>
         <Form onSubmit={this.onPublishSubmit} inline>
         <FormGroup className="mr-2">
@@ -212,7 +238,6 @@ export class Tutorial extends Component {
             id="dateInput"
             value={dateInput}
             onChange={this.onChange}
-            onClick={this.onClick}
             className="mr-2"
           />
         </FormGroup>
@@ -239,6 +264,8 @@ export class Tutorial extends Component {
           </>
         }
       </ListGroup>
+      </>
+      }
         
         
         <div className="mt-3">

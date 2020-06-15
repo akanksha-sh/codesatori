@@ -40,6 +40,7 @@ export default class AssignmentListItem extends Component {
   };
 
   onEditClick = (e) => {
+
     //Edit button
     e.preventDefault();
     e.stopPropagation();
@@ -88,7 +89,14 @@ export default class AssignmentListItem extends Component {
               <Container>
                 <Row>
                   <Col xs="auto">
-                    <Button onClick={this.onEditClick}>Edit</Button>
+                    <Button tag={RRLink} exact to={{
+                      pathname: "/assignments/edit",
+                      state: {
+                        assignmentInfo: this.props.assignment,
+                      }
+                    }} >
+                        Edit
+                    </Button>
                   </Col>
                   <Col className="ml-3">
                     <AddAssignment

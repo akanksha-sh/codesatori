@@ -125,19 +125,16 @@ export default class ClassListItem extends Component {
                       {d.name}
                     </th>
                     <td>
-                      <UncontrolledDropdown
-                        onClick={(e) => {
-                          e.preventDefault();
-                          /* TODO: go to the page where you can set assignmens. */
-                        }}
-                      >
-                        <DropdownToggle
-                          color="light"
+                      <Button color="light"
                           className="transparentDropdownToggle"
-                        >
-                          <i class="material-icons md-dark">settings</i>
-                        </DropdownToggle>
-                      </UncontrolledDropdown>
+                          tag={RRLink} exact to={{
+                            pathname: "/assignments/edit",
+                            state: {
+                              assignmentInfo: d,
+                            }
+                          }}>
+                            <i class="material-icons md-dark">create</i>
+                      </Button>
                     </td>
                   </tr>
                 );
