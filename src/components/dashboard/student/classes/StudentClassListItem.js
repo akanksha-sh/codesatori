@@ -35,8 +35,8 @@ export class StudentClassListItem extends Component {
 				// action
 				style={{alignItems:'center'}}
 			>
-				{this.props.class.name}
-				<Collapse isOpen={this.props.class.status !== 'pending'} style={{float:'right'}}>
+				{this.props.classInfo.classOfStudents.name}
+				<Collapse isOpen={this.props.classInfo.classOfStudents.active} style={{float:'right'}}>
 					<UncontrolledDropdown onClick={this.toggleNav}>
 						<DropdownToggle color="light" className="transparentDropdownToggle">
 						<i class="material-icons md-dark">info</i>
@@ -54,7 +54,7 @@ export class StudentClassListItem extends Component {
 						</tr>
 						</thead>
 						<tbody>
-							<StudentClassInfo id={this.props.class.id} />
+							<StudentClassInfo id={this.props.classInfo.classOfStudents.classId} assignmentInfo={this.props.classInfo.assignmentSubmissionPair} />
 						</tbody>
 					</Table>
 				</Collapse>

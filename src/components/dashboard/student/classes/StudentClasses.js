@@ -15,6 +15,7 @@ export class StudentClasses extends Component {
     classes: [],
 		inactiveShown: false,
 		isLoading: true,
+		classAssignmentData: [],
 		error: null
 	};
 	
@@ -26,32 +27,19 @@ export class StudentClasses extends Component {
 		console.log("Retrieving user's classes from: " + Globals.BACKEND_URL)
 		const userContext = this.context
 		userContext.authUser.getIdToken().then(async (idToken) => {
-      let [classRet] = await Promise.all([
-        axios({
-          url: Globals.BACKEND_URL + "classes/student",
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + idToken,
-          },
-        }),
-        // axios({
-        //   url: Globals.BACKEND_URL + "assignments/student",
-        //   method: "GET",
-        //   headers: {
-        //     Authorization: "Bearer " + idToken,
-        //   },
-				// })
-			]);
-        const classNamesRet = classRet.data.map(({ classId, name }) => ({classId, name }));
-        console.log("Retrieved classes: " + JSON.stringify(classNamesRet));
-        // console.log("Retrieved assignments: " + JSON.stringify(assignmentRet.data));
-        this.setState({ classes: classNamesRet });
-        this.setState({ isLoading: false });
-			})
-			.catch((errorRet) => {
+			const classRet = await axios({
+				url: Globals.BACKEND_URL + "classes/student",
+				method: "GET",
+				headers: {
+					Authorization: "Bearer " + idToken,
+				},
+			});
+			console.log("getClass(): " + JSON.stringify(classRet.data));
+			this.setState({ classAssignmentData: classRet.data, isLoading: false });
+			}).catch((errorRet) => {
 				console.log("Error from backend: ", errorRet);
 				this.setState({ error: errorRet });
-        this.setState({ isLoading: false });
+        		this.setState({ isLoading: false });
 			});
 	}
 
@@ -86,7 +74,7 @@ export class StudentClasses extends Component {
 
 	render() {
 		//To implement statuses at backend
-		const { classes, isLoading} = this.state
+		const { classAssignmentData, isLoading} = this.state
 		const inactiveClasses=[]
 		const pendingClasses=[]
 
@@ -99,40 +87,40 @@ export class StudentClasses extends Component {
           isLoading ? 
           <div className="text-center">
             <Spinner color="dark" className="mb-2" />
-					</div> : 
-					<div>
-						<div style={ClassGroupStyle}>
-							<Collapse isOpen={pendingClasses.length > 0}>
-								<h4>Pending</h4>
-								<ListGroup style={ListStyle}>
-									{pendingClasses.map((c)=><ClassListItem key={c.id} class={c}/>)}
-								</ListGroup>
-							</Collapse>
-						</div>
-						<div style={ClassGroupStyle}>
-							<h4>Active Classes</h4>
+		  </div> : 
+			<div>
+				<div style={ClassGroupStyle}>
+					<Collapse isOpen={pendingClasses.length > 0}>
+						<h4>Pending</h4>
+						<ListGroup style={ListStyle}>
+							{pendingClasses.map((c)=><ClassListItem key={c.id} class={c}/>)}
+						</ListGroup>
+					</Collapse>
+				</div>
+				<div style={ClassGroupStyle}>
+					<h4>Active Classes</h4>
+					<ListGroup style={ListStyle}>
+						{classAssignmentData.map(function (d, idx) {
+							return <ClassListItem key={idx} classInfo={d}/>;
+						})}
+					</ListGroup>
+				</div>
+				<div style={ClassGroupStyle}>
+					<h4>Inactive Classes</h4>
+					<button style={this.getBtnStyle()} onClick={this.toggleShow}> 
+						{(this.state.inactiveShown) ? 'hide' : 'show' }
+					</button>
+					<br />
+					<Collapse isOpen={this.state.inactiveShown}>
+						{(inactiveClasses.length === 0) ?
+							<div style={{fontSize:'8pt'}}>Nothing to show</div> :
 							<ListGroup style={ListStyle}>
-								{classes.map(function (d, idx) {
-									return <ClassListItem key={idx} class={d}/>;
-								})}
+								{inactiveClasses.map((c) => <ClassListItem key={c.id} class={c}/>)}
 							</ListGroup>
-						</div>
-						<div style={ClassGroupStyle}>
-							<h4>Inactive Classes</h4>
-							<button style={this.getBtnStyle()} onClick={this.toggleShow}> 
-								{(this.state.inactiveShown) ? 'hide' : 'show' }
-							</button>
-							<br />
-							<Collapse isOpen={this.state.inactiveShown}>
-								{(inactiveClasses.length === 0) ?
-									<div style={{fontSize:'8pt'}}>Nothing to show</div> :
-									<ListGroup style={ListStyle}>
-										{inactiveClasses.map((c) => <ClassListItem key={c.id} class={c}/>)}
-									</ListGroup>
-								}
-							</Collapse>
-						</div>
-					</div>
+						}
+					</Collapse>
+				</div>
+			</div>
 				}
 			</div>
 		)

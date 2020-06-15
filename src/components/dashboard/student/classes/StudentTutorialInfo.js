@@ -15,7 +15,7 @@ export class StudentTutorialInfo extends Component {
   };
 
   getStatus = (isMarked, isTardy, submissionDate) => {
-    const status = (isMarked) ? "Marked" : ((submissionDate !== "") ? "Submitted" : "Not Submitted")
+    const status = (isMarked) ? "Marked" : ((submissionDate !== null) ? "Submitted" : "Not Submitted")
     if (isTardy) {
       return (
         <td>
@@ -29,26 +29,32 @@ export class StudentTutorialInfo extends Component {
 
   render() {
     const {
-      name,
-      totalTests,
-      totalScore,
       submissionDate,
-      deadline,
-    } = this.props.tutorial;
+      testsPassed,
+      score,
+    } = this.props.assignmentInfo.studentSubmission;
 
-    const isMarked = this.props.tutorial.score !== ""
-    const isTardy = moment().diff(moment(deadline)) > 0
-    const score = (isMarked) ? this.props.tutorial.score : "-"
-    const testsPassed = (this.props.tutorial.testsPassed !== "") ? this.props.tutorial.testsPassed : "-"
+    const { assignmentId, name } = this.props.assignmentInfo.assignment;
+
+    const deadline = this.props.assignmentInfo.assignment.assignmentStatus.filter((status) => {
+      return status.classId === this.props.classId;
+    }).deadline
+
+    const isMarked = score !== -1;
+    const isTardy = moment().diff(moment(deadline)) > 0;
+    const scoreDisplay = (isMarked) ? score : "-";
+    const testsPassedDisplay = (testsPassed !== -1) ? testsPassed + "tests passed" : "-";
 
     return (
       <ListGroupItem 
         tag={RRLink}
         to={{
-            pathname: "/tutorial/" + this.props.tutorial.id,
+            pathname: "/tutorial/" + assignmentId,
             state: {
                 deadline: deadline,
-                submitted: submissionDate !== ""
+                submitted: submissionDate !== "",
+                assignment: this.props.assignmentInfo.assignment,
+                studentSubmission: this.props.assignmentInfo.studentSubmission,
             } 
         }}
         action
@@ -58,10 +64,10 @@ export class StudentTutorialInfo extends Component {
           <td>{name}</td>
           {this.getStatus(isMarked, isTardy, submissionDate)}
           <td>
-            {testsPassed}/{totalTests} tests passed
+            {testsPassedDisplay}
           </td>
           <td>
-            {score}/{totalScore}
+            {scoreDisplay}
           </td>
         </tr>
       </ListGroupItem>

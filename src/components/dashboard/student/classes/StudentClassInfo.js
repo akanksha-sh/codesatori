@@ -3,21 +3,14 @@ import uuid from "uuid";
 import TutorialInfo from "./StudentTutorialInfo";
 
 export class StudentClassInfo extends Component {
-  state = {
-    id: 0,
-    tutorials: [],
-  };
 
-  componentDidMount() {
-    this.setState({
-      id: this.props.id,
-      tutorials: DummyClassTutorials.tutorials,
-    });
+  constructor(props) {
+    super(props);
   }
 
   render() {
-    return this.state.tutorials.map((tutorial) => (
-      <TutorialInfo key={tutorial.id} tutorial={tutorial} />
+    return this.props.assignmentInfo.map((assignmentInfo) => (
+      <TutorialInfo key={this.props.id + assignmentInfo.assignmentId} assignmentInfo={assignmentInfo} classId = {this.props.id}/>
     ));
   }
 }
