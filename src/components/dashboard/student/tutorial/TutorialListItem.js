@@ -12,8 +12,8 @@ export class TutorialListItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: this.props.question.studentAnswer,
-      languageIndex: this.props.question.languageIndex,
+      code: this.props.answer.answerBody,
+      languageIndex: this.props.question.languageValue,
       isCompiling: false,
       compilerOut: null,
     };
@@ -56,7 +56,7 @@ export class TutorialListItem extends Component {
   };
 
   render() {
-    const { text } = this.props.question;
+    let text = this.props.question.questionText;
 
     return (
       <ListGroupItem>

@@ -22,6 +22,7 @@ export class Tutorial extends Component {
       id: this.props.match.params.id,
       name: "(Tutorial Name)",
       questions: [],
+      answers: [],
       activeTab: 1,
     };
   }
@@ -65,23 +66,23 @@ export class Tutorial extends Component {
               <NavItem>
                 <NavLink
                   className={classnames({
-                    active: this.state.activeTab === q.id,
+                    active: this.state.activeTab === q.id + 1,
                   })}
                   onClick={() => {
-                    this.setState({ activeTab: q.id });
+                    this.setState({ activeTab: q.id + 1 });
                   }}
                 >
-                  Question {q.id}
+                  Question {q.id + 1}
                 </NavLink>
               </NavItem>
             );
           })}
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
-          {this.state.questions.map((q) => {
+          {this.state.questions.map((q, idx) => {
             return (
-              <TabPane tabId={q.id}>
-                <TutorialListItem key={q.id} question={q} />
+              <TabPane tabId={q.id + 1}>
+                <TutorialListItem key={q.id + 1} question={q} answer={this.state.answers[idx]} />
               </TabPane>
             );
           })}
@@ -92,44 +93,38 @@ export class Tutorial extends Component {
   }
 
   getTutorialQuestions = () => {
-    //access database
-    console.log("This tutorial's id is: " + this.state.id);
-    if (this.state.id === "fc5d4ff6-7300-4765-a629-280afa06d01b") {
-      this.setState({
-        name: "Java Homework 2 : Linked-List",
-        questions: [
-          {
-            id: 1,
-            languageIndex: 0,
-            text:
-              "Write a public method with signature 'createIntList()' that will return an empty LinkedList of type 'Integer'.",
-            studentAnswer:
-              'public class Solution {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World!");\n\t}\n}\n',
-          },
-          {
-            id: 2,
-            languageIndex: 0,
-            text:
-              "Write a public method with sigature 'max(List<Integer> integers)' that returns the largest integer in the list.",
-            studentAnswer:
-              "public class Solution {\n\tpublic static Integer max(List<Integer> integers) {\n\t\t/* Code goes here! */\n\t\treturn 0;\n\t}\n}\n",
-          },
-        ],
-      });
-    } else if (this.state.id === "d57b350e-b599-48a5-9c05-9c1147869267") {
-      this.setState({
-        name: "Java Homework 1 : Arrays",
-        questions: [
-          {
-            id: 1,
-            languageIndex: 0,
-            text:
-              "Write a public method with sigature 'max(int[] is)' that returns the largest integer in the array.",
-            studentAnswer: " ",
-          },
-        ],
-      });
-    }
+    let { assignment, studentSubmission } = this.props.location.state
+    console.log("This assignment is: " + JSON.stringify(assignment) + " with answers: " + JSON.stringify(studentSubmission))
+    console.log("Actual questions are: "+ JSON.stringify(assignment.assignmentTemplate.questions))
+    this.setState({
+      name: assignment.name,
+      questions: assignment.assignmentTemplate.questions,
+      answers: studentSubmission.studentSubmissionTemplate.answers
+    })
+
+    // if (this.state.id === "28082810-0614-3091-8084-2c7173ef0793") {
+    //   this.setState({
+    //     name: "Java Homework 2 : Linked-List",
+    //     questions: [
+    //       {
+    //         id: 1,
+    //         languageIndex: 0,
+    //         text:
+    //           "Write a public method with signature 'createIntList()' that will return an empty LinkedList of type 'Integer'.",
+    //         studentAnswer:
+    //           'public class Solution {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World!");\n\t}\n}\n',
+    //       },
+    //       {
+    //         id: 2,
+    //         languageIndex: 0,
+    //         text:
+    //           "Write a public method with sigature 'max(List<Integer> integers)' that returns the largest integer in the list.",
+    //         studentAnswer:
+    //           "public class Solution {\n\tpublic static Integer max(List<Integer> integers) {\n\t\t/* Code goes here! */\n\t\treturn 0;\n\t}\n}\n",
+    //       },
+    //     ],
+    //   });
+    // }
   };
 
   getCountdownBoxStyle = (isOverdue) => {
