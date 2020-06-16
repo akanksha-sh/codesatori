@@ -25,7 +25,7 @@ export class AddAssignment extends Component {
     e.preventDefault();
   };
 
-  onSubmitClick = (e) => {
+  onStopPropagationClick = (e) => {
     e.stopPropagation();
   };
 
@@ -80,7 +80,7 @@ export class AddAssignment extends Component {
             id="title"
             value={date}
             onChange={this.onChange}
-            onClick={this.onClick}
+            onClick={this.onStopPropagationClick}
             className="mr-2"
           />
         </FormGroup>
@@ -110,7 +110,7 @@ export class AddAssignment extends Component {
             })}
           </Input>
         </FormGroup>
-        <Button type="submit" onClick={this.onSubmitClick}>
+        <Button type="submit" onClick={this.onStopPropagationClick}>
           Publish
         </Button>
       </Form>

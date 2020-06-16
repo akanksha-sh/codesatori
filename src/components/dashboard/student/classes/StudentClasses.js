@@ -15,6 +15,7 @@ export class StudentClasses extends Component {
     classes: [],
     inactiveShown: false,
     isLoading: true,
+    classAssignmentData: [],
     error: null,
   };
 
@@ -28,30 +29,15 @@ export class StudentClasses extends Component {
     userContext.authUser
       .getIdToken()
       .then(async (idToken) => {
-        let [classRet] = await Promise.all([
-          axios({
-            url: Globals.BACKEND_URL + "classes/student",
-            method: "GET",
-            headers: {
-              Authorization: "Bearer " + idToken,
-            },
-          }),
-          // axios({
-          //   url: Globals.BACKEND_URL + "assignments/student",
-          //   method: "GET",
-          //   headers: {
-          //     Authorization: "Bearer " + idToken,
-          //   },
-          // })
-        ]);
-        const classNamesRet = classRet.data.map(({ classId, name }) => ({
-          classId,
-          name,
-        }));
-        console.log("Retrieved classes: " + JSON.stringify(classNamesRet));
-        // console.log("Retrieved assignments: " + JSON.stringify(assignmentRet.data));
-        this.setState({ classes: classNamesRet });
-        this.setState({ isLoading: false });
+        const classRet = await axios({
+          url: Globals.BACKEND_URL + "classes/student",
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        });
+        console.log("getClass(): " + JSON.stringify(classRet.data));
+        this.setState({ classAssignmentData: classRet.data, isLoading: false });
       })
       .catch((errorRet) => {
         console.log("Error from backend: ", errorRet);
@@ -91,7 +77,7 @@ export class StudentClasses extends Component {
 
   render() {
     //To implement statuses at backend
-    const { classes, isLoading } = this.state;
+    const { classAssignmentData, isLoading } = this.state;
     const inactiveClasses = [];
     const pendingClasses = [];
 
@@ -119,8 +105,8 @@ export class StudentClasses extends Component {
             <div style={ClassGroupStyle}>
               <h4>Active Classes</h4>
               <ListGroup style={ListStyle}>
-                {classes.map(function (d, idx) {
-                  return <ClassListItem key={idx} class={d} />;
+                {classAssignmentData.map(function (d, idx) {
+                  return <ClassListItem key={idx} classInfo={d} />;
                 })}
               </ListGroup>
             </div>

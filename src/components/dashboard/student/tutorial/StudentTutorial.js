@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Countdown from "./Countdown";
 import {
+  Button,
   Collapse,
   Nav,
   NavItem,
@@ -27,6 +28,67 @@ export class Tutorial extends Component {
 
   componentDidMount() {
     this.getTutorialQuestions();
+  }
+
+  submit = () => {
+    //save to database and change status to submit
+  };
+
+  save = () => {
+    //save to database
+  };
+
+  saveAndExit = () => {
+    //save to database
+    this.props.history.goBack();
+  };
+
+  exit = () => {
+    this.props.history.goBack();
+  };
+
+  render() {
+    const { deadline, submitted } = this.props.location.state;
+
+    return (
+      <div style={contentDiv}>
+        <h2 style={pageTitle}>{this.state.name}</h2>
+        <Collapse
+          isOpen={moment().diff(moment(deadline)) > 0}
+          style={TimeLeftStyle}
+        >
+          {this.getCountdownBox(deadline)}
+        </Collapse>
+        <Nav tabs>
+          {this.state.questions.map((q) => {
+            return (
+              <NavItem>
+                <NavLink
+                  className={classnames({
+                    active: this.state.activeTab === q.id,
+                  })}
+                  onClick={() => {
+                    this.setState({ activeTab: q.id });
+                  }}
+                >
+                  Question {q.id}
+                </NavLink>
+              </NavItem>
+            );
+          })}
+        </Nav>
+        <TabContent activeTab={this.state.activeTab}>
+          {this.state.questions.map((q) => {
+            return (
+              <TabPane tabId={q.id}>
+                <TutorialListItem key={q.id} question={q} />
+              </TabPane>
+            );
+          })}
+        </TabContent>
+        {this.getButtons(submitted)}
+      </div>
+    );
   }
 
   getTutorialQuestions = () => {
@@ -104,11 +166,13 @@ export class Tutorial extends Component {
       background: isSave ? "#f2f2f2" : "#e0e0e0",
       color: "#000",
       border: "none",
-      height: "30px",
-      width: "100px",
+      width: "50%",
       cursor: "pointer",
-      fontSize: "6pt",
       margin: "5pt",
+      alignItems: "center",
+      display: "flex",
+      textAlign: "center",
+      justifyContent: "center",
     };
   };
 
@@ -116,30 +180,33 @@ export class Tutorial extends Component {
     if (!submitted) {
       return (
         <div style={BtnGroupStyle}>
-          <button
+          <Button
             style={this.getBtnStyle(false)}
             onClick={this.submit}
             onMouseEnter={(e) => (e.target.style.background = "#f2f2f2")}
             onMouseLeave={(e) => (e.target.style.background = "#e0e0e0")}
           >
+            {/* <i className="material-icons md-dark">assignment_turned_in</i>  */}
             Submit
-          </button>
-          <button
+          </Button>
+          <Button
             style={this.getBtnStyle(true)}
             onMouseEnter={(e) => (e.target.style.background = "#e0e0e0")}
             onMouseLeave={(e) => (e.target.style.background = "#f2f2f2")}
             onClick={this.save}
           >
+            <i className="material-icons md-dark">save</i> 
             Save
-          </button>
-          <button
+          </Button>
+          <Button
             style={this.getBtnStyle(false)}
             onMouseEnter={(e) => (e.target.style.background = "#f2f2f2")}
             onMouseLeave={(e) => (e.target.style.background = "#e0e0e0")}
             onClick={this.saveAndExit}
           >
+            {/* <i className="material-icons md-dark">power_settings_new</i>  */}
             Save and Exit
-          </button>
+          </Button>
         </div>
       );
     }
@@ -157,68 +224,6 @@ export class Tutorial extends Component {
       </div>
     );
   };
-
-  submit = () => {
-    //save to database and change status to submit
-  };
-
-  save = () => {
-    //save to database
-  };
-
-  saveAndExit = () => {
-    //save to database
-    this.props.history.goBack();
-  };
-
-  exit = () => {
-    this.props.history.goBack();
-  };
-
-  render() {
-    const { deadline, submitted } = this.props.location.state;
-
-    return (
-      <div style={contentDiv}>
-        <h2 style={pageTitle}>{this.state.name}</h2>
-        <Collapse
-          isOpen={moment().diff(moment(deadline)) > 0}
-          style={TimeLeftStyle}
-        >
-          <div style={{ margin: "8px" }}>Time left:</div>
-          {this.getCountdownBox(deadline)}
-        </Collapse>
-        <Nav tabs>
-          {this.state.questions.map((q) => {
-            return (
-              <NavItem>
-                <NavLink
-                  className={classnames({
-                    active: this.state.activeTab === q.id,
-                  })}
-                  onClick={() => {
-                    this.setState({ activeTab: q.id });
-                  }}
-                >
-                  Question {q.id}
-                </NavLink>
-              </NavItem>
-            );
-          })}
-        </Nav>
-        <TabContent activeTab={this.state.activeTab}>
-          {this.state.questions.map((q) => {
-            return (
-              <TabPane tabId={q.id}>
-                <TutorialListItem key={q.id} question={q} />
-              </TabPane>
-            );
-          })}
-        </TabContent>
-        {this.getButtons(submitted)}
-      </div>
-    );
-  }
 }
 
 export default Tutorial;

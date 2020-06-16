@@ -31,12 +31,20 @@ export class Tutorial extends Component {
       publishClasses: [],
       isLoading: true,
       isSaving: false,
+      editAssignmentId: "",
     };
   }
 
   componentDidMount() {
-    const { classIdSelected } = this.props.location.state;
-    this.setState({ classIdInput: classIdSelected });
+    if (this.props.isEdit) {
+      const { assignmentInfo } = this.props.location.state;
+      this.loadAssignmentInfo(assignmentInfo);
+      return;
+    }
+    if (this.props.location.state != null) {
+      const { classIdSelected } = this.props.location.state;
+      this.setState({ classIdInput: classIdSelected });
+    }
     this.getClasses();
   }
 
@@ -47,6 +55,15 @@ export class Tutorial extends Component {
 
   onClick = (e) => {
     e.preventDefault();
+  };
+
+  loadAssignmentInfo = (assignmentInfo) => {
+    this.setState({
+      questions: assignmentInfo.assignmentTemplate.questions,
+      title: assignmentInfo.name,
+      editAssignmentId: assignmentInfo.assignmentId,
+      isLoading: false,
+    });
   };
 
   onPublishSubmit = (e) => {
@@ -120,13 +137,18 @@ export class Tutorial extends Component {
     this.setState({ isSaving: true });
     const userContext = this.context;
     const publishClasses = this.state.publishClasses;
+    const isEdit = this.props.isEdit;
+    const SAVE_URL = isEdit
+      ? Globals.BACKEND_URL + "assignments/edit/" + this.state.editAssignmentId
+      : Globals.BACKEND_URL + "assignments";
+    const SAVE_METHOD = isEdit ? "PUT" : "POST";
     userContext.authUser.getIdToken().then(async (idToken) => {
       console.log(
         "Contextual User: " + JSON.stringify(userContext.userDetails)
       );
       const assignmentRet = await axios({
-        url: Globals.BACKEND_URL + "assignments",
-        method: "POST",
+        url: SAVE_URL,
+        method: SAVE_METHOD,
         headers: {
           Authorization: "Bearer " + idToken,
         },
@@ -136,7 +158,7 @@ export class Tutorial extends Component {
           assignmentTemplate: { questions: this.state.questions },
         },
       });
-      if (publishClasses.length !== 0) {
+      if (!isEdit && publishClasses.length !== 0) {
         for (let publishClass of publishClasses) {
           const publishAssignment = {
             classId: publishClass.classId,
@@ -184,72 +206,77 @@ export class Tutorial extends Component {
           onChange={this.onChange}
           placeholder="Title"
         />
-        <h5 className="mt-3">Publish assignment to: </h5>
-        <Form onSubmit={this.onPublishSubmit} inline>
-          <FormGroup className="mr-2">
-            <Label for="group" className="mr-2">
-              Class
-            </Label>
-            <Input
-              type="select"
-              name="classIdInput"
-              id="classIdInput"
-              placeholder="e.g. Class 19B"
-              onClick={this.onClick}
-              onChange={this.onChange}
-              value={classIdInput}
-              className="mr-2"
-            >
-              <option value={0} disabled>
-                Select class...
-              </option>
-              {unpublishedClassNames.map((d, idx) => {
-                return (
-                  <option key={idx} value={d.classId}>
-                    {d.name}
+        {this.props.isEdit ? (
+          <></>
+        ) : (
+          <>
+            <h5 className="mt-3">Publish assignment to: </h5>
+            <Form onSubmit={this.onPublishSubmit} inline>
+              <FormGroup className="mr-2">
+                <Label for="group" className="mr-2">
+                  Class
+                </Label>
+                <Input
+                  type="select"
+                  name="classIdInput"
+                  id="classIdInput"
+                  placeholder="e.g. Class 19B"
+                  onClick={this.onClick}
+                  onChange={this.onChange}
+                  value={classIdInput}
+                  className="mr-2"
+                >
+                  <option value={0} disabled>
+                    Select class...
                   </option>
-                );
-              })}
-            </Input>
-          </FormGroup>
-          <FormGroup className="mr-2">
-            <Label for="date" className="mr-2">
-              {" "}
-              Deadline
-            </Label>
-            <Input
-              type="date"
-              name="dateInput"
-              id="dateInput"
-              value={dateInput}
-              onChange={this.onChange}
-              onClick={this.onClick}
-              className="mr-2"
-            />
-          </FormGroup>
-          <Button type="submit">Add</Button>
-        </Form>
-        <ListGroup className="mt-2">
-          {publishClasses.length === 0 ? (
-            <ListGroupItem>No classes to be published to.</ListGroupItem>
-          ) : (
-            <>
-              {publishClasses.map((d, idx) => {
-                return (
-                  <ListGroupItem key={idx}>
-                    <span>{d.name}</span>
-                    <span className="ml-4">Deadline: {d.date}</span>
-                    <Button
-                      className="float-right"
-                      onClick={this.deletePublishedClass.bind(this, idx)}
-                      close
-                    />
-                  </ListGroupItem>
-                );
-              })}
-            </>
-          )}
-        </ListGroup>
+                  {unpublishedClassNames.map((d, idx) => {
+                    return (
+                      <option key={idx} value={d.classId}>
+                        {d.name}
+                      </option>
+                    );
+                  })}
+                </Input>
+              </FormGroup>
+              <FormGroup className="mr-2">
+                <Label for="date" className="mr-2">
+                  {" "}
+                  Deadline
+                </Label>
+                <Input
+                  type="date"
+                  name="dateInput"
+                  id="dateInput"
+                  value={dateInput}
+                  onChange={this.onChange}
+                  className="mr-2"
+                />
+              </FormGroup>
+              <Button type="submit">Add</Button>
+            </Form>
+            <ListGroup className="mt-2">
+              {publishClasses.length === 0 ? (
+                <ListGroupItem>No classes to be published to.</ListGroupItem>
+              ) : (
+                <>
+                  {publishClasses.map((d, idx) => {
+                    return (
+                      <ListGroupItem key={idx}>
+                        <span>{d.name}</span>
+                        <span className="ml-4">Deadline: {d.date}</span>
+                        <Button
+                          className="float-right"
+                          onClick={this.deletePublishedClass.bind(this, idx)}
+                          close
+                        />
+                      </ListGroupItem>
+                    );
+                  })}
+                </>
+              )}
+            </ListGroup>
+          </>
+        )}
 
         <div className="mt-3">
           <AddQuestion addQuestion={this.addQuestion} />

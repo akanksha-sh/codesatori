@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert } from "reactstrap";
+import { Alert, Spinner } from "reactstrap";
 
 const CompilerOutput = (props) => {
   const alertFor = (output) => {
@@ -15,7 +15,7 @@ const CompilerOutput = (props) => {
           }}
           color="light"
         >
-          {output.message}
+          <b>{output.message}</b>
         </Alert>
       </div>
     );
@@ -23,7 +23,13 @@ const CompilerOutput = (props) => {
 
   return (
     <div style={props.style}>
-      {props.output === null ? <AlertForNull /> : alertFor(props.output)}
+      {props.fetching ? (
+        <AlertForFetching />
+      ) : props.output === null ? (
+        <AlertForNull />
+      ) : (
+        alertFor(props.output)
+      )}
     </div>
   );
 };
@@ -36,12 +42,30 @@ const alertStyle = {
   textAlign: "center",
 };
 
+const symbolStyle = {
+  margin: "8px",
+};
+
+/* TODO: This is pretty badly programmed since it can all be parameterized. */
+const AlertForFetching = () => {
+  return (
+    <Alert style={alertStyle} color="primary">
+      <b>Compiler Status: Fetching Results </b>
+      <br />
+      <Spinner style={symbolStyle} />
+      <br />
+    </Alert>
+  );
+};
+
 const AlertForNull = () => {
   return (
     <Alert style={alertStyle} color="dark">
       <b>Compiler Status: None </b>
       <br />
-      <i class="material-icons md-dark">remove_circle_outline</i>
+      <i style={symbolStyle} class="material-icons md-dark">
+        remove_circle_outline
+      </i>
       <br />
     </Alert>
   );
@@ -52,7 +76,9 @@ const AlertForSuccess = () => {
     <Alert style={alertStyle} color="success">
       <b>Compiler Status: Success </b>
       <br />
-      <i class="material-icons md-dark">check_circle_outline</i>
+      <i style={symbolStyle} class="material-icons md-dark">
+        check_circle_outline
+      </i>
     </Alert>
   );
 };
@@ -62,7 +88,9 @@ const AlertForRunTimeError = () => {
     <Alert style={alertStyle} color="danger">
       <b>Compiler Status: Run Time Error </b>
       <br />
-      <i class="material-icons md-dark">error_outline</i>
+      <i style={symbolStyle} class="material-icons md-dark">
+        error_outline
+      </i>
     </Alert>
   );
 };
@@ -72,7 +100,9 @@ const AlertForCompileTimeError = () => {
     <Alert style={alertStyle} color="warning">
       <b>Compiler Status: Compile Time Error </b>
       <br />
-      <i class="material-icons md-dark">error_outline</i>
+      <i style={symbolStyle} class="material-icons md-dark">
+        error_outline
+      </i>
     </Alert>
   );
 };
@@ -82,7 +112,9 @@ const AlertForBadRequest = () => {
     <Alert style={alertStyle} color="info">
       <b>Compiler Status: Bad Request </b>
       <br />
-      <i class="material-icons md-dark">help_outline</i>
+      <i style={symbolStyle} class="material-icons md-dark">
+        help_outline
+      </i>
     </Alert>
   );
 };

@@ -72,6 +72,7 @@ export class TutorialListItem extends Component {
             />
             <CompilerOutput
               style={{ ...editorStyle, float: "right" }}
+              fetching={this.state.isCompiling}
               output={this.state.compilerOut}
             />
           </div>
@@ -93,6 +94,6 @@ export default TutorialListItem;
 const editorStyle = {
   borderStyle: "groove",
   float: "left",
-  height: "500px",
+  height: "400px",
   width: "50%",
 };

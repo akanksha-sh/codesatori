@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { Alert } from "reactstrap";
 
 class Countdown extends React.Component {
   state = {
@@ -31,30 +32,24 @@ class Countdown extends React.Component {
   }
 
   render() {
-    const { days, hours, minutes, seconds } = this.state;
+    const { days, hours, minutes } = this.state;
     const CountdownBoxStyle = this.props.countdownBoxStyle;
 
     return (
-      <div>
-        <div style={CountdownBoxStyle}>
-          <div style={CountdownItemStyle}>
-            {days}
-            <span>days</span>
-          </div>
-          <div style={CountdownItemStyle}>
-            {hours}
-            <span>hours</span>
-          </div>
-          <div style={CountdownItemStyle}>
-            {minutes}
-            <span>minutes</span>
-          </div>
-          <div style={CountdownItemStyle}>
-            {seconds}
-            <span>seconds</span>
-          </div>
-        </div>
-      </div>
+      <Alert
+        style={{
+          ...CountdownBoxStyle,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "row",
+        }}
+      >
+        <div style={{ float: "left" }}>Time left: </div>
+        <em style={{ float: "right" }}>
+          {days} days {hours} hours {minutes} minutes{" "}
+        </em>
+      </Alert>
     );
   }
 }

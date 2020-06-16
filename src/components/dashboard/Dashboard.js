@@ -22,6 +22,11 @@ export class Dashboard extends Component {
               <Route exact path="/assignments" component={Assignments} />
               <Route exact path="/assignments/1" component={Tutorial} />
               <Route exact path="/assignments/create" component={Tutorial} />
+              <Route
+                exact
+                path="/assignments/edit"
+                render={(props) => <Tutorial {...props} isEdit={true} />}
+              />
               <Route exact path="/tutorial/:id" component={StudentTutorial} />
             </div>
             <Redirect exact from="/" to="/classes" />
