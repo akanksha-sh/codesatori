@@ -11,19 +11,19 @@ export class ClassInfo extends Component {
       <div className="dropdown-menu-custom">
         <ListGroup>
           <ListGroupItem>
-            No. of students: {this.props.class.students}
+            No. of students: {this.props.classInfo.studentIds.length}
           </ListGroupItem>
           <ListGroupItem>
-            No. of assignments: {this.props.class.noAssignments}
+            No. of assignments: {this.props.classInfo.assignmentStatus.length}
           </ListGroupItem>
           <ListGroupItem>
-            Ongoing assignments: {this.props.class.ongoing}{" "}
+            Ongoing assignments: {this.props.classInfo.assignmentStatus.length}
           </ListGroupItem>
           <ListGroupItem>
-            Pending assignments: {this.props.class.pending}
+            Pending assignments: 0
           </ListGroupItem>
           <ListGroupItem>
-            Marked assignments: {this.props.class.marked}
+            Marked assignments: 0
           </ListGroupItem>
         </ListGroup>
       </div>

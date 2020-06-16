@@ -172,31 +172,31 @@ export default class ClassListItem extends Component {
                   <th scope="row" style={infoTabStyle}>
                     No. of students:
                   </th>
-                  <td>{this.props.classInfo.students}</td>
+                  <td>{this.props.classInfo.studentIds.length}</td>
                 </tr>
                 <tr>
                   <th scope="row" style={infoTabStyle}>
                     No. of assignments:
                   </th>
-                  <td>{this.props.classInfo.noAssignments}</td>
+                  <td>{this.props.classInfo.assignmentStatus.length}</td>
                 </tr>
                 <tr>
                   <th scope="row" style={infoTabStyle}>
                     Ongoing assignments:
                   </th>
-                  <td>{this.props.classInfo.ongoing}</td>
+                  <td> {this.props.classInfo.assignmentStatus.length}</td>
                 </tr>
                 <tr>
                   <th scope="row" style={infoTabStyle}>
                     Pending assignments:
                   </th>
-                  <td>{this.props.classInfo.pending}</td>
+                  <td>0</td>
                 </tr>
                 <tr>
                   <th scope="row" style={infoTabStyle}>
                     Marked assignments:
                   </th>
-                  <td>{this.props.classInfo.marked}</td>
+                  <td>0</td>
                 </tr>
               </tbody>
             </Table>
