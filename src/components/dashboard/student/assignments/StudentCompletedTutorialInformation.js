@@ -21,35 +21,39 @@ export class StudentCompletedTutorialInformation extends Component {
     };
 
     const renderStatus = () => {
-      let status = this.props.tutorial.submissionDate === "" ? "Not Submitted" : 
-                    ((this.props.tutorial.score === "") ? "Submitted" : "Marked")
+      let status =
+        this.props.tutorial.submissionDate === ""
+          ? "Not Submitted"
+          : this.props.tutorial.score === ""
+          ? "Submitted"
+          : "Marked";
       return status;
     };
 
     return (
-        <ListGroupItem
-            // disabled
-            tag={RRLink}
-            to={{
-                pathname: "/tutorial/" + this.props.tutorial.id,
-                state: {
-                    deadline: this.props.tutorial.deadline,
-                    submitted: this.props.tutorial.submissionDate !== ""
-                } 
-            }}
-            action
-            style={{alignItems:'center', display:'flex'}}
-        >
-          <div>{this.props.tutorial.name}</div>
-          <div style={{marginLeft:'auto'}}>
-              {renderStatus()}
-              <UncontrolledDropdown onClick={this.clickHandler}>
-              <DropdownToggle color="light" className="transparentDropdownToggle">
-                {renderButton()}
-              </DropdownToggle>
-              </UncontrolledDropdown>
-          </div>
-        </ListGroupItem>
+      <ListGroupItem
+        // disabled
+        tag={RRLink}
+        to={{
+          pathname: "/tutorial/" + this.props.tutorial.id,
+          state: {
+            deadline: this.props.tutorial.deadline,
+            submitted: this.props.tutorial.submissionDate !== "",
+          },
+        }}
+        action
+        style={{ alignItems: "center", display: "flex" }}
+      >
+        <div>{this.props.tutorial.name}</div>
+        <div style={{ marginLeft: "auto" }}>
+          {renderStatus()}
+          <UncontrolledDropdown onClick={this.clickHandler}>
+            <DropdownToggle color="light" className="transparentDropdownToggle">
+              {renderButton()}
+            </DropdownToggle>
+          </UncontrolledDropdown>
+        </div>
+      </ListGroupItem>
     );
   }
 }

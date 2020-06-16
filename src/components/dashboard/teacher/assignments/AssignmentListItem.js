@@ -50,7 +50,7 @@ export default class AssignmentListItem extends Component {
     this.props.delAssignment(assignmentId);
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
   render() {
     const assignmentStatuses = this.props.assignment.assignmentStatus;
@@ -64,20 +64,26 @@ export default class AssignmentListItem extends Component {
 
     return (
       <ListGroupItem tag="a" href="" action onClick={this.open}>
-        <span  style={{ width: "80%" }}>{this.props.assignment.name}</span>
+        <span style={{ width: "80%" }}>{this.props.assignment.name}</span>
         <Button
-            style={{ marginLeft: "16px" }}
-            id={"deletePopover" + this.props.assignment.id}
-            onClick={this.onClick}
-            close
-          />
-        <UncontrolledPopover trigger="legacy" placement="bottom" target={"deletePopover" + this.props.assignment.id}>
+          style={{ marginLeft: "16px" }}
+          id={"deletePopover" + this.props.assignment.id}
+          onClick={this.onClick}
+          close
+        />
+        <UncontrolledPopover
+          trigger="legacy"
+          placement="bottom"
+          target={"deletePopover" + this.props.assignment.id}
+        >
           <PopoverHeader>Delete this assignment</PopoverHeader>
           <PopoverBody>This cannot be undone! Are you sure?</PopoverBody>
-          <Button color="danger" 
-            style={{width: "100%"}} 
-            onClick={this.onDeleteClick}>
-              Delete Assignment
+          <Button
+            color="danger"
+            style={{ width: "100%" }}
+            onClick={this.onDeleteClick}
+          >
+            Delete Assignment
           </Button>
         </UncontrolledPopover>
         <i className="material-icons md-dark float-right">expand_more</i>

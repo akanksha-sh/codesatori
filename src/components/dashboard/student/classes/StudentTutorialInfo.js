@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import { Link as RRLink } from "react-router-dom";
 import { ListGroupItem } from "reactstrap";
-import moment from 'moment'
+import moment from "moment";
 
 export class StudentTutorialInfo extends Component {
   getTardiness = (tardy) => {
@@ -15,17 +15,21 @@ export class StudentTutorialInfo extends Component {
   };
 
   getStatus = (isMarked, isTardy, submissionDate) => {
-    const status = (isMarked) ? "Marked" : ((submissionDate !== "") ? "Submitted" : "Not Submitted")
+    const status = isMarked
+      ? "Marked"
+      : submissionDate !== ""
+      ? "Submitted"
+      : "Not Submitted";
     if (isTardy) {
       return (
         <td>
           {status}
           <div style={LateTagStyle}>Late</div>
         </td>
-      )
+      );
     }
-    return <td>{status}</td>
-  }
+    return <td>{status}</td>;
+  };
 
   render() {
     const {
@@ -36,23 +40,26 @@ export class StudentTutorialInfo extends Component {
       deadline,
     } = this.props.tutorial;
 
-    const isMarked = this.props.tutorial.score !== ""
-    const isTardy = moment().diff(moment(deadline)) > 0
-    const score = (isMarked) ? this.props.tutorial.score : "-"
-    const testsPassed = (this.props.tutorial.testsPassed !== "") ? this.props.tutorial.testsPassed : "-"
+    const isMarked = this.props.tutorial.score !== "";
+    const isTardy = moment().diff(moment(deadline)) > 0;
+    const score = isMarked ? this.props.tutorial.score : "-";
+    const testsPassed =
+      this.props.tutorial.testsPassed !== ""
+        ? this.props.tutorial.testsPassed
+        : "-";
 
     return (
-      <ListGroupItem 
+      <ListGroupItem
         tag={RRLink}
         to={{
-            pathname: "/tutorial/" + this.props.tutorial.id,
-            state: {
-                deadline: deadline,
-                submitted: submissionDate !== ""
-            } 
+          pathname: "/tutorial/" + this.props.tutorial.id,
+          state: {
+            deadline: deadline,
+            submitted: submissionDate !== "",
+          },
         }}
         action
-        style={{padding:'0'}}
+        style={{ padding: "0" }}
       >
         <tr>
           <td>{name}</td>
@@ -72,6 +79,6 @@ export class StudentTutorialInfo extends Component {
 export default StudentTutorialInfo;
 
 const LateTagStyle = {
-  background:'#b73e3a',
-  color:'#f2f2f2',
-}
+  background: "#b73e3a",
+  color: "#f2f2f2",
+};

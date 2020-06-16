@@ -9,7 +9,7 @@ import {
   Button,
   UncontrolledPopover,
   PopoverBody,
-  PopoverHeader
+  PopoverHeader,
 } from "reactstrap";
 import AddStudent from "./AddStudent";
 import { Link as RRLink } from "react-router-dom";
@@ -47,15 +47,21 @@ export default class ClassListItem extends Component {
         // action
         >
           {name}
-          <Button
-            style={{ margin: "6px" }}
-            id={"deletePopover"+id}
-            close
-          />
-          <UncontrolledPopover trigger="legacy" placement="bottom" target={"deletePopover"+id}>
+          <Button style={{ margin: "6px" }} id={"deletePopover" + id} close />
+          <UncontrolledPopover
+            trigger="legacy"
+            placement="bottom"
+            target={"deletePopover" + id}
+          >
             <PopoverHeader>Delete this class</PopoverHeader>
             <PopoverBody>This cannot be undone! Are you sure?</PopoverBody>
-            <Button color="danger" style={{width: "100%"}} onClick={this.props.delClass.bind(this,classId)}>Delete Class</Button>
+            <Button
+              color="danger"
+              style={{ width: "100%" }}
+              onClick={this.props.delClass.bind(this, classId)}
+            >
+              Delete Class
+            </Button>
           </UncontrolledPopover>
         </ListGroupItem>
       );
@@ -71,14 +77,20 @@ export default class ClassListItem extends Component {
       >
         {name}
         <div style={{ float: "right" }}>
-        <Button color="light" className="transparentDropdownToggle" tag={RRLink} exact to={{
-            pathname: "/assignments/create",
-            state: {
-              classIdSelected: classId,
-            }
-          }} >
-              <i class="material-icons md-dark">add</i>
-            </Button>
+          <Button
+            color="light"
+            className="transparentDropdownToggle"
+            tag={RRLink}
+            exact
+            to={{
+              pathname: "/assignments/create",
+              state: {
+                classIdSelected: classId,
+              },
+            }}
+          >
+            <i class="material-icons md-dark">add</i>
+          </Button>
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
               <i class="material-icons md-dark">person_add</i>
@@ -97,15 +109,21 @@ export default class ClassListItem extends Component {
               <i class="material-icons md-dark">info</i>
             </DropdownToggle>
           </UncontrolledDropdown>
-          <Button
-            style={{ margin: "6px" }}
-            id={"deletePopover"+id}
-            close
-          />
-          <UncontrolledPopover trigger="legacy" placement="bottom" target={"deletePopover"+id}>
+          <Button style={{ margin: "6px" }} id={"deletePopover" + id} close />
+          <UncontrolledPopover
+            trigger="legacy"
+            placement="bottom"
+            target={"deletePopover" + id}
+          >
             <PopoverHeader>Delete this class</PopoverHeader>
             <PopoverBody>This cannot be undone! Are you sure?</PopoverBody>
-            <Button color="danger" style={{width: "100%"}} onClick={this.props.delClass.bind(this,classId)}>Delete Class</Button>
+            <Button
+              color="danger"
+              style={{ width: "100%" }}
+              onClick={this.props.delClass.bind(this, classId)}
+            >
+              Delete Class
+            </Button>
           </UncontrolledPopover>
         </div>
 

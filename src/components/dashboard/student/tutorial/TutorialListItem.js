@@ -1,22 +1,21 @@
 import React, { Component } from "react";
-import { Button, ListGroupItem, FormGroup, Label, Input } from "reactstrap";
+import { Button, ListGroupItem, FormGroup } from "reactstrap";
 import * as Globals from "../../../../Globals";
 import AuthUserContext from "../../../../session/Context";
 import axios from "axios";
+import CodeEditor from "./CodeEditor";
+import CompilerOutput from "./CompilerOutput";
 
 export class TutorialListItem extends Component {
   static contextType = AuthUserContext;
 
-  static INITIAL =
-    'public class Solution {\npublic static void main(String[] args) {\nSystem.out.println("Hello World!");\n}\n}';
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      value: this.INITIAL,
+      code: this.props.question.studentAnswer,
+      languageIndex: this.props.question.languageIndex,
       isCompiling: false,
-      success: true,
-      compilerOut: "",
+      compilerOut: null,
     };
   }
 
@@ -26,6 +25,8 @@ export class TutorialListItem extends Component {
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
+  updateCode = (code) => this.setState({ code: code });
+
   onClick = (e) => {
     e.preventDefault();
     this.setState({ isCompiling: true });
@@ -34,71 +35,52 @@ export class TutorialListItem extends Component {
       console.log(
         "Contextual User: " + JSON.stringify(userContext.userDetails)
       );
-      
+      console.log("Code: " + this.state.code);
+
       let [compileRet] = await Promise.all([
         axios({
-          url: Globals.BACKEND_URL + "code/compile",
-          method: "GET",
+          url: Globals.BACKEND_URL + "compiler",
+          method: "POST",
           headers: {
             Authorization: "Bearer " + idToken,
           },
           data: {
-            code: this.state.value,
-            languageValue: 0,
+            code: this.state.code,
+            languageIndex: this.state.languageIndex,
           },
         }),
       ]);
-      console.log(
-        "Compiler Out: " + JSON.stringify(compileRet.data)
-      );
-      this.setState({ isCompiling: false });
+      console.log("Compiler Out: " + JSON.stringify(compileRet.data));
+      this.setState({ isCompiling: false, compilerOut: compileRet.data });
     });
   };
 
-  getAnswerBody = (studentAnswer) => {
-    if (studentAnswer === "") {
-      return (
-        <Input
-          type="textarea"
-          name="value"
-          id="value"
-          rows="10"
-          value={this.state.value}
-          placeholder='public class Solution {
-            public static void main(String[] args) {
-              System.out.println("Hello World!");
-            }
-          }'
-          onChange={this.onChange}
-        />
-      )
-    } 
-
-    return (
-      <Input
-        type="textarea"
-        name="value"
-        id="value"
-        rows="10"
-        value={studentAnswer}
-        // placeholder={studentAnswer}
-        onChange={this.onChange}
-        disabled={true}
-      />
-    )
-  }
-
   render() {
-    const { id, questionText, studentAnswer } = this.props.question;
+    const { text } = this.props.question;
 
     return (
       <ListGroupItem>
-        <h5> Question {id} </h5>
-        {questionText}
+        <h5> {text} </h5>
+        <br />
         <FormGroup>
-          {this.getAnswerBody(studentAnswer)}
-          <Button onClick={this.onClick} style={{ width: "100%" }}>
-            Compile
+          <div>
+            <CodeEditor
+              style={{ ...editorStyle, float: "left" }}
+              code={this.state.code}
+              onChange={this.updateCode}
+              languageIndex={this.state.languageIndex}
+            />
+            <CompilerOutput
+              style={{ ...editorStyle, float: "right" }}
+              output={this.state.compilerOut}
+            />
+          </div>
+          <Button
+            color="primary"
+            onClick={this.onClick}
+            style={{ width: "100%" }}
+          >
+            Run Code
           </Button>
         </FormGroup>
       </ListGroupItem>
@@ -107,3 +89,10 @@ export class TutorialListItem extends Component {
 }
 
 export default TutorialListItem;
+
+const editorStyle = {
+  borderStyle: "groove",
+  float: "left",
+  height: "500px",
+  width: "50%",
+};

@@ -55,7 +55,7 @@ export default class TeacherClasses extends Component {
           })
           .map((a) => {
             return newAssignments.filter(
-              (assignment) => assignment.assignmentId == a.assignmentId
+              (assignment) => assignment.assignmentId === a.assignmentId
             )[0];
           });
         return { ...c, ongoingAssignments: ongoingAssignments };
@@ -75,96 +75,106 @@ export default class TeacherClasses extends Component {
 
   delClass = (id) => {
     const userContext = this.context;
-    userContext.authUser.getIdToken().then(idToken => 
-      axios({
-        url: Globals.BACKEND_URL + "classes/" + id,
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + idToken,
-        },
-      }))
-    .then((res) => {
-      this.refreshClasses();
-    })
-    .catch((error) => {
-      console.log("Error deleting class: " + error);
-    })
+    userContext.authUser
+      .getIdToken()
+      .then((idToken) =>
+        axios({
+          url: Globals.BACKEND_URL + "classes/" + id,
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        })
+      )
+      .then((res) => {
+        this.refreshClasses();
+      })
+      .catch((error) => {
+        console.log("Error deleting class: " + error);
+      });
   };
 
   addClass = (title, emailList) => {
     const userContext = this.context;
-    console.log(
-      "Contextual User: " + JSON.stringify(userContext.userDetails)
-    );
-    userContext.authUser.getIdToken()
-    .then((idToken) => (
-      axios({
-        url: Globals.BACKEND_URL + "classes",
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + idToken,
-        },
-        data: {
-          name: title,
-          emails: emailList,
-        },
-      })))
-    .then((classRet) => {
-      const newClass = classRet.data;
-      console.log("Retrieved Class: " + JSON.stringify(newClass));
-      this.refreshClasses();
-    })
-    .catch((error) => {
-      console.log("Error from backend: ", error);
-    });
-  }
+    console.log("Contextual User: " + JSON.stringify(userContext.userDetails));
+    userContext.authUser
+      .getIdToken()
+      .then((idToken) =>
+        axios({
+          url: Globals.BACKEND_URL + "classes",
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+          data: {
+            name: title,
+            emails: emailList,
+          },
+        })
+      )
+      .then((classRet) => {
+        const newClass = classRet.data;
+        console.log("Retrieved Class: " + JSON.stringify(newClass));
+        this.refreshClasses();
+      })
+      .catch((error) => {
+        console.log("Error from backend: ", error);
+      });
+  };
 
   render() {
     const del = this.delClass;
-    const currentClasses = this.state.classes.filter((cls) => {return cls.active;});
-    const archivedClasses = this.state.classes.filter((cls) => {return !cls.active;});
+    const currentClasses = this.state.classes.filter((cls) => {
+      return cls.active;
+    });
+    const archivedClasses = this.state.classes.filter((cls) => {
+      return !cls.active;
+    });
     return (
       <div>
-          <div style={contentDiv}>
-            <h2 style={pageTitle}> Classes </h2>
-            <AddClass addClass={this.addClass} />
-            <br />
-            <br />
-            {
-              this.state.isLoading ? (
-                <div className="text-center">
-                  <Spinner color="dark" className="mb-2" />
-                </div>
-              ) : 
+        <div style={contentDiv}>
+          <h2 style={pageTitle}> Classes </h2>
+          <AddClass addClass={this.addClass} />
+          <br />
+          <br />
+          {this.state.isLoading ? (
+            <div className="text-center">
+              <Spinner color="dark" className="mb-2" />
+            </div>
+          ) : (
             <div>
               <h4>Current</h4>
               <ListGroup style={listGroup}>
-                {
-                  currentClasses.length === 0 ?
-                  <ListGroupItem>You have no current classes.</ListGroupItem> : 
+                {currentClasses.length === 0 ? (
+                  <ListGroupItem>You have no current classes.</ListGroupItem>
+                ) : (
                   <>
-                  {currentClasses.map((d, idx) => {
-                      d.id=idx;
-                      return <ClassListItem key={idx} classInfo={d} delClass={del} />;
-                  })}
+                    {currentClasses.map((d, idx) => {
+                      d.id = idx;
+                      return (
+                        <ClassListItem key={idx} classInfo={d} delClass={del} />
+                      );
+                    })}
                   </>
-                }
+                )}
               </ListGroup>
               <h4>Archived</h4>
               <ListGroup style={listGroup}>
-                {
-                  archivedClasses.length === 0 ?
-                  <ListGroupItem>You have no archived classes.</ListGroupItem> : 
+                {archivedClasses.length === 0 ? (
+                  <ListGroupItem>You have no archived classes.</ListGroupItem>
+                ) : (
                   <>
-                  {archivedClasses.map((d, idx) => {
-                    d.id=idx;
-                    return <ClassListItem key={idx} classInfo={d} delClass={del} />;
-                  })}
+                    {archivedClasses.map((d, idx) => {
+                      d.id = idx;
+                      return (
+                        <ClassListItem key={idx} classInfo={d} delClass={del} />
+                      );
+                    })}
                   </>
-                }
+                )}
               </ListGroup>
             </div>
-          }
+          )}
         </div>
       </div>
     );

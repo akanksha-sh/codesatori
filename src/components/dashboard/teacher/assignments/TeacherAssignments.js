@@ -37,20 +37,23 @@ export default class TeacherAssignment extends Component {
 
   delAssignment = (id) => {
     const userContext = this.context;
-    userContext.authUser.getIdToken().then(idToken => 
-      axios({
-        url: Globals.BACKEND_URL + "assignments/" + id,
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + idToken,
-        },
-      }))
-    .then((res) => {
-      this.getAssignments();
-    })
-    .catch((error) => {
-      console.log("Error deleting assignment: " + error);
-    })
+    userContext.authUser
+      .getIdToken()
+      .then((idToken) =>
+        axios({
+          url: Globals.BACKEND_URL + "assignments/" + id,
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        })
+      )
+      .then((res) => {
+        this.getAssignments();
+      })
+      .catch((error) => {
+        console.log("Error deleting assignment: " + error);
+      });
   };
 
   getAssignments = () => {
@@ -127,7 +130,7 @@ export default class TeacherAssignment extends Component {
                       <AssignmentListItem
                         key={idx}
                         assignment={d}
-                        delAssignment = {delAssignment}
+                        delAssignment={delAssignment}
                         classNames={this.state.classNames}
                         refresh={this.getAssignments}
                       />
@@ -143,7 +146,7 @@ export default class TeacherAssignment extends Component {
               ) : (
                 <div>
                   {archivedAssignments.map((d, idx) => {
-                    d.id=idx;
+                    d.id = idx;
                     return <AssignmentListItem key={idx} assignment={d} />;
                   })}
                 </div>

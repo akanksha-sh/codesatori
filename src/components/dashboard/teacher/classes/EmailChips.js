@@ -1,15 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { Row, Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Input } from "reactstrap";
 
 class EmailChips extends React.Component {
   state = {
     items: [],
     value: "",
-    error: null
+    error: null,
   };
 
-  handleKeyDown = evt => {
+  handleKeyDown = (evt) => {
     if (["Enter", "Tab", ","].includes(evt.key)) {
       evt.preventDefault();
 
@@ -18,36 +17,36 @@ class EmailChips extends React.Component {
       if (value && this.isValid(value)) {
         this.setState({
           items: [...this.state.items, this.state.value],
-          value: ""
+          value: "",
         });
       }
     }
   };
 
-  handleChange = evt => {
+  handleChange = (evt) => {
     this.setState({
       value: evt.target.value,
-      error: null
+      error: null,
     });
   };
 
-  handleDelete = item => {
+  handleDelete = (item) => {
     this.setState({
-      items: this.state.items.filter(i => i !== item)
+      items: this.state.items.filter((i) => i !== item),
     });
   };
 
-  handlePaste = evt => {
+  handlePaste = (evt) => {
     evt.preventDefault();
 
     var paste = evt.clipboardData.getData("text");
-    var emails = paste.match(/[\w\d\.-]+@[\w\d\.-]+\.[\w\d\.-]+/g);
+    var emails = paste.match(/[\w\d.-]+@[\w\d.-]+.[\w\d.-]+/g);
 
     if (emails) {
-      var toBeAdded = emails.filter(email => !this.isInList(email));
+      var toBeAdded = emails.filter((email) => !this.isInList(email));
 
       this.setState({
-        items: [...this.state.items, ...toBeAdded]
+        items: [...this.state.items, ...toBeAdded],
       });
     }
     this.props.setParentState(this.state.items);
@@ -78,13 +77,13 @@ class EmailChips extends React.Component {
   }
 
   isEmail(email) {
-    return /[\w\d\.-]+@[\w\d\.-]+\.[\w\d\.-]+/.test(email);
+    return /[\w\d.-]+@[\w\d.-]+\.[\w\d.-]+/.test(email);
   }
 
   render() {
     return (
       <>
-        {this.state.items.map(item => (
+        {this.state.items.map((item) => (
           <div className="tag-item" key={item}>
             {item}
             <button

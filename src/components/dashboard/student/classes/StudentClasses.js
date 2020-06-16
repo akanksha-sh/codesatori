@@ -1,69 +1,74 @@
-import React, { Component } from 'react'
-import { Collapse, ListGroup, Spinner } from 'reactstrap'
-import uuid from 'uuid'
-import AddClass from './StudentAddClass'
-import ClassListItem from './StudentClassListItem'
-import { pageTitle, contentDiv } from "../../../../Style"
-import * as Globals from "./../../../../Globals"
-import axios from "axios"
-import AuthUserContext from '../../../../session/Context'
+import React, { Component } from "react";
+import { Collapse, ListGroup, Spinner } from "reactstrap";
+import uuid from "uuid";
+import AddClass from "./StudentAddClass";
+import ClassListItem from "./StudentClassListItem";
+import { pageTitle, contentDiv } from "../../../../Style";
+import * as Globals from "./../../../../Globals";
+import axios from "axios";
+import AuthUserContext from "../../../../session/Context";
 
 export class StudentClasses extends Component {
-	static contextType = AuthUserContext
+  static contextType = AuthUserContext;
 
   state = {
     classes: [],
-		inactiveShown: false,
-		isLoading: true,
-		error: null
-	};
-	
-	componentDidMount() {
-		this.getClasses()
-	}
+    inactiveShown: false,
+    isLoading: true,
+    error: null,
+  };
 
-	getClasses = () => {
-		console.log("Retrieving user's classes from: " + Globals.BACKEND_URL)
-		const userContext = this.context
-		userContext.authUser.getIdToken().then(async (idToken) => {
-      let [classRet] = await Promise.all([
-        axios({
-          url: Globals.BACKEND_URL + "classes/student",
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + idToken,
-          },
-        }),
-        // axios({
-        //   url: Globals.BACKEND_URL + "assignments/student",
-        //   method: "GET",
-        //   headers: {
-        //     Authorization: "Bearer " + idToken,
-        //   },
-				// })
-			]);
-        const classNamesRet = classRet.data.map(({ classId, name }) => ({classId, name }));
+  componentDidMount() {
+    this.getClasses();
+  }
+
+  getClasses = () => {
+    console.log("Retrieving user's classes from: " + Globals.BACKEND_URL);
+    const userContext = this.context;
+    userContext.authUser
+      .getIdToken()
+      .then(async (idToken) => {
+        let [classRet] = await Promise.all([
+          axios({
+            url: Globals.BACKEND_URL + "classes/student",
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + idToken,
+            },
+          }),
+          // axios({
+          //   url: Globals.BACKEND_URL + "assignments/student",
+          //   method: "GET",
+          //   headers: {
+          //     Authorization: "Bearer " + idToken,
+          //   },
+          // })
+        ]);
+        const classNamesRet = classRet.data.map(({ classId, name }) => ({
+          classId,
+          name,
+        }));
         console.log("Retrieved classes: " + JSON.stringify(classNamesRet));
         // console.log("Retrieved assignments: " + JSON.stringify(assignmentRet.data));
         this.setState({ classes: classNamesRet });
         this.setState({ isLoading: false });
-			})
-			.catch((errorRet) => {
-				console.log("Error from backend: ", errorRet);
-				this.setState({ error: errorRet });
+      })
+      .catch((errorRet) => {
+        console.log("Error from backend: ", errorRet);
+        this.setState({ error: errorRet });
         this.setState({ isLoading: false });
-			});
-	}
+      });
+  };
 
-	addClass = (name) => {
-		const newClass = {
-			id: uuid.v4(),
-			name: name,
-			//To implement at backend
-			status: "pending",
-		}
-		this.setState({classes: [...this.state.classes, newClass]})
-	}
+  addClass = (name) => {
+    const newClass = {
+      id: uuid.v4(),
+      name: name,
+      //To implement at backend
+      status: "pending",
+    };
+    this.setState({ classes: [...this.state.classes, newClass] });
+  };
 
   getBtnStyle = () => {
     return {
@@ -84,59 +89,64 @@ export class StudentClasses extends Component {
       inactiveShown: !this.state.inactiveShown,
     });
 
-	render() {
-		//To implement statuses at backend
-		const { classes, isLoading} = this.state
-		const inactiveClasses=[]
-		const pendingClasses=[]
+  render() {
+    //To implement statuses at backend
+    const { classes, isLoading } = this.state;
+    const inactiveClasses = [];
+    const pendingClasses = [];
 
-		return (
-			<div style={contentDiv}>
-				<h2 style={pageTitle}> Classes </h2>
-        		<AddClass addClass={this.addClass}/>
-				<br />
-				{
-          isLoading ? 
+    return (
+      <div style={contentDiv}>
+        <h2 style={pageTitle}> Classes </h2>
+        <AddClass addClass={this.addClass} />
+        <br />
+        {isLoading ? (
           <div className="text-center">
             <Spinner color="dark" className="mb-2" />
-					</div> : 
-					<div>
-						<div style={ClassGroupStyle}>
-							<Collapse isOpen={pendingClasses.length > 0}>
-								<h4>Pending</h4>
-								<ListGroup style={ListStyle}>
-									{pendingClasses.map((c)=><ClassListItem key={c.id} class={c}/>)}
-								</ListGroup>
-							</Collapse>
-						</div>
-						<div style={ClassGroupStyle}>
-							<h4>Active Classes</h4>
-							<ListGroup style={ListStyle}>
-								{classes.map(function (d, idx) {
-									return <ClassListItem key={idx} class={d}/>;
-								})}
-							</ListGroup>
-						</div>
-						<div style={ClassGroupStyle}>
-							<h4>Inactive Classes</h4>
-							<button style={this.getBtnStyle()} onClick={this.toggleShow}> 
-								{(this.state.inactiveShown) ? 'hide' : 'show' }
-							</button>
-							<br />
-							<Collapse isOpen={this.state.inactiveShown}>
-								{(inactiveClasses.length === 0) ?
-									<div style={{fontSize:'8pt'}}>Nothing to show</div> :
-									<ListGroup style={ListStyle}>
-										{inactiveClasses.map((c) => <ClassListItem key={c.id} class={c}/>)}
-									</ListGroup>
-								}
-							</Collapse>
-						</div>
-					</div>
-				}
-			</div>
-		)
-	}
+          </div>
+        ) : (
+          <div>
+            <div style={ClassGroupStyle}>
+              <Collapse isOpen={pendingClasses.length > 0}>
+                <h4>Pending</h4>
+                <ListGroup style={ListStyle}>
+                  {pendingClasses.map((c) => (
+                    <ClassListItem key={c.id} class={c} />
+                  ))}
+                </ListGroup>
+              </Collapse>
+            </div>
+            <div style={ClassGroupStyle}>
+              <h4>Active Classes</h4>
+              <ListGroup style={ListStyle}>
+                {classes.map(function (d, idx) {
+                  return <ClassListItem key={idx} class={d} />;
+                })}
+              </ListGroup>
+            </div>
+            <div style={ClassGroupStyle}>
+              <h4>Inactive Classes</h4>
+              <button style={this.getBtnStyle()} onClick={this.toggleShow}>
+                {this.state.inactiveShown ? "hide" : "show"}
+              </button>
+              <br />
+              <Collapse isOpen={this.state.inactiveShown}>
+                {inactiveClasses.length === 0 ? (
+                  <div style={{ fontSize: "8pt" }}>Nothing to show</div>
+                ) : (
+                  <ListGroup style={ListStyle}>
+                    {inactiveClasses.map((c) => (
+                      <ClassListItem key={c.id} class={c} />
+                    ))}
+                  </ListGroup>
+                )}
+              </Collapse>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 }
 
 const ClassGroupStyle = {

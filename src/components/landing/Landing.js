@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import LandingHeader from "./LandingHeader";
 import LandingFooter from "./LandingFooter";
 import { Jumbotron, Button, Container, Row, Col } from "reactstrap";
-import ReactPlayer from 'react-player';
+import ReactPlayer from "react-player";
 
 export class Landing extends Component {
   constructor(props) {
@@ -43,16 +43,15 @@ export class Landing extends Component {
                 <Container className="mt-5">
                   <Row className="justify-content-center">
                     <Col xs="auto">
-                    <ReactPlayer
-                      url={process.env.PUBLIC_URL +  "/demo.mp4"}
-                      playing="true"
-                      loop="true"
-                      muted="true"
-                    />
+                      <ReactPlayer
+                        url={process.env.PUBLIC_URL + "/demo.mp4"}
+                        playing="true"
+                        loop="true"
+                        muted="true"
+                      />
                     </Col>
                   </Row>
                 </Container>
-                
               </Jumbotron>
               <Jumbotron style={{ backgroundColor: "transparent" }}>
                 <h3 className="text-center">

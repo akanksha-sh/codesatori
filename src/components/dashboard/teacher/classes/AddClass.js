@@ -1,16 +1,24 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+} from "reactstrap";
 import { contentDiv } from "../../../../Style";
 import EmailChips from "./EmailChips";
 
 const INITIAL_STATE = {
   className: "",
   items: [],
-  emailValue: "" 
+  emailValue: "",
 };
 
 export class AddClass extends Component {
-
   constructor(props) {
     super(props);
 
@@ -21,10 +29,10 @@ export class AddClass extends Component {
     e.preventDefault();
     console.log(JSON.stringify(this.state));
     this.props.addClass(this.state.className, this.state.items);
-    this.setState({ ... INITIAL_STATE });
+    this.setState({ ...INITIAL_STATE });
   };
 
-  handleKeyDown = evt => {
+  handleKeyDown = (evt) => {
     if (["Enter", "Tab", ","].includes(evt.key)) {
       evt.preventDefault();
 
@@ -33,36 +41,36 @@ export class AddClass extends Component {
       if (value && this.isValid(value)) {
         this.setState({
           items: [...this.state.items, this.state.emailValue],
-          emailValue: ""
+          emailValue: "",
         });
       }
     }
   };
 
-  onChange = evt => {
+  onChange = (evt) => {
     this.setState({
       [evt.target.name]: evt.target.value,
-      error: null
+      error: null,
     });
   };
 
-  handleDelete = item => {
+  handleDelete = (item) => {
     this.setState({
-      items: this.state.items.filter(i => i !== item)
+      items: this.state.items.filter((i) => i !== item),
     });
   };
 
-  handlePaste = evt => {
+  handlePaste = (evt) => {
     evt.preventDefault();
 
     var paste = evt.clipboardData.getData("text");
     var emails = paste.match(/[\w\d\.-]+@[\w\d\.-]+\.[\w\d\.-]+/g);
 
     if (emails) {
-      var toBeAdded = emails.filter(email => !this.isInList(email));
+      var toBeAdded = emails.filter((email) => !this.isInList(email));
 
       this.setState({
-        items: [...this.state.items, ...toBeAdded]
+        items: [...this.state.items, ...toBeAdded],
       });
     }
   };
@@ -99,61 +107,61 @@ export class AddClass extends Component {
     return (
       <Form onSubmit={this.onSubmit} style={{ display: "flex" }} inline>
         <Container>
-        <Row>
-        <Col xs="auto">
-        <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="title" className="mr-sm-2">
-            Class Name
-          </Label>
-          <Input
-            type="text"
-            name="className"
-            id="title"
-            placeholder="e.g. AL Computing"
-            value={this.state.className}
-            onChange={this.onChange}
-          />
-        </FormGroup>
-        </Col>
-        <Col xs="4">
-        <FormGroup  className="mb-2 mr-sm-2 mb-sm-0">
-          <>
-          <Label for="title" className="mr-sm-2">
-            Students:
-          </Label>
-            {this.state.items.map(item => (
-              <div className="tag-item" key={item}>
-                {item}
-                <button
-                  type="button"
-                  className="button"
-                  onClick={() => this.handleDelete(item)}
-                >
-                  &times;
-                </button>
-              </div>
-            ))}
+          <Row>
+            <Col xs="auto">
+              <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                <Label for="title" className="mr-sm-2">
+                  Class Name
+                </Label>
+                <Input
+                  type="text"
+                  name="className"
+                  id="title"
+                  placeholder="e.g. AL Computing"
+                  value={this.state.className}
+                  onChange={this.onChange}
+                />
+              </FormGroup>
+            </Col>
+            <Col xs="4">
+              <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                <>
+                  <Label for="title" className="mr-sm-2">
+                    Students:
+                  </Label>
+                  {this.state.items.map((item) => (
+                    <div className="tag-item" key={item}>
+                      {item}
+                      <button
+                        type="button"
+                        className="button"
+                        onClick={() => this.handleDelete(item)}
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
 
-            <Input
-              type="text"
-              value={this.state.emailValue}
-              name="emailValue"
-              placeholder="Email address"
-              onKeyDown={this.handleKeyDown}
-              onChange={this.onChange}
-              onPaste={this.handlePaste}
-            />
+                  <Input
+                    type="text"
+                    value={this.state.emailValue}
+                    name="emailValue"
+                    placeholder="Email address"
+                    onKeyDown={this.handleKeyDown}
+                    onChange={this.onChange}
+                    onPaste={this.handlePaste}
+                  />
 
-            {this.state.error && <p className="error">{this.state.error}</p>}
-          </>
-        </FormGroup>
-        </Col>
-        <Col xs="auto">
-        <Button  className="mb-2 mr-sm-2 mb-sm-0">
-          Add class
-        </Button>
-        </Col>
-        </Row>
+                  {this.state.error && (
+                    <p className="error">{this.state.error}</p>
+                  )}
+                </>
+              </FormGroup>
+            </Col>
+            <Col xs="auto">
+              <Button className="mb-2 mr-sm-2 mb-sm-0">Add class</Button>
+            </Col>
+          </Row>
         </Container>
       </Form>
     );

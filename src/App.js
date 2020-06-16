@@ -99,7 +99,12 @@ class App extends Component {
     this.setState({ isLoading: true });
     // ALWAYS USE getIdToken() !! If not it may be expired
     this.state.authUser.getIdToken().then((idToken) => {
-      this.setState({newUserDetails: {... this.state.newUserDetails, email: this.state.authUser.email}})
+      this.setState({
+        newUserDetails: {
+          ...this.state.newUserDetails,
+          email: this.state.authUser.email,
+        },
+      });
       console.log(
         "Initialising new user details: " +
           JSON.stringify(this.state.newUserDetails)
