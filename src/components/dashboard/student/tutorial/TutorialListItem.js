@@ -95,5 +95,6 @@ const editorStyle = {
   borderStyle: "groove",
   float: "left",
   height: "400px",
+  overflowY: "scroll",
   width: "50%",
 };
