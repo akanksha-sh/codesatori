@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Input } from "reactstrap";
+import { Alert, Button, Form, FormGroup, Input } from "reactstrap";
 
 export class AddStudent extends Component {
   submitHandler = (e) => {
@@ -11,7 +11,7 @@ export class AddStudent extends Component {
     return (
       <div className="dropdown-menu-custom">
         <Form onSubmit={this.submitHandler}>
-          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+          <FormGroup className="mb-2 mr-sm-2 mb-sm-0 mt-3">
             <Input
               type="username"
               name="username"
@@ -19,8 +19,7 @@ export class AddStudent extends Component {
               placeholder="Add user"
             />
           </FormGroup>
-          <br />
-          <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+          <FormGroup className="mb-2 mr-sm-2 mb-sm-0 mt-3">
             <Input type="select" name="select" id="classSelect">
               <option>Add group</option>
               <option>Class 17S</option>
@@ -28,8 +27,10 @@ export class AddStudent extends Component {
               <option>Class 17B</option>
             </Input>
           </FormGroup>
-          <br />
-          <Button className="mb-2 mr-sm-2 mb-sm-0">Add</Button>
+          <Alert color="info" className="mb-2 mr-sm-2 mb-sm-0 mt-3">
+            or use code: <b>{this.props.classCode}</b> to join
+          </Alert>
+          <Button className="mb-2 mr-sm-2 mb-sm-0 mt-3">Add</Button>
         </Form>
       </div>
     );

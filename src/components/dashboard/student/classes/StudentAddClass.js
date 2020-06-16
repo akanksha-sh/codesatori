@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Row, Col, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { contentDiv } from "../../../../Style";
+import axios from "axios";
+import AuthUserContext from "../../../../session/Context";
+import * as Globals from "../../../../Globals";
 
 export class StudentAddClass extends Component {
+  static contextType = AuthUserContext;
+
   state = {
     nameOfClass: "",
     classCode: "",
@@ -13,9 +18,30 @@ export class StudentAddClass extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     // Communicate with database to verify existence of class. If it doesn't exit, handle error
-    this.props.addClass(this.state.nameOfClass);
+    this.addClass(this.state.classCode);
     this.setState({ nameOfClass: "", classCode: "" });
   };
+
+  addClass = (code) => {
+    const userContext = this.context;
+    userContext.authUser
+      .getIdToken()
+      .then((idToken) =>
+        axios({
+          url: Globals.BACKEND_URL + "classes/join?code=" + code,
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + idToken,
+          },
+        })
+      )
+      .then((res) => {
+        this.props.refreshData();
+      })
+      .catch((error) => {
+        console.log("Error adding class: " + error);
+      });
+  }
 
   render() {
     return (
@@ -28,8 +54,8 @@ export class StudentAddClass extends Component {
             type="text"
             name="classCode"
             id="classCode"
-            placeholder="e.g. 69AW8Z"
-            value={this.state.value}
+            placeholder="e.g. 6RAI8"
+            value={this.state.classCode}
             onChange={this.onChange}
           />
         </FormGroup>

@@ -36,7 +36,7 @@ export default class ClassListItem extends Component {
   };
 
   render() {
-    const { id, classId, name, active } = this.props.classInfo;
+    const { id, classId, name, active, classCode } = this.props.classInfo;
     if (!active) {
       return (
         <ListGroupItem
@@ -96,7 +96,7 @@ export default class ClassListItem extends Component {
               <i class="material-icons md-dark">person_add</i>
             </DropdownToggle>
             <DropdownMenu right>
-              <AddStudent />
+              <AddStudent classCode={classCode}/>
             </DropdownMenu>
           </UncontrolledDropdown>
           <UncontrolledDropdown onClick={this.toggleAreAssignmentsOpen}>

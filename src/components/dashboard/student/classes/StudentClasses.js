@@ -84,7 +84,7 @@ export class StudentClasses extends Component {
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}> Classes </h2>
-        <AddClass addClass={this.addClass} />
+        <AddClass addClass={this.addClass} refreshData={this.getClasses} />
         <br />
         {isLoading ? (
           <div className="text-center">
