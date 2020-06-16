@@ -29,7 +29,7 @@ export class Dashboard extends Component {
               />
               <Route exact path="/tutorial/:id" component={StudentTutorial} />
             </div>
-            <Redirect exact from="/" to="/classes" />
+            <Redirect exact from="/" to="/assignments" />
           </div>
         </Router>
       </div>

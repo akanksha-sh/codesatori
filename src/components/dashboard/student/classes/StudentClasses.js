@@ -11,13 +11,16 @@ import AuthUserContext from "../../../../session/Context";
 export class StudentClasses extends Component {
   static contextType = AuthUserContext;
 
-  state = {
-    classes: [],
-    inactiveShown: false,
-    isLoading: true,
-    classAssignmentData: [],
-    error: null,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      inactiveShown: false,
+      isLoading: true,
+      classAssignmentData: [],
+      error: null,
+    };
+  }
 
   componentDidMount() {
     this.getClasses();
@@ -97,7 +100,7 @@ export class StudentClasses extends Component {
                 <h4>Pending</h4>
                 <ListGroup style={ListStyle}>
                   {pendingClasses.map((c) => (
-                    <ClassListItem key={c.id} class={c} />
+                    <ClassListItem key={c.id} classInfo={c} />
                   ))}
                 </ListGroup>
               </Collapse>
@@ -105,8 +108,8 @@ export class StudentClasses extends Component {
             <div style={ClassGroupStyle}>
               <h4>Active Classes</h4>
               <ListGroup style={ListStyle}>
-                {classAssignmentData.map(function (d, idx) {
-                  return <ClassListItem key={idx} classInfo={d} />;
+                {classAssignmentData.map(function (c, idx) {
+                  return <ClassListItem key={c.id} classInfo={c} />;
                 })}
               </ListGroup>
             </div>
@@ -122,7 +125,7 @@ export class StudentClasses extends Component {
                 ) : (
                   <ListGroup style={ListStyle}>
                     {inactiveClasses.map((c) => (
-                      <ClassListItem key={c.id} class={c} />
+                      <ClassListItem key={c.id} classInfo={c} />
                     ))}
                   </ListGroup>
                 )}

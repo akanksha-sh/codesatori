@@ -26,28 +26,42 @@ export class StudentOngoingTutorialInformation extends Component {
     }
   };
 
-  render() {
-    const countdown = moment(moment(this.props.tutorial.deadline) - moment());
-    const days = countdown.format("D");
+  getAssignmentStatus = (assignmentData) => {
+    return assignmentData.assignment.assignmentStatus.filter((status) => {
+      if (status.classId === assignmentData.studentSubmission.classId) {
+        return status
+      }
+    })[0]
+  }
 
-    console.log(days);
+  render() {
+    let status = this.getAssignmentStatus(this.props.tutorial)
+    const countdown = moment(moment(status.deadline) - moment());
+    const days = countdown.format("D");
+    let {
+      assignmentId,
+      submissionDate,
+    } = this.props.tutorial.studentSubmission
+
     return (
       <ListGroupItem
         // disabled
         tag={RRLink}
         to={{
-          pathname: "/tutorial/" + this.props.tutorial.id,
+          pathname: "/tutorial/" + assignmentId,
           state: {
-            deadline: this.props.tutorial.deadline,
-            submitted: this.props.tutorial.submissionDate !== "",
+            deadline: status.deadline,
+            submitted: submissionDate !== null,
+            assignment: this.props.tutorial.assignment,
+            studentSubmission: this.props.tutorial.studentSubmission,
           },
         }}
         action
         style={{ alignItems: "center", display: "flex" }}
       >
-        <div>{this.props.tutorial.name}</div>
+        <div>{this.props.tutorial.assignment.name}</div>
         <div style={{ marginLeft: "auto" }}>
-          deadline: {this.props.tutorial.deadline}
+          deadline: {status.deadline}
           <UncontrolledDropdown onClick={this.clickHandler}>
             <DropdownToggle color="light" className="transparentDropdownToggle">
               <i class="material-icons md-dark">chat_bubble_outline</i>

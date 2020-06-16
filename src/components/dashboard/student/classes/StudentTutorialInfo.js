@@ -4,16 +4,6 @@ import { ListGroupItem } from "reactstrap";
 import moment from "moment";
 
 export class StudentTutorialInfo extends Component {
-  getTardiness = (tardy) => {
-    if (tardy === "-") {
-      return tardy;
-    } else if (tardy) {
-      return "Late";
-    } else {
-      return "On Time";
-    }
-  };
-
   getStatus = (isMarked, isTardy, submissionDate) => {
     const status = isMarked
       ? "Marked"
@@ -42,12 +32,17 @@ export class StudentTutorialInfo extends Component {
 
     const deadline = this.props.assignmentInfo.assignment.assignmentStatus.filter(
       (status) => {
-        return status.classId === this.props.classId;
+        if (status.classId === this.props.classId) {
+          return status
+        }
       }
-    ).deadline;
+    )[0].deadline;
 
+    const isSubmitted = submissionDate !== null
     const isMarked = score !== -1;
-    const isTardy = moment().diff(moment(deadline)) > 0;
+    const isTardy = (isSubmitted) 
+      ? moment(submissionDate).diff(moment(deadline)) > 0
+      : moment().diff(moment(deadline)) > 0;
     const scoreDisplay = isMarked ? score : "-";
     const testsPassedDisplay =
       testsPassed !== -1 ? testsPassed + "tests passed" : "-";
@@ -59,7 +54,7 @@ export class StudentTutorialInfo extends Component {
           pathname: "/tutorial/" + assignmentId,
           state: {
             deadline: deadline,
-            submitted: submissionDate !== "",
+            submitted: isSubmitted,
             assignment: this.props.assignmentInfo.assignment,
             studentSubmission: this.props.assignmentInfo.studentSubmission,
           },

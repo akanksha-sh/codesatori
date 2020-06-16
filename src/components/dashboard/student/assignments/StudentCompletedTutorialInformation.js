@@ -11,9 +11,17 @@ export class StudentCompletedTutorialInformation extends Component {
     e.preventDefault();
   };
 
+  getAssignmentStatus = (assignmentData) => {
+    return assignmentData.assignment.assignmentStatus.filter((status) => {
+      if (status.classId === assignmentData.studentSubmission.classId) {
+        return status
+      }
+    })[0]
+  }
+
   render() {
     const renderButton = () => {
-      if (this.props.tutorial.score !== "") {
+      if (this.props.tutorial.score !== -1) {
         return <i class="material-icons md-dark">assessment</i>;
       } else {
         return <i class="material-icons md-dark">check</i>;
@@ -30,6 +38,12 @@ export class StudentCompletedTutorialInformation extends Component {
       return status;
     };
 
+    let {
+      classId,
+      assignmentId,
+      submissionDate,
+    } = this.props.tutorial.studentSubmission
+
     return (
       <ListGroupItem
         // disabled
@@ -37,14 +51,16 @@ export class StudentCompletedTutorialInformation extends Component {
         to={{
           pathname: "/tutorial/" + this.props.tutorial.id,
           state: {
-            deadline: this.props.tutorial.deadline,
-            submitted: this.props.tutorial.submissionDate !== "",
+            deadline: this.getAssignmentStatus(this.props.tutorial).deadline,
+            submitted: submissionDate !== null,
+            assignment: this.props.tutorial.assignment,
+            studentSubmission: this.props.tutorial.studentSubmission,
           },
         }}
         action
         style={{ alignItems: "center", display: "flex" }}
       >
-        <div>{this.props.tutorial.name}</div>
+        <div>{this.props.tutorial.assignment.name}</div>
         <div style={{ marginLeft: "auto" }}>
           {renderStatus()}
           <UncontrolledDropdown onClick={this.clickHandler}>
