@@ -68,9 +68,6 @@ export class StudentAssignments extends Component {
       }
     })
 
-    console.log("Ongoing tutorials are: " + JSON.stringify(ongoingAssignmentDatas))
-    console.log("Completed tutorials are: " + JSON.stringify(completedAssignmentDatas))
-
     return (
       <div style={contentDiv}>
         <h2 style={pageTitle}>Assignments</h2>
