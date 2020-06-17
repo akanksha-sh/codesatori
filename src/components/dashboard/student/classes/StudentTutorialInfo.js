@@ -46,7 +46,7 @@ export class StudentTutorialInfo extends Component {
     const scoreDisplay = isMarked ? score : "-";
     const testsPassedDisplay =
       testsPassed !== -1 ? testsPassed + "tests passed" : "-";
-
+    
     return (
       <ListGroupItem
         tag={RRLink}

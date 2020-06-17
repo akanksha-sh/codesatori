@@ -29,6 +29,7 @@ export class Tutorial extends Component {
       questions: [],
       answers: [],
       activeTab: 0,
+      submitted: false,
     };
   }
 
@@ -145,12 +146,11 @@ export class Tutorial extends Component {
 
   getTutorialQuestions = () => {
     let { assignment, studentSubmission } = this.props.location.state
-    console.log("This assignment is: " + JSON.stringify(assignment) + " with answers: " + JSON.stringify(studentSubmission))
-    console.log("Actual questions are: "+ JSON.stringify(assignment.assignmentTemplate.questions))
     this.setState({
       name: assignment.name,
       questions: assignment.assignmentTemplate.questions,
-      answers: studentSubmission.studentSubmissionTemplate.answers
+      answers: studentSubmission.studentSubmissionTemplate.answers,
+      submitted: this.props.location.state.submitted
     })
   };
 
