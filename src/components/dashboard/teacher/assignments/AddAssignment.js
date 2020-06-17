@@ -80,7 +80,7 @@ export class AddAssignment extends Component {
             id="title"
             value={date}
             onChange={this.onChange}
-            onClick={this.onStopPropagationClick}
+            onClick={this.onClick}
             className="mr-2"
           />
         </FormGroup>
