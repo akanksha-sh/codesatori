@@ -37,7 +37,6 @@ export class StudentOngoingTutorialInformation extends Component {
   render() {
     let status = this.getAssignmentStatus(this.props.tutorial)
     const countdown = moment(moment(status.deadline) - moment());
-    const days = countdown.format("D");
     let {
       assignmentId,
       submissionDate,
@@ -75,14 +74,3 @@ export class StudentOngoingTutorialInformation extends Component {
 
 export default StudentOngoingTutorialInformation;
 
-const NameBoxStyle = {
-  display: "flex",
-  background: "#f2f2f2",
-  flex: "10",
-  color: "#000",
-  fontSize: "8pt",
-  paddingLeft: "5pt",
-  lineHeight: "10pt",
-  alignItems: "center",
-  justifyContent: "left",
-};

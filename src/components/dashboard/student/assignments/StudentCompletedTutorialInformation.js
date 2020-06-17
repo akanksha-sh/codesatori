@@ -21,7 +21,7 @@ export class StudentCompletedTutorialInformation extends Component {
 
   render() {
     const renderButton = () => {
-      if (this.props.tutorial.score !== -1) {
+      if (this.props.tutorial.studentSubmission.score !== -1) {
         return <i class="material-icons md-dark">assessment</i>;
       } else {
         return <i class="material-icons md-dark">check</i>;
@@ -30,9 +30,9 @@ export class StudentCompletedTutorialInformation extends Component {
 
     const renderStatus = () => {
       let status =
-        this.props.tutorial.submissionDate === ""
+        this.props.tutorial.studentSubmission.submissionDate === null
           ? "Not Submitted"
-          : this.props.tutorial.score === ""
+          : this.props.tutorial.studentSubmission.score === -1
           ? "Submitted"
           : "Marked";
       return status;

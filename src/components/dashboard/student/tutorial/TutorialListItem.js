@@ -25,7 +25,10 @@ export class TutorialListItem extends Component {
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  updateCode = (code) => this.setState({ code: code });
+  updateCode = (code) => {
+    this.setState({ code: code });
+    this.props.updateStudentAnswers(this.props.question.id, code)
+  }
 
   onClick = (e) => {
     e.preventDefault();

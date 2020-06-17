@@ -10,11 +10,16 @@ import {
   TabPane,
 } from "reactstrap";
 import moment from "moment";
+import * as Globals from "../../../../Globals";
+import AuthUserContext from "../../../../session/Context";
+import axios from "axios";
 import { pageTitle, contentDiv } from "../../../../Style";
 import TutorialListItem from "./TutorialListItem";
 import classnames from "classnames";
 
 export class Tutorial extends Component {
+  static contextType = AuthUserContext;
+  
   constructor(props) {
     super(props);
 
@@ -23,7 +28,7 @@ export class Tutorial extends Component {
       name: "(Tutorial Name)",
       questions: [],
       answers: [],
-      activeTab: 1,
+      activeTab: 0,
     };
   }
 
@@ -31,16 +36,57 @@ export class Tutorial extends Component {
     this.getTutorialQuestions();
   }
 
+  updateStudentAnswers = (idx, code) => {
+    this.state.answers[idx].answerBody = code
+  }
+
   submit = () => {
-    //save to database and change status to submit
+    const studentSubmission = this.props.location.state.studentSubmission
+    console.log(
+      "Submitting assignment to: " + Globals.BACKEND_URL + "...")
+    const userContext = this.context
+		userContext.authUser.getIdToken().then(async (idToken) => {
+			axios({
+				url: Globals.BACKEND_URL + "assignments/submit",
+				method: "POST",
+				headers: {
+					Authorization: "Bearer " + idToken,
+        },
+        data: {...studentSubmission, studentSubmissionTemplate: {answers: this.state.answers}}
+			});
+      console.log("submission completed");
+      this.setState({submitted: true});
+		}).catch((errorRet) => {
+      console.log("Error from backend: ", errorRet);
+      this.setState({ error: errorRet });
+      this.setState({ isLoading: false });
+    });
   };
 
   save = () => {
-    //save to database
+    const studentSubmission = this.props.location.state.studentSubmission
+    console.log(
+      "Saving assignment to: " + Globals.BACKEND_URL + "...")
+    const userContext = this.context
+		userContext.authUser.getIdToken().then(async (idToken) => {
+			axios({
+				url: Globals.BACKEND_URL + "assignments/save",
+				method: "POST",
+				headers: {
+					Authorization: "Bearer " + idToken,
+        },
+        data: {...studentSubmission, studentSubmissionTemplate: {answers: this.state.answers}}
+			});
+			console.log("save completed");
+		}).catch((errorRet) => {
+      console.log("Error from backend: ", errorRet);
+      this.setState({ error: errorRet });
+      this.setState({ isLoading: false });
+    });
   };
 
   saveAndExit = () => {
-    //save to database
+    this.save();
     this.props.history.goBack();
   };
 
@@ -49,7 +95,7 @@ export class Tutorial extends Component {
   };
 
   render() {
-    const { deadline, submitted } = this.props.location.state;
+    const { deadline } = this.props.location.state;
 
     return (
       <div style={contentDiv}>
@@ -66,10 +112,10 @@ export class Tutorial extends Component {
               <NavItem>
                 <NavLink
                   className={classnames({
-                    active: this.state.activeTab === q.id + 1,
+                    active: this.state.activeTab === q.id,
                   })}
                   onClick={() => {
-                    this.setState({ activeTab: q.id + 1 });
+                    this.setState({ activeTab: q.id });
                   }}
                 >
                   Question {q.id + 1}
@@ -81,13 +127,18 @@ export class Tutorial extends Component {
         <TabContent activeTab={this.state.activeTab}>
           {this.state.questions.map((q, idx) => {
             return (
-              <TabPane tabId={q.id + 1}>
-                <TutorialListItem key={q.id + 1} question={q} answer={this.state.answers[idx]} />
+              <TabPane tabId={(q.id)}>
+                <TutorialListItem 
+                  key={(q.id)} 
+                  question={q} 
+                  answer={this.state.answers[idx]} 
+                  updateStudentAnswers={this.updateStudentAnswers}
+                  />
               </TabPane>
             );
           })}
         </TabContent>
-        {this.getButtons(submitted)}
+        {this.getButtons(this.state.submitted)}
       </div>
     );
   }
@@ -101,30 +152,6 @@ export class Tutorial extends Component {
       questions: assignment.assignmentTemplate.questions,
       answers: studentSubmission.studentSubmissionTemplate.answers
     })
-
-    // if (this.state.id === "28082810-0614-3091-8084-2c7173ef0793") {
-    //   this.setState({
-    //     name: "Java Homework 2 : Linked-List",
-    //     questions: [
-    //       {
-    //         id: 1,
-    //         languageIndex: 0,
-    //         text:
-    //           "Write a public method with signature 'createIntList()' that will return an empty LinkedList of type 'Integer'.",
-    //         studentAnswer:
-    //           'public class Solution {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World!");\n\t}\n}\n',
-    //       },
-    //       {
-    //         id: 2,
-    //         languageIndex: 0,
-    //         text:
-    //           "Write a public method with sigature 'max(List<Integer> integers)' that returns the largest integer in the list.",
-    //         studentAnswer:
-    //           "public class Solution {\n\tpublic static Integer max(List<Integer> integers) {\n\t\t/* Code goes here! */\n\t\treturn 0;\n\t}\n}\n",
-    //       },
-    //     ],
-    //   });
-    // }
   };
 
   getCountdownBoxStyle = (isOverdue) => {
